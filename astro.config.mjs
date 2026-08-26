@@ -3,9 +3,9 @@ import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 
-// 部署到自己的域名后改这里，RSS 和 sitemap 会跟着走
+// 绑定自定义域名后把这里改掉，RSS 和 sitemap 的绝对链接都取自它
 export default defineConfig({
-  site: "https://neoblog.pages.dev",
+  site: "https://neo-blog.pages.dev",
   integrations: [mdx(), sitemap()],
   markdown: {
     shikiConfig: {
