@@ -1,0 +1,12 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "neo-blog",
+  "compatibility_date": "2026-08-25",
+  // 纯静态站：把 astro build 产出的 dist/ 整个交给 Cloudflare 托管。
+  // 显式写出来是为了不让 Cloudflare 的框架自动检测介入 —— 它会把项目
+  // 当成服务端渲染，导致图片走 /_image 运行时接口而全部 404。
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}

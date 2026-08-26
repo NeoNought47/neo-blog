@@ -7,6 +7,12 @@ import sitemap from "@astrojs/sitemap";
 // 注意 neo-blog.pages.dev 是别人的站，不要填那个。
 export default defineConfig({
   site: "https://neo-blog.kaito-neyo.workers.dev",
+
+  // 必须显式声明静态模式。Cloudflare 的构建环境会把项目当成服务端模式，
+  // 结果 HTML 里留下 /_image?href=... 这种运行时图片接口地址，
+  // 而纯静态部署没有这个接口，全站图片 404。
+  output: "static",
+
   integrations: [mdx(), sitemap()],
   markdown: {
     shikiConfig: {
