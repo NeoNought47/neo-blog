@@ -2,6 +2,7 @@
 title: "万智牌 cEDH Blue Farm 套牌指南"
 date: 2025-07-03
 tags: ["Magic the Gathering", "Trading Card Games"]
+draft: true
 ---
 
 这是一套以织命使·堤谟娜(Tymna the Weaver)和卢德维佳作寇姆(Kraum, Ludevic's Opus)为指挥官的cEDH套牌指南。
