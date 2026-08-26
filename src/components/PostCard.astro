@@ -1,0 +1,33 @@
+---
+import { Image } from "astro:assets";
+import { formatDate, type Post } from "../lib/posts";
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const { title, date, tags, cover, draft } = post.data;
+---
+
+<article class="card reveal">
+  {
+    cover && (
+      <div class="card__media">
+        <Image src={cover} alt={title} width={720} height={450} loading="lazy" />
+      </div>
+    )
+  }
+  <div class="card__body">
+    <h3 class="card__title">
+      <a class="card__link" href={`/posts/${post.id}`}>{title}</a>
+    </h3>
+    <div class="tag-row">
+      {tags.slice(0, 3).map((t) => <a class="tag" href={`/tags/${encodeURIComponent(t)}`}>{t}</a>)}
+    </div>
+    <div class="card__meta">
+      <time datetime={date.toISOString()}>{formatDate(date)}</time>
+      {draft && (<><span class="dot" /><span style="color:var(--accent-2)">草稿</span></>)}
+    </div>
+  </div>
+</article>

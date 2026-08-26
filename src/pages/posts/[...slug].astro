@@ -1,0 +1,74 @@
+---
+import { Image } from "astro:assets";
+import { render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import { getPosts, formatDate, readingTime } from "../../lib/posts";
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post, i) => ({
+    params: { slug: post.id },
+    props: {
+      post,
+      // 列表按时间倒序，所以「上一篇」= 更新的那篇 = 索引更小
+      newer: posts[i - 1] ?? null,
+      older: posts[i + 1] ?? null,
+    },
+  }));
+}
+
+const { post, newer, older } = Astro.props;
+const { Content } = await render(post);
+const { title, date, tags, cover, description, draft } = post.data;
+const mins = readingTime(post.body ?? "");
+---
+
+<Base title={title} description={description ?? title} progress>
+  <article>
+    <header class="post-head page">
+      <div class="tag-row" style="justify-content:center">
+        {tags.map((t) => <a class="tag" href={`/tags/${encodeURIComponent(t)}`}>{t}</a>)}
+      </div>
+      <h1>{title}</h1>
+      <div class="post-head__meta">
+        <time datetime={date.toISOString()}>{formatDate(date)}</time>
+        <span class="dot"></span>
+        <span>约 {mins} 分钟</span>
+        {draft && (<><span class="dot"></span><span style="color:var(--accent-2)">草稿</span></>)}
+      </div>
+    </header>
+
+    {
+      cover && (
+        <div class="post-cover">
+          <Image src={cover} alt={title} width={2000} loading="eager" />
+        </div>
+      )
+    }
+
+    <div class="prose page">
+      <Content />
+    </div>
+
+    <nav class="pager page" aria-label="文章导航">
+      {
+        newer ? (
+          <a class="pager__item" href={`/posts/${newer.id}`}>
+            <div class="pager__label">← 上一篇</div>
+            <div class="pager__title">{newer.data.title}</div>
+          </a>
+        ) : (
+          <span />
+        )
+      }
+      {
+        older && (
+          <a class="pager__item pager__item--next" href={`/posts/${older.id}`}>
+            <div class="pager__label">下一篇 →</div>
+            <div class="pager__title">{older.data.title}</div>
+          </a>
+        )
+      }
+    </nav>
+  </article>
+</Base>

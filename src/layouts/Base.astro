@@ -1,0 +1,166 @@
+---
+import { SITE } from "../consts";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** 文章页开启顶部阅读进度条 */
+  progress?: boolean;
+}
+
+const { title, description = SITE.description, progress = false } = Astro.props;
+const pageTitle = title ? `${title} · ${SITE.title}` : SITE.title;
+const path = Astro.url.pathname;
+const canonical = new URL(path, Astro.site);
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title={SITE.title} href="/rss.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="generator" content={Astro.generator} />
+
+    {/* 在首屏渲染前定好主题，避免暗色模式下白屏闪一下。
+        暗色是这个站的设计基调，所以默认暗色，只有手动切过才用亮色。 */}
+    <script is:inline>
+      if (localStorage.getItem("theme") === "light") {
+        document.documentElement.dataset.theme = "light";
+      }
+      // 标记 JS 可用，入场动画只在这个前提下启用
+      document.documentElement.classList.add("js");
+    </script>
+  </head>
+
+  <body>
+    <div class="aurora" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+    {progress && <div class="progress" id="progress" aria-hidden="true"></div>}
+
+    <header class="nav" id="nav">
+      <nav class="nav__inner page" aria-label="主导航">
+        <a class="nav__brand" href="/">Neo's <em>Blog</em></a>
+        {
+          SITE.nav.map((item) => (
+            <a
+              class="nav__link"
+              href={item.href}
+              aria-current={
+                item.href === "/"
+                  ? path === "/"
+                    ? "page"
+                    : undefined
+                  : path.startsWith(item.href)
+                    ? "page"
+                    : undefined
+              }
+            >
+              {item.label}
+            </a>
+          ))
+        }
+        <button class="theme-btn" id="theme-btn" type="button" aria-label="切换明暗主题">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"></path>
+          </svg>
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="footer page">
+      <span>© {SITE.startYear}–{new Date().getFullYear()} {SITE.author}</span>
+      <span>
+        <a href="/rss.xml">RSS</a> · 由 <a href="https://astro.build">Astro</a> 驱动
+      </span>
+    </footer>
+
+    {/* 图片灯箱容器，由 script 填充 */}
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="图片预览">
+      <button class="lightbox__close" type="button" aria-label="关闭">✕</button>
+      <img alt="" />
+    </div>
+
+    <script>
+      // ---- 明暗主题 ----
+      const btn = document.getElementById("theme-btn");
+      btn?.addEventListener("click", () => {
+        const root = document.documentElement;
+        const light = root.dataset.theme === "light";
+        if (light) delete root.dataset.theme;
+        else root.dataset.theme = "light";
+        localStorage.setItem("theme", light ? "dark" : "light");
+      });
+
+      // ---- 导航栏滚动出分隔线 ----
+      const nav = document.getElementById("nav");
+      const progress = document.getElementById("progress");
+      const onScroll = () => {
+        nav?.classList.toggle("scrolled", window.scrollY > 8);
+        if (progress) {
+          const max = document.documentElement.scrollHeight - window.innerHeight;
+          const pct = max > 0 ? window.scrollY / max : 0;
+          progress.style.transform = `scaleX(${Math.min(1, Math.max(0, pct))})`;
+        }
+      };
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+
+      // ---- 滚动入场动画 ----
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { rootMargin: "0px 0px -8% 0px" },
+      );
+      document.querySelectorAll(".reveal").forEach((el, i) => {
+        (el as HTMLElement).style.transitionDelay = `${Math.min(i, 8) * 55}ms`;
+        io.observe(el);
+      });
+
+      // ---- 正文图片灯箱 ----
+      const lb = document.getElementById("lightbox");
+      const lbImg = lb?.querySelector("img") as HTMLImageElement | null;
+      const close = () => {
+        lb?.classList.remove("open");
+        document.body.style.overflow = "";
+      };
+      document.querySelectorAll<HTMLImageElement>(".prose img").forEach((img) => {
+        img.addEventListener("click", () => {
+          if (!lb || !lbImg) return;
+          // 用 currentSrc 拿到浏览器实际选中的那档尺寸
+          lbImg.src = img.currentSrc || img.src;
+          lbImg.alt = img.alt;
+          lb.classList.add("open");
+          document.body.style.overflow = "hidden";
+        });
+      });
+      lb?.addEventListener("click", close);
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") close();
+      });
+    </script>
+  </body>
+</html>

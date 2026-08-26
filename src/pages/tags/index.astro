@@ -1,0 +1,55 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getTags } from "../../lib/posts";
+
+const tags = await getTags();
+---
+
+<Base title="标签" description="按标签浏览文章">
+  <section class="hero page" style="padding-bottom:1rem">
+    <span class="hero__eyebrow">{tags.length} 个标签</span>
+    <h1 class="hero__title">标签</h1>
+  </section>
+
+  <div class="narrow" style="padding-bottom:3rem">
+    <div class="tag-cloud">
+      {
+        tags.map(({ tag, count }) => (
+          <a class="tag tag--lg reveal" href={`/tags/${encodeURIComponent(tag)}`}>
+            {tag}
+            <span class="tag__count">{count}</span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</Base>
+
+<style>
+  .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+
+  .tag--lg {
+    font-size: 0.92rem;
+    padding: 0.5rem 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+
+  .tag__count {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-faint);
+    padding: 0.05rem 0.4rem;
+    border-radius: 100px;
+    background: var(--surface-hover);
+  }
+
+  .tag--lg:hover .tag__count {
+    color: var(--accent);
+  }
+</style>

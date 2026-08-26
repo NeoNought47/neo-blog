@@ -1,0 +1,47 @@
+---
+import Base from "../layouts/Base.astro";
+import { getPosts } from "../lib/posts";
+
+const posts = await getPosts();
+
+// 按年份分组
+const byYear = new Map<number, typeof posts>();
+for (const p of posts) {
+  const y = p.data.date.getFullYear();
+  if (!byYear.has(y)) byYear.set(y, []);
+  byYear.get(y)!.push(p);
+}
+const years = [...byYear.entries()].sort((a, b) => b[0] - a[0]);
+---
+
+<Base title="归档" description="全部文章按时间排列">
+  <section class="hero page" style="padding-bottom:1rem">
+    <span class="hero__eyebrow">共 {posts.length} 篇</span>
+    <h1 class="hero__title">归档</h1>
+  </section>
+
+  <div class="narrow" style="padding-bottom:2rem">
+    {
+      years.map(([year, items]) => (
+        <section>
+          <h2 class="archive-year">{year}</h2>
+          {items.map((p) => (
+            <a class="archive-row reveal" href={`/posts/${p.id}`}>
+              <span class="archive-row__date">
+                {String(p.data.date.getMonth() + 1).padStart(2, "0")}-
+                {String(p.data.date.getDate()).padStart(2, "0")}
+              </span>
+              <span class="archive-row__title">{p.data.title}</span>
+            </a>
+          ))}
+        </section>
+      ))
+    }
+  </div>
+</Base>
+
+<style>
+  .archive-row {
+    text-decoration: none;
+  }
+</style>
