@@ -49,7 +49,7 @@ const canonical = new URL(path, Astro.site);
 
     <header class="nav" id="nav">
       <nav class="nav__inner page" aria-label="主导航">
-        <a class="nav__brand" href="/">Neo's <em>Blog</em></a>
+        <a class="nav__brand" href="/" set:html={SITE.brand} />
         {
           SITE.nav.map((item) => (
             <a

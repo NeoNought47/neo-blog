@@ -1,8 +1,11 @@
 export const SITE = {
-  title: "Neo's Blog",
+  title: "Neo's Buffet Infinity",
+  /** 导航栏左上角品牌名，<em> 里的部分会被渐变高亮 */
+  brand: "Neo's <em>Buffet Infinity</em>",
   /** 首页大标题，<em> 里的部分会被渐变高亮 */
-  heroTitle: "记录游戏、卡牌<br />与一些<em>技术碎片</em>",
-  description: "一个人的记录本 — 游戏、万智牌、CS2、技术笔记。",
+  heroTitle: "记录收藏，<em>技术碎片</em>，爱好",
+  /** 只用于 SEO meta 和 RSS，首页不再显示 */
+  description: "记录收藏，技术碎片，爱好。",
   author: "NeoNought",
   startYear: 2025,
   nav: [
