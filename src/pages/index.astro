@@ -12,6 +12,11 @@ const [featured, ...rest] = posts;
   <section class="hero page">
     <span class="hero__eyebrow">{posts.length} 篇记录</span>
     <h1 class="hero__title" set:html={SITE.heroTitle} />
+    <address class="hero__shop">
+      <span>{SITE.shop.address}</span>
+      <span>{SITE.shop.phone}</span>
+      <span class="hero__hours">{SITE.shop.hours}</span>
+    </address>
   </section>
 
   <div class="page">

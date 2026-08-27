@@ -411,6 +411,31 @@ main {
   font-size: 1.05rem;
 }
 
+/* 大标题下面的"餐厅信息"，像门口那块小牌子，别抢标题 */
+.hero__shop {
+  font-style: normal;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin-top: 1.6rem;
+  color: var(--text-muted);
+  font-size: 0.98rem;
+  line-height: 1.75;
+}
+
+.hero__hours {
+  margin-top: 0.45rem;
+  color: var(--accent);
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 640px) {
+  .hero__shop {
+    font-size: 0.88rem;
+  }
+}
+
 /* ---------- 8. 区块标题 ---------- */
 .section-head {
   display: flex;
