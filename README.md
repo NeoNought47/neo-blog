@@ -79,7 +79,10 @@ git tag -n5 -l "design/*"
 
 当前有：
 
-- `design/frutiger-aero-v1` — 草绿/水青/天蓝三段渐变，高透 Aero 玻璃，圆体标题
+- `design/retro-diner-v1` — 奶油纸底 + 砖红，复古餐厅调（**当前线上**）
+- `design/frutiger-aero-v1` — 草绿/水青/天蓝三段渐变，高透 Aero 玻璃
+
+两套的玻璃结构完全一样，差别只在颜色变量，所以互相切换很安全。
 
 ### 只想看看当时长什么样
 
