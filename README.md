@@ -79,10 +79,19 @@ git tag -n5 -l "design/*"
 
 当前有：
 
-- `design/retro-diner-v1` — 奶油纸底 + 砖红，复古餐厅调（**当前线上**）
-- `design/frutiger-aero-v1` — 草绿/水青/天蓝三段渐变，高透 Aero 玻璃
+| 标签 | 色调 | 亮色光晕 | favicon |
+|---|---|---|---|
+| `design/retro-diner-v2` | 奶油纸 + 砖红（**当前线上**） | 有 | 握寿司，深色底 |
+| `design/retro-diner-v1` | 奶油纸 + 砖红 | 无 | 握寿司，奶油底（16px 下辨识差） |
+| `design/frutiger-aero-v1` | 草绿/水青/天蓝 | 无 | N 字母 |
 
-两套的玻璃结构完全一样，差别只在颜色变量，所以互相切换很安全。
+三套的玻璃结构完全一样，差别只在颜色变量和 favicon，所以互相切换很安全。
+
+想直接看某个标签存了什么，不用切分支：
+
+```bash
+git show design/retro-diner-v1:public/favicon.svg
+```
 
 ### 只想看看当时长什么样
 
