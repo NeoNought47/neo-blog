@@ -10,9 +10,9 @@
   --bg-elevated: #0e0e13;
 
   /* 表面：半透明白叠在底色上，配合 backdrop-filter 出毛玻璃 */
-  --surface: rgba(255, 255, 255, 0.035);
-  --surface-hover: rgba(255, 255, 255, 0.06);
-  --border: rgba(255, 255, 255, 0.08);
+  --surface: rgba(255, 255, 255, 0.013);
+  --surface-hover: rgba(255, 255, 255, 0.03);
+  --border: rgba(255, 255, 255, 0.11);
   --border-strong: rgba(255, 255, 255, 0.16);
 
   /* 文字：正文不要用纯白，#ededf0 更耐读 */
@@ -20,16 +20,22 @@
   --text-muted: #a1a1aa;
   --text-faint: #6b6b75;
 
-  /* 强调色：青绿 + 靛紫，暗色下显色最好 */
-  --accent: #5eead4;
-  --accent-2: #a78bfa;
+  /* Frutiger Aero 色板：草绿 -> 水青 -> 天蓝，不用紫 */
+  --accent: #5eead4;      /* 水青，主强调 */
+  --accent-2: #7dd3fc;    /* 天蓝，浅 */
+  --accent-3: #86efac;    /* 草绿 */
   --accent-soft: rgba(94, 234, 212, 0.12);
+  /* Aero 三段渐变，标题和高光都取它 */
+  --aero: linear-gradient(115deg, var(--accent-3) 0%, var(--accent) 45%, var(--accent-2) 100%);
 
   /* 阴影：暗色下靠"更深的黑"而不是灰来做层次 */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.55);
-  --glow: 0 0 0 1px rgba(94, 234, 212, 0.25), 0 8px 32px rgba(94, 234, 212, 0.12);
+  --glow: 0 0 0 1px rgba(94, 234, 212, 0.3), 0 8px 32px rgba(125, 211, 252, 0.2);
+  /* Aero 玻璃：顶部一道镜面高光 + 底部微反光 */
+  --gloss: inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.04);
 
   --radius: 14px;
   --radius-lg: 20px;
@@ -53,22 +59,25 @@
 
 /* 亮色模式：同一套变量换值，其它 CSS 一行都不用改 */
 :root[data-theme="light"] {
-  --bg: #fbfbfd;
+  --bg: #f2fafd;
   --bg-elevated: #ffffff;
-  --surface: rgba(10, 10, 20, 0.025);
-  --surface-hover: rgba(10, 10, 20, 0.05);
-  --border: rgba(10, 10, 20, 0.09);
-  --border-strong: rgba(10, 10, 20, 0.18);
+  --surface: rgba(255, 255, 255, 0.22);
+  --surface-hover: rgba(255, 255, 255, 0.4);
+  --border: rgba(255, 255, 255, 0.7);
+  --border-strong: rgba(255, 255, 255, 0.95);
   --text: #16161a;
   --text-muted: #55555f;
   --text-faint: #8a8a95;
-  --accent: #0d9488;
-  --accent-2: #7c3aed;
-  --accent-soft: rgba(13, 148, 136, 0.1);
+  --accent: #0891b2;
+  --accent-2: #38bdf8;
+  --accent-3: #16a34a;
+  --accent-soft: rgba(8, 145, 178, 0.1);
   --shadow-sm: 0 1px 2px rgba(10, 10, 30, 0.06);
   --shadow-md: 0 4px 16px rgba(10, 10, 30, 0.07);
   --shadow-lg: 0 16px 48px rgba(10, 10, 30, 0.1);
-  --glow: 0 0 0 1px rgba(13, 148, 136, 0.25), 0 8px 32px rgba(13, 148, 136, 0.1);
+  --glow: 0 0 0 1px rgba(8, 145, 178, 0.28), 0 8px 32px rgba(56, 189, 248, 0.16);
+  --gloss: inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.35);
 }
 
 /* ---------- 2. 基础重置 ---------- */
@@ -145,7 +154,7 @@ a {
   height: 60vw;
   top: -22vw;
   left: -12vw;
-  background: radial-gradient(circle, var(--accent) 0%, transparent 68%);
+  background: radial-gradient(circle, var(--accent) 0%, color-mix(in srgb, var(--accent) 0%, transparent) 68%);
   animation: drift-a 22s ease-in-out infinite alternate;
 }
 
@@ -154,13 +163,13 @@ a {
   height: 52vw;
   top: -14vw;
   right: -16vw;
-  background: radial-gradient(circle, var(--accent-2) 0%, transparent 68%);
+  background: radial-gradient(circle, var(--accent-2) 0%, color-mix(in srgb, var(--accent-2) 0%, transparent) 68%);
   animation: drift-b 26s ease-in-out infinite alternate;
 }
 
 :root[data-theme="light"] .aurora::before,
 :root[data-theme="light"] .aurora::after {
-  opacity: 0.22;
+  opacity: 0.55;
 }
 
 @keyframes drift-a {
@@ -172,6 +181,30 @@ a {
 @keyframes drift-b {
   to {
     transform: translate3d(-5vw, 6vw, 0) scale(1.08);
+  }
+}
+
+/* 第三团光晕：草绿。和青、蓝凑成 Aero 的三色天空 */
+.aurora__green {
+  position: absolute;
+  width: 46vw;
+  height: 46vw;
+  bottom: -20vw;
+  left: 22vw;
+  border-radius: 50%;
+  filter: blur(110px);
+  opacity: 0.45;
+  background: radial-gradient(circle, var(--accent-3) 0%, color-mix(in srgb, var(--accent-3) 0%, transparent) 68%);
+  animation: drift-c 30s ease-in-out infinite alternate;
+}
+
+:root[data-theme="light"] .aurora__green {
+  opacity: 0.45;
+}
+
+@keyframes drift-c {
+  to {
+    transform: translate3d(-4vw, -5vw, 0) scale(1.14);
   }
 }
 
@@ -205,9 +238,9 @@ main {
   position: sticky;
   top: 0;
   z-index: 50;
-  backdrop-filter: saturate(180%) blur(16px);
-  -webkit-backdrop-filter: saturate(180%) blur(16px);
-  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  backdrop-filter: saturate(210%) blur(30px);
+  -webkit-backdrop-filter: saturate(210%) blur(30px);
+  background: color-mix(in srgb, var(--bg) 42%, transparent);
   border-bottom: 1px solid transparent;
   transition: border-color 0.3s var(--ease), background-color 0.3s var(--ease);
 }
@@ -234,7 +267,7 @@ main {
 
 .nav__brand em {
   font-style: normal;
-  background: linear-gradient(115deg, var(--accent), var(--accent-2));
+  background: var(--aero);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -256,7 +289,7 @@ main {
   bottom: 0;
   width: 100%;
   height: 1px;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  background: var(--aero);
   transform: scaleX(0);
   transform-origin: right;
   transition: transform 0.35s var(--ease);
@@ -283,6 +316,8 @@ main {
   background: var(--surface);
   color: var(--text-muted);
   cursor: pointer;
+  box-shadow: var(--gloss);
+  backdrop-filter: blur(10px) saturate(160%);
   transition: all 0.25s var(--ease);
 }
 
@@ -311,7 +346,7 @@ main {
   width: 100%;
   transform: scaleX(0);
   transform-origin: left;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  background: var(--aero);
   z-index: 60;
 }
 
@@ -333,7 +368,8 @@ main {
   border: 1px solid var(--border);
   border-radius: 100px;
   background: var(--surface);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(14px) saturate(180%);
+  box-shadow: var(--gloss);
 }
 
 .hero__eyebrow::before {
@@ -348,16 +384,18 @@ main {
 .hero__title {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(2.6rem, 7vw, 4.75rem);
-  line-height: 1.06;
-  letter-spacing: -0.02em;
+  /* 拉丁字形的字面高度远小于汉字的全角字身，同字号下会显小一圈，
+     所以这里比中文标题时期调大一档补回视觉体量 */
+  font-size: clamp(3.1rem, 9vw, 6.4rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
   margin: 1.5rem 0 0;
 }
 
 .hero__title em {
   font-style: normal;
   white-space: nowrap;
-  background: linear-gradient(115deg, var(--accent) 10%, var(--accent-2) 90%);
+  background: var(--aero);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -413,20 +451,26 @@ main {
   flex-direction: column;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  background: var(--surface);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  /* 上半段亮、下半段暗，中间一道硬分界 —— Aero 玻璃的核心特征 */
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.038) 0%,
+    rgba(255, 255, 255, 0.014) 48%,
+    rgba(255, 255, 255, 0.003) 48.5%,
+    rgba(255, 255, 255, 0.016) 100%
+  );
+  backdrop-filter: blur(30px) saturate(190%);
+  -webkit-backdrop-filter: blur(30px) saturate(190%);
   overflow: hidden;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--gloss), var(--shadow-md);
   transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease),
-    border-color 0.4s var(--ease), background-color 0.4s var(--ease);
+    border-color 0.4s var(--ease);
 }
 
 .card:hover {
   transform: translateY(-5px);
   border-color: var(--border-strong);
-  background: var(--surface-hover);
-  box-shadow: var(--shadow-lg), var(--glow);
+  box-shadow: var(--gloss), var(--shadow-lg), var(--glow);
 }
 
 /* 卡片顶部那道渐变高光，hover 时亮起 */
@@ -435,7 +479,7 @@ main {
   position: absolute;
   inset: 0 0 auto;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  background: linear-gradient(90deg, transparent, var(--accent-3), var(--accent), var(--accent-2), transparent);
   opacity: 0;
   transition: opacity 0.4s var(--ease);
 }
@@ -516,6 +560,8 @@ main {
   border: 1px solid var(--border);
   color: var(--text-muted);
   background: var(--surface);
+  box-shadow: var(--gloss);
+  backdrop-filter: blur(10px) saturate(160%);
   transition: all 0.25s var(--ease);
 }
 
@@ -730,6 +776,8 @@ a.tag:hover {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--surface);
+  backdrop-filter: blur(16px) saturate(180%);
+  box-shadow: var(--gloss);
   transition: all 0.35s var(--ease);
 }
 
