@@ -69,6 +69,43 @@ src/
 
 首页大标题改 `src/consts.ts` 的 `heroTitle`，`<em>` 包住的部分会被渐变高亮。
 
+## 外观还原点
+
+每套满意的外观都会打一个 `design/*` 标签。想推倒重做又怕回不来时，先看这里。
+
+```bash
+git tag -n5 -l "design/*"
+```
+
+当前有：
+
+- `design/frutiger-aero-v1` — 草绿/水青/天蓝三段渐变，高透 Aero 玻璃，圆体标题
+
+### 只想看看当时长什么样
+
+```bash
+git stash && git checkout design/frutiger-aero-v1 && npm run dev
+```
+
+看完回到最新：`git checkout main && git stash pop`
+
+### 确定要还原
+
+只还原外观、保留之后写的所有文章：
+
+```bash
+git checkout design/frutiger-aero-v1 -- src/styles/global.css src/consts.ts src/layouts/Base.astro
+```
+
+改完记得 `npm run build` 跑一遍再提交 —— 如果期间改过组件结构，光还原样式可能对不上。
+
+### 存下新的一套
+
+```bash
+git tag -a design/<名字> -m "描述"
+git push origin design/<名字>
+```
+
 ## 部署
 
 静态站，`npm run build` 产出 `dist/`，扔哪都能跑。
