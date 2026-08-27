@@ -1,11 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#5eead4"/>
-      <stop offset="1" stop-color="#a78bfa"/>
-    </linearGradient>
-  </defs>
-  <rect width="64" height="64" rx="16" fill="#08080b"/>
-  <path d="M20 44V20l24 24V20" fill="none" stroke="url(#g)" stroke-width="6"
-        stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- 奶油底 -->
+  <rect width="64" height="64" rx="15" fill="#f4eddc"/>
+
+  <!-- 米饭 -->
+  <rect x="12" y="30" width="40" height="21" rx="10" fill="#fffdf6" stroke="#e2d4bb" stroke-width="1.6"/>
+  <!-- 米粒的一点点起伏 -->
+  <circle cx="21" cy="45" r="1.6" fill="#eadfc8"/>
+  <circle cx="30" cy="47" r="1.4" fill="#eadfc8"/>
+  <circle cx="40" cy="45" r="1.5" fill="#eadfc8"/>
+
+  <!-- 三文鱼片，搭在米饭上 -->
+  <path d="M11 30c0-7.2 5.6-12.4 21-12.4S53 22.8 53 30c0 2.6-2 4-4.6 4H15.6C13 34 11 32.6 11 30z"
+        fill="#e0654b"/>
+  <!-- 鱼肉的白色纹路 -->
+  <path d="M17 28.4c5-3.4 10.4-5 15-5" stroke="#f7c3ac" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+  <path d="M33 22.6c5.4.4 10.2 2.2 13.6 4.8" stroke="#f7c3ac" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+
+  <!-- 海苔带 -->
+  <rect x="27" y="17.6" width="10" height="34" rx="2.4" fill="#4a2e22"/>
+  <rect x="29.2" y="19.6" width="2.2" height="30" rx="1.1" fill="#63413233"/>
 </svg>

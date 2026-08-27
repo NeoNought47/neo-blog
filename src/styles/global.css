@@ -6,8 +6,8 @@
 /* ---------- 1. 设计令牌 ---------- */
 :root {
   /* 底色：不是纯黑，带一点蓝，显得有空气感 */
-  --bg: #08080b;
-  --bg-elevated: #0e0e13;
+  --bg: #1a1210;
+  --bg-elevated: #221815;
 
   /* 表面：半透明白叠在底色上，配合 backdrop-filter 出毛玻璃 */
   --surface: rgba(255, 255, 255, 0.013);
@@ -16,15 +16,15 @@
   --border-strong: rgba(255, 255, 255, 0.16);
 
   /* 文字：正文不要用纯白，#ededf0 更耐读 */
-  --text: #ededf0;
-  --text-muted: #a1a1aa;
-  --text-faint: #6b6b75;
+  --text: #f3e9dd;
+  --text-muted: #b9a795;
+  --text-faint: #85736a;
 
-  /* Frutiger Aero 色板：草绿 -> 水青 -> 天蓝，不用紫 */
-  --accent: #5eead4;      /* 水青，主强调 */
-  --accent-2: #7dd3fc;    /* 天蓝，浅 */
-  --accent-3: #86efac;    /* 草绿 */
-  --accent-soft: rgba(94, 234, 212, 0.12);
+  /* 复古暖色板：砖红 / 深栗 / 焦糖。深色底下整体提亮一档才压得住 */
+  --accent: #e0654b;      /* 砖红，主强调 */
+  --accent-2: #c4442f;    /* 深砖红 */
+  --accent-3: #e8a05a;    /* 焦糖 */
+  --accent-soft: rgba(224, 101, 75, 0.14);
   /* Aero 三段渐变，标题和高光都取它 */
   --aero: linear-gradient(115deg, var(--accent-3) 0%, var(--accent) 45%, var(--accent-2) 100%);
 
@@ -32,7 +32,7 @@
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.55);
-  --glow: 0 0 0 1px rgba(94, 234, 212, 0.3), 0 8px 32px rgba(125, 211, 252, 0.2);
+  --glow: 0 0 0 1px rgba(224, 101, 75, 0.32), 0 8px 32px rgba(196, 68, 47, 0.22);
   /* Aero 玻璃：顶部一道镜面高光 + 底部微反光 */
   --gloss: inset 0 1px 0 rgba(255, 255, 255, 0.16),
     inset 0 -1px 0 rgba(255, 255, 255, 0.04);
@@ -59,23 +59,23 @@
 
 /* 亮色模式：同一套变量换值，其它 CSS 一行都不用改 */
 :root[data-theme="light"] {
-  --bg: #f2fafd;
-  --bg-elevated: #ffffff;
-  --surface: rgba(255, 255, 255, 0.22);
-  --surface-hover: rgba(255, 255, 255, 0.4);
-  --border: rgba(255, 255, 255, 0.7);
-  --border-strong: rgba(255, 255, 255, 0.95);
-  --text: #16161a;
-  --text-muted: #55555f;
-  --text-faint: #8a8a95;
-  --accent: #0891b2;
-  --accent-2: #38bdf8;
-  --accent-3: #16a34a;
-  --accent-soft: rgba(8, 145, 178, 0.1);
-  --shadow-sm: 0 1px 2px rgba(10, 10, 30, 0.06);
-  --shadow-md: 0 4px 16px rgba(10, 10, 30, 0.07);
-  --shadow-lg: 0 16px 48px rgba(10, 10, 30, 0.1);
-  --glow: 0 0 0 1px rgba(8, 145, 178, 0.28), 0 8px 32px rgba(56, 189, 248, 0.16);
+  --bg: #f4eddc;
+  --bg-elevated: #fbf7ec;
+  --surface: rgba(255, 251, 242, 0.3);
+  --surface-hover: rgba(255, 251, 242, 0.5);
+  --border: rgba(255, 252, 245, 0.75);
+  --border-strong: rgba(255, 252, 245, 1);
+  --text: #3a2a22;
+  --text-muted: #6b5346;
+  --text-faint: #9a8474;
+  --accent: #a83b29;      /* 砖红，参考图主色 */
+  --accent-2: #6e2418;    /* 深栗，参考图阴影色 */
+  --accent-3: #c9702f;    /* 焦糖 */
+  --accent-soft: rgba(168, 59, 41, 0.1);
+  --shadow-sm: 0 1px 2px rgba(70, 40, 25, 0.07);
+  --shadow-md: 0 4px 16px rgba(70, 40, 25, 0.09);
+  --shadow-lg: 0 16px 48px rgba(70, 40, 25, 0.13);
+  --glow: 0 0 0 1px rgba(168, 59, 41, 0.3), 0 8px 32px rgba(110, 36, 24, 0.16);
   --gloss: inset 0 1px 0 rgba(255, 255, 255, 0.75),
     inset 0 -1px 0 rgba(255, 255, 255, 0.35);
 }
@@ -169,7 +169,7 @@ a {
 
 :root[data-theme="light"] .aurora::before,
 :root[data-theme="light"] .aurora::after {
-  opacity: 0.55;
+  opacity: 0.16;
 }
 
 @keyframes drift-a {
@@ -199,7 +199,7 @@ a {
 }
 
 :root[data-theme="light"] .aurora__green {
-  opacity: 0.45;
+  opacity: 0.13;
 }
 
 @keyframes drift-c {
@@ -392,13 +392,16 @@ main {
   margin: 1.5rem 0 0;
 }
 
+/* 参考图是实心红字压一道深栗硬阴影，不是渐变 */
+.hero__title {
+  color: var(--accent);
+  text-shadow: 0.06em 0.06em 0 var(--accent-2);
+}
+
 .hero__title em {
   font-style: normal;
   white-space: nowrap;
-  background: var(--aero);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: inherit;
 }
 
 .hero__sub {
@@ -591,11 +594,11 @@ a.tag:hover {
 
 .prose p {
   margin: 1.35em auto;
-  color: #d4d4d9;
+  color: color-mix(in srgb, var(--text) 88%, transparent);
 }
 
 :root[data-theme="light"] .prose p {
-  color: #2c2c34;
+  color: color-mix(in srgb, var(--text) 92%, transparent);
 }
 
 .prose h2 {
@@ -857,9 +860,50 @@ a.tag:hover {
   font-size: 0.85rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
+  align-items: flex-end;
+  gap: 1.5rem;
   flex-wrap: wrap;
+}
+
+.footer__shop {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.footer__name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--accent);
+  letter-spacing: 0.01em;
+}
+
+.footer address {
+  font-style: normal;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  color: var(--text-muted);
+}
+
+.footer__hours {
+  font-size: 0.78rem;
+  opacity: 0.8;
+}
+
+.footer__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.3rem;
+}
+
+@media (max-width: 640px) {
+  .footer__meta {
+    align-items: flex-start;
+  }
 }
 
 .footer a:hover {

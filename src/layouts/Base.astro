@@ -32,9 +32,10 @@ const canonical = new URL(path, Astro.site);
     <meta name="generator" content={Astro.generator} />
 
     {/* 在首屏渲染前定好主题，避免暗色模式下白屏闪一下。
-        暗色是这个站的设计基调，所以默认暗色，只有手动切过才用亮色。 */}
+        奶油色是设计基调，深色只是备选。 */}
     <script is:inline>
-      if (localStorage.getItem("theme") === "light") {
+      // 奶油色是这个站的主态，只有手动切过才用深色
+      if (localStorage.getItem("theme") !== "dark") {
         document.documentElement.dataset.theme = "light";
       }
       // 标记 JS 可用，入场动画只在这个前提下启用
@@ -86,10 +87,19 @@ const canonical = new URL(path, Astro.site);
     </main>
 
     <footer class="footer page">
-      <span>© {SITE.startYear}–{new Date().getFullYear()} {SITE.author}</span>
-      <span>
-        <a href="/rss.xml">RSS</a> · 由 <a href="https://astro.build">Astro</a> 驱动
-      </span>
+      <div class="footer__shop">
+        <span class="footer__name">{SITE.title}</span>
+        <address>
+          {SITE.shop.address}<span class="dot"></span>{SITE.shop.phone}
+        </address>
+        <span class="footer__hours">{SITE.shop.hours}</span>
+      </div>
+      <div class="footer__meta">
+        <span>© {SITE.startYear}–{new Date().getFullYear()} {SITE.author}</span>
+        <span>
+          <a href="/rss.xml">RSS</a> · 由 <a href="https://astro.build">Astro</a> 驱动
+        </span>
+      </div>
     </footer>
 
     {/* 图片灯箱容器，由 script 填充 */}

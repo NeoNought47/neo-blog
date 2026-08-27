@@ -8,6 +8,14 @@ export const SITE = {
   description: "记录收藏，技术碎片，爱好。",
   author: "NeoNought",
   startYear: 2025,
+  /** 页脚的"餐厅信息"。地址和电话都是虚构的：
+   *  Huntington Ave 在 02115 段门牌最高到 880 左右，36000 不存在；
+   *  555-01xx 是北美保留给虚构作品的号段，永远打不通。 */
+  shop: {
+    address: "36000 Huntington Avenue, Boston, MA 02115",
+    phone: "+1 (617) 555-0142",
+    hours: "全天营业 · 无限续盘",
+  },
   nav: [
     { href: "/", label: "首页" },
     { href: "/archive", label: "归档" },
