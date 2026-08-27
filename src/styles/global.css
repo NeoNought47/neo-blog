@@ -25,6 +25,11 @@
   --accent-2: #c4442f;    /* 深砖红 */
   --accent-3: #e8a05a;    /* 焦糖 */
   --accent-soft: rgba(224, 101, 75, 0.14);
+
+  /* 背景光晕。深色下直接用强调色就够亮 */
+  --aurora-1: var(--accent);
+  --aurora-2: var(--accent-2);
+  --aurora-3: var(--accent-3);
   /* Aero 三段渐变，标题和高光都取它 */
   --aero: linear-gradient(115deg, var(--accent-3) 0%, var(--accent) 45%, var(--accent-2) 100%);
 
@@ -72,6 +77,11 @@
   --accent-2: #6e2418;    /* 深栗，参考图阴影色 */
   --accent-3: #c9702f;    /* 焦糖 */
   --accent-soft: rgba(168, 59, 41, 0.1);
+
+  /* 亮色的光晕用浅色调，不能拿砖红/深栗直接铺，会把奶油底压脏 */
+  --aurora-1: #f6b389;
+  --aurora-2: #f3c2ad;
+  --aurora-3: #f9d9a6;
   --shadow-sm: 0 1px 2px rgba(70, 40, 25, 0.07);
   --shadow-md: 0 4px 16px rgba(70, 40, 25, 0.09);
   --shadow-lg: 0 16px 48px rgba(70, 40, 25, 0.13);
@@ -154,7 +164,7 @@ a {
   height: 60vw;
   top: -22vw;
   left: -12vw;
-  background: radial-gradient(circle, var(--accent) 0%, color-mix(in srgb, var(--accent) 0%, transparent) 68%);
+  background: radial-gradient(circle, var(--aurora-1) 0%, color-mix(in srgb, var(--aurora-1) 0%, transparent) 68%);
   animation: drift-a 22s ease-in-out infinite alternate;
 }
 
@@ -163,13 +173,13 @@ a {
   height: 52vw;
   top: -14vw;
   right: -16vw;
-  background: radial-gradient(circle, var(--accent-2) 0%, color-mix(in srgb, var(--accent-2) 0%, transparent) 68%);
+  background: radial-gradient(circle, var(--aurora-2) 0%, color-mix(in srgb, var(--aurora-2) 0%, transparent) 68%);
   animation: drift-b 26s ease-in-out infinite alternate;
 }
 
 :root[data-theme="light"] .aurora::before,
 :root[data-theme="light"] .aurora::after {
-  opacity: 0.16;
+  opacity: 0.8;
 }
 
 @keyframes drift-a {
@@ -194,12 +204,12 @@ a {
   border-radius: 50%;
   filter: blur(110px);
   opacity: 0.45;
-  background: radial-gradient(circle, var(--accent-3) 0%, color-mix(in srgb, var(--accent-3) 0%, transparent) 68%);
+  background: radial-gradient(circle, var(--aurora-3) 0%, color-mix(in srgb, var(--aurora-3) 0%, transparent) 68%);
   animation: drift-c 30s ease-in-out infinite alternate;
 }
 
 :root[data-theme="light"] .aurora__green {
-  opacity: 0.13;
+  opacity: 0.68;
 }
 
 @keyframes drift-c {
