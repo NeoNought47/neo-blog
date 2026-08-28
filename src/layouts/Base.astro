@@ -38,6 +38,13 @@ const canonical = new URL(path, Astro.site);
       if (localStorage.getItem("theme") !== "dark") {
         document.documentElement.dataset.theme = "light";
       }
+      // 代码块深浅：用户手动选过就听用户的，否则跟随站点主题
+      (() => {
+        const root = document.documentElement;
+        const pref = localStorage.getItem("codeTheme");
+        const dark = pref ? pref === "dark" : root.dataset.theme !== "light";
+        root.classList.add(dark ? "code-dark" : "code-light");
+      })();
       // 标记 JS 可用，入场动画只在这个前提下启用
       document.documentElement.classList.add("js");
     </script>
@@ -117,6 +124,11 @@ const canonical = new URL(path, Astro.site);
         if (light) delete root.dataset.theme;
         else root.dataset.theme = "light";
         localStorage.setItem("theme", light ? "dark" : "light");
+        // 用户没单独指定过代码块深浅时，让它跟着站点主题走
+        if (!localStorage.getItem("codeTheme")) {
+          root.classList.toggle("code-dark", light);
+          root.classList.toggle("code-light", !light);
+        }
       });
 
       // ---- 导航栏滚动出分隔线 ----
@@ -148,6 +160,33 @@ const canonical = new URL(path, Astro.site);
       document.querySelectorAll(".reveal").forEach((el, i) => {
         (el as HTMLElement).style.transitionDelay = `${Math.min(i, 8) * 55}ms`;
         io.observe(el);
+      });
+
+      // ---- 代码块深浅切换 ----
+      const ICON =
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
+        '<circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"/></svg>';
+      document.querySelectorAll<HTMLElement>(".prose pre").forEach((pre) => {
+        // 按钮不能直接放进 <pre>，否则复制代码时会把它一起带走
+        const wrap = document.createElement("div");
+        wrap.className = "code-wrap";
+        pre.parentNode?.insertBefore(wrap, pre);
+        wrap.appendChild(pre);
+
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "code-toggle";
+        b.title = "切换代码块深浅";
+        b.setAttribute("aria-label", "切换代码块深浅");
+        b.innerHTML = ICON;
+        b.addEventListener("click", () => {
+          const root = document.documentElement;
+          const toDark = root.classList.contains("code-light");
+          root.classList.toggle("code-dark", toDark);
+          root.classList.toggle("code-light", !toDark);
+          localStorage.setItem("codeTheme", toDark ? "dark" : "light");
+        });
+        wrap.appendChild(b);
       });
 
       // ---- 正文图片灯箱 ----

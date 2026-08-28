@@ -711,16 +711,102 @@ a.tag:hover {
   border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
 }
 
-.prose pre {
+/* ---------- 代码块 ----------
+   Shiki 配了双主题，只输出 --shiki-light / --shiki-dark 颜色变量，
+   背景由这里的玻璃样式接管。深浅两套由 html 上的 .code-light / .code-dark 决定，
+   这个类由脚本写死（跟随站点主题，或用户在代码块右上角手动指定）。 */
+.code-wrap {
+  position: relative;
   max-width: min(100%, 900px);
   margin: 1.8em auto;
+}
+
+.prose pre {
+  margin: 0;
   padding: 1.15rem 1.3rem;
   border-radius: var(--radius);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-md);
   overflow-x: auto;
   font-size: 0.88rem;
   line-height: 1.65;
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  box-shadow: var(--gloss), var(--shadow-md);
+  transition: background-color 0.35s var(--ease), border-color 0.35s var(--ease);
+}
+
+/* 浅色代码：跟卡片同一套暖玻璃 */
+.code-light .prose pre,
+.code-light .prose pre span {
+  color: var(--shiki-light);
+}
+
+.code-light .prose pre {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 251, 242, 0.62) 0%,
+    rgba(255, 251, 242, 0.42) 48%,
+    rgba(255, 251, 242, 0.34) 48.5%,
+    rgba(255, 251, 242, 0.44) 100%
+  );
+  border: 1px solid rgba(255, 252, 245, 0.8);
+}
+
+/* 深色代码：同样保留玻璃感，只是底色转深 */
+.code-dark .prose pre,
+.code-dark .prose pre span {
+  color: var(--shiki-dark);
+}
+
+.code-dark .prose pre {
+  background: linear-gradient(
+    to bottom,
+    rgba(26, 18, 15, 0.78) 0%,
+    rgba(26, 18, 15, 0.66) 48%,
+    rgba(26, 18, 15, 0.6) 48.5%,
+    rgba(26, 18, 15, 0.68) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* 右上角的深浅切换按钮 */
+.code-toggle {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.6rem;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.25s var(--ease), color 0.25s var(--ease),
+    border-color 0.25s var(--ease);
+}
+
+.code-wrap:hover .code-toggle,
+.code-toggle:focus-visible {
+  opacity: 1;
+}
+
+.code-toggle:hover {
+  color: var(--accent);
+  border-color: var(--border-strong);
+}
+
+.code-toggle svg {
+  width: 13px;
+  height: 13px;
+}
+
+/* 触屏没有 hover，直接常驻显示 */
+@media (hover: none) {
+  .code-toggle {
+    opacity: 0.65;
+  }
 }
 
 .prose hr {

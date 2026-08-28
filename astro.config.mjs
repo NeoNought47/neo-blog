@@ -18,7 +18,10 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [remarkMark],
     shikiConfig: {
-      theme: "github-dark-dimmed",
+      // 双主题：Shiki 只输出 --shiki-light / --shiki-dark 两套颜色变量，
+      // 由 CSS 决定用哪套，背景则完全交给我们自己的玻璃样式
+      themes: { light: "github-light", dark: "github-dark-dimmed" },
+      defaultColor: false,
       wrap: true,
     },
   },

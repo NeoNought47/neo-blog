@@ -13,7 +13,7 @@ tags: ["Cybersecurity", "Learning Notes"]
 			3. Burp Suite
 			4. Proxifier (转发联动工具)
 ##### 1.2 课程边界（重要）
-> **明确告知**：本节课只解决==**无防护场景**==的抓包。
+> **明确告知**：本节课只解决<mark>**无防护场景**</mark>的抓包。
 > 后续课程将讲解：
 > 	其他协议抓包（Wireshark、科莱）
 > 	反代理检测绕过（APP/小程序专项章节）
@@ -56,18 +56,18 @@ C. Burp Suite证书安装
     设置 → 安全 → 从SD卡安装 → 选择.cer文件安装
 ## III. 四大对象抓包实战
 ##### 3.1 Web网站抓包（浏览器）
-==Charles==
+<mark>Charles</mark>
 特点：无需设置代理 启动之后可以直接抓取本机浏览器流量（但是Ubuntu还是需要在firefox里面设置系统代理127.0.0.1:8888, 正常是use system proxy settings, 改为manual proxy config）
 配置：`Proxy` → `Proxy Settings` → 勾选`Enable transparent HTTP proxying`
 远程抓取：若抓模拟器流量，需勾选`Support HTTP/2`和`Enable SOCKS proxy`
 
-==Fiddler==
+<mark>Fiddler</mark>
 特点：无需设置代理，自动抓取系统HTTP/HTTPS流量
 配置：Tools → Options → HTTPS → 勾选Capture HTTPS CONNECTs和Decrypt HTTPS traffic
 筛选功能：可针对特定域名筛选（Filter功能）
 
-==Burp Suite抓包（重点）==
-特点：必须设置代理，偏向安全测试，支持数据包==拦截修改==
+<mark>Burp Suite抓包（重点）</mark>
+特点：必须设置代理，偏向安全测试，支持数据包<mark>拦截修改</mark>
 配置步骤：
 1. 设置代理监听，`Proxy` → `Options` → `Add` → 绑定地址（127.0.0.1或本机IP）→ 端口（默认8080）
 2. 开启浏览器代理，设置 代理 手动代理 127.0.0.1:8080
@@ -78,10 +78,10 @@ C. Burp Suite证书安装
 - **排除本地地址**：浏览器代理设置的"请勿对以下地址使用代理服务器"中，**删除所有本地地址**，否则本地靶场抓不到包
 
 
-##### ==BP在Ubuntu上的实践记录：==
+##### <mark>BP在Ubuntu上的实践记录：</mark>
 **`Proxy → Intercept`**
 - `Intercept is on` 时，会把经过 Burp 的 **Request 暂时拦住**
-- 你可以==查看、修改==这个 Request
+- 你可以<mark>查看、修改</mark>这个 Request
 - 点 **Forward** = 把它继续发送给服务器
 - 也可以配置成连 **Response** 都拦住
 
@@ -103,7 +103,7 @@ intercept is off 的时候，不会拦住数据包，可以在HTTP history里看
 
 **步骤1：确认本机IP地址**
 `ifconfig`
-==这里假设本机IP为：192.168.1.6==
+<mark>这里假设本机IP为：192.168.1.6</mark>
 
 步骤2：模拟器设置代理
     模拟器设置 → WLAN → 长按当前网络 → 修改网络
@@ -112,7 +112,7 @@ intercept is off 的时候，不会拦住数据包，可以在HTTP history里看
     代理服务器端口：Burp监听端口（如8080）
 
 步骤3：Burp添加监听地址
-    Proxy → Options → Add → 选择本机IP，这里假设是==192.168.1.6==（非127.0.0.1）→ 端口8080
+    Proxy → Options → Add → 选择本机IP，这里假设是<mark>192.168.1.6</mark>（非127.0.0.1）→ 端口8080
 
 步骤4：验证抓包
 
@@ -129,7 +129,7 @@ Charles/Fiddler抓APP
 
 ##### 3.3 微信小程序抓包
 ###### **核心难点**
-- ==微信**有代理设置**，但直接设置系统代理会导致微信功能异常（消息发不出等）==
+- <mark>微信**有代理设置**，但直接设置系统代理会导致微信功能异常（消息发不出等）</mark>
 - 微信内置浏览器/小程序**无法直接配置独立代理**
 
 ##### 解决方案：转发联动（两种方法）
@@ -162,7 +162,7 @@ Internet
 目标 API
 
 **1. 为什么 Charles 能抓、Burp 好像不能?**  
-不是能力差别,是默认行为差别。==Charles 安装后自动帮你改系统代理==,而且默认只解密白名单里的域名,名单外的原样透传;Burp 不动系统设置,且默认见到 CONNECT 就想 MITM,碰到微信的 mmtls 私有协议解析不了就断连,于是消息发不出。Burp 手动配好代理 + 装系统证书 + TLS Pass Through 排除微信自己的域名,一样能抓。
+不是能力差别,是默认行为差别。<mark>Charles 安装后自动帮你改系统代理</mark>,而且默认只解密白名单里的域名,名单外的原样透传;Burp 不动系统设置,且默认见到 CONNECT 就想 MITM,碰到微信的 mmtls 私有协议解析不了就断连,于是消息发不出。Burp 手动配好代理 + 装系统证书 + TLS Pass Through 排除微信自己的域名,一样能抓。
 **2. Charles 是不是主动设置了系统代理?**  
 是。它启动时写系统配置,退出时改回来,所以感觉像"自动抓"。
 **3. 系统代理是不是流量先经过系统?**  
@@ -182,7 +182,7 @@ Internet
 - **环境变量代理** —— `HTTP_PROXY=...`,只对从这个 shell 启动的进程生效
 
 
-==例子==
+<mark>例子</mark>
 假设微信小程序请求：https://api.xiaodi8.com/user?id=123
 根据上面的配置，微信小程序->Charles (Charles也说我不直接访问那个网站，把请求给external proxy) -> 127.0.0.1 -> BP -> api.xiaodi8.com
 服务器返回 api.xiaodi8.com - Burp - Charles - 微信小程序
@@ -214,9 +214,9 @@ Internet
 
 - 直接设置系统代理指向Burp（`127.0.0.1:8080`）
 
-- ==**缺点**：所有流量都走代理，干扰信息多，且部分应用检测代理后拒绝运行==
+- <mark>**缺点**：所有流量都走代理，干扰信息多，且部分应用检测代理后拒绝运行</mark>
 
-==方法二：Proxifier*进程级*抓包（推荐）==
+<mark>方法二：Proxifier*进程级*抓包（推荐）</mark>
 
 1	找到目标进程名（任务管理器 → 腾讯文档 → 进程名如TencentDocs.exe）
 2	Proxifier添加代理服务器：127.0.0.1:8080（HTTPS）
