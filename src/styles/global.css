@@ -683,6 +683,16 @@ a.tag:hover {
   color: var(--accent);
 }
 
+/* Obsidian 的 ==高亮==，由 remark-mark 插件转成 <mark> */
+.prose mark {
+  background: color-mix(in srgb, var(--accent-3) 32%, transparent);
+  color: inherit;
+  padding: 0.08em 0.24em;
+  border-radius: 4px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
 .prose blockquote {
   margin: 1.8em auto;
   padding: 0.2em 0 0.2em 1.3em;
