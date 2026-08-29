@@ -26,6 +26,8 @@ export default defineConfig({
     },
   },
   image: {
+    // 默认质量抬到 92，见 src/plugins/image-service.mjs
+    service: { entrypoint: "./src/plugins/image-service.mjs" },
     // 84 张图全部本地优化成 webp/avif，构建时一次性完成
     responsiveStyles: true,
   },

@@ -856,6 +856,37 @@ a.tag:hover {
   box-shadow: var(--shadow-lg), var(--glow);
 }
 
+/* 摄影类文章：图片下方的时间地点，压小一档当作图注 */
+.photo-meta {
+  max-width: var(--measure);
+  margin: 2.6em auto 0;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.88rem;
+  line-height: 1.85;
+  color: var(--text-muted);
+}
+
+.prose .photo-meta p {
+  margin: 0.45em 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+.prose .photo-meta ul {
+  margin: 0.6em auto;
+  font-size: 0.85rem;
+}
+
+.prose .photo-meta li {
+  margin: 0.3em 0;
+}
+
+.prose .photo-meta strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
 /* ---------- 12. 文章头部 ---------- */
 .post-head {
   padding: clamp(3rem, 9vh, 5.5rem) 0 2.5rem;
