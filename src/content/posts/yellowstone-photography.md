@@ -5,6 +5,10 @@ tags: ["Photography"]
 cover: ../../assets/posts/yellowstone-photography/yellowstone-01.jpg
 ---
 
+**时间**　2026 年 5 月 6 日
+
+**地点**　美国怀俄明州，黄石国家公园（Yellowstone National Park）
+
 ![](../../assets/posts/yellowstone-photography/yellowstone-01.jpg)
 
 ![](../../assets/posts/yellowstone-photography/yellowstone-02.jpg)
@@ -19,7 +23,11 @@ cover: ../../assets/posts/yellowstone-photography/yellowstone-01.jpg
 
 ![](../../assets/posts/yellowstone-photography/yellowstone-07.jpg)
 
+<span class="photo-caption">**晨曦池**　Morning Glory Pool，上间歇泉盆地　`44.47510, -110.84343`</span>
+
 ![](../../assets/posts/yellowstone-photography/yellowstone-08.jpg)
+
+<span class="photo-caption">**上瀑布**　Upper Falls of the Yellowstone River，黄石大峡谷南缘　`44.71305, -110.49978`</span>
 
 ![](../../assets/posts/yellowstone-photography/yellowstone-09.jpg)
 
@@ -34,16 +42,3 @@ cover: ../../assets/posts/yellowstone-photography/yellowstone-01.jpg
 ![](../../assets/posts/yellowstone-photography/yellowstone-14.jpg)
 
 ![](../../assets/posts/yellowstone-photography/yellowstone-15.jpg)
-
-<div class="photo-meta">
-
-**时间**　2026 年 5 月 6 日
-
-**地点**　美国怀俄明州，黄石国家公园（Yellowstone National Park）
-
-其中两张留有 GPS，可定位到：
-
-- **上瀑布**　Upper Falls of the Yellowstone River，黄石大峡谷南缘　`44.71305, -110.49978`
-- **晨曦池**　Morning Glory Pool，上间歇泉盆地　`44.47510, -110.84343`
-
-</div>

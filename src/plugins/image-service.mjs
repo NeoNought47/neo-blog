@@ -13,11 +13,25 @@ import sharpService from "astro/assets/services/sharp";
  * quality 本来就在 DEFAULT_HASH_PROPS 里，所以改这个值会正常触发重新生成，
  * 不会命中旧缓存。
  */
+/** 渲染上限。正文图显示宽约 680px，灯箱最大约 1800px，
+ *  2560 已经远超任何屏幕的实际需要，再高只是白白增加下载量。 */
+const MAX_WIDTH = 2560;
+
 export default {
   ...sharpService,
   transform(inputBuffer, transform, config) {
     if (transform.quality == null) {
-      transform = { ...transform, quality: 92 };
+      transform = { ...transform, quality: 95 };
+    }
+    // 源文件保留原始分辨率（仓库里是未经处理的原件），
+    // 只在输出这一步限宽 —— 这样全程只有一次有损压缩。
+    if (transform.width && transform.width > MAX_WIDTH) {
+      const scale = MAX_WIDTH / transform.width;
+      transform = {
+        ...transform,
+        width: MAX_WIDTH,
+        height: transform.height ? Math.round(transform.height * scale) : undefined,
+      };
     }
     return sharpService.transform(inputBuffer, transform, config);
   },
