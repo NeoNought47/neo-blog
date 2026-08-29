@@ -843,7 +843,12 @@ a.tag:hover {
 }
 
 .prose img {
-  width: 100%;
+  /* 不要写 width: 100%。那会把每张图都强行撑到容器宽度，
+     低分辨率的源图会被放大显示，在高 DPI 屏上尤其糊。
+     用 max-width 让图片最多占满容器，但绝不超过自身尺寸。 */
+  max-width: 100%;
+  width: auto;
+  margin-inline: auto;
   border-radius: var(--radius);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-lg);
