@@ -189,6 +189,19 @@ const canonical = new URL(path, Astro.site);
         wrap.appendChild(b);
       });
 
+      // ---- 正文图片：绝不放大显示 ----
+      // 屏幕是几倍屏，一张图就得有几倍的像素才不算放大。
+      // CSS 读不到图片的真实像素数，只能在这里按 naturalWidth / DPR 封顶。
+      const capImage = (img: HTMLImageElement) => {
+        if (!img.naturalWidth) return;
+        const maxCss = img.naturalWidth / (window.devicePixelRatio || 1);
+        img.style.maxWidth = `min(100%, ${Math.floor(maxCss)}px)`;
+      };
+      document.querySelectorAll<HTMLImageElement>(".prose img").forEach((img) => {
+        if (img.complete) capImage(img);
+        else img.addEventListener("load", () => capImage(img), { once: true });
+      });
+
       // ---- 正文图片灯箱 ----
       const lb = document.getElementById("lightbox");
       const lbImg = lb?.querySelector("img") as HTMLImageElement | null;
