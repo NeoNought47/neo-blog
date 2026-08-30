@@ -4,6 +4,8 @@ date: 2026-07-24T12:00:00
 tags: ["Cybersecurity", "Learning Notes"]
 ---
 
+<span class="post-note">课程为小迪安全官方 2024 年上传，本文为个人学习笔记。</span>
+
 ## APP 应用开发架构
 ##### 1、原生开发
 

@@ -4,6 +4,8 @@ date: 2026-08-13T10:00:00
 tags: ["Cybersecurity", "Learning Notes"]
 ---
 
+<span class="post-note">课程为小迪安全官方 2024 年上传，本文为个人学习笔记。</span>
+
 ## I. 课程定位与目标
 ##### 1.1 本章核心定位
 	针对HTTP/HTTPS协议（其他协议如TCP/UDP/游戏协议等，需要wireshark）

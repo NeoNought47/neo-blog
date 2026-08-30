@@ -4,6 +4,8 @@ date: 2026-08-09T10:00:00
 tags: ["Cybersecurity", "Learning Notes"]
 ---
 
+<span class="post-note">课程为小迪安全官方 2024 年上传，本文为个人学习笔记。</span>
+
 无图形化下载文件可以用curl wget等
 使用网站工具生成命令 
 https://forum.ywhack.com/bountytips.php?download

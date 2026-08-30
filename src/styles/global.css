@@ -861,6 +861,18 @@ a.tag:hover {
   box-shadow: var(--shadow-lg), var(--glow);
 }
 
+/* 文章开头的来源说明，压小并弱化，不抢正文 */
+.prose .post-note {
+  display: block;
+  max-width: var(--measure);
+  margin: 0 auto 2.2em;
+  padding-left: 0.9rem;
+  border-left: 2px solid var(--accent-soft);
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: var(--text-faint);
+}
+
 /* 摄影类文章：贴在对应照片下方的图注 */
 .prose .photo-caption {
   display: block;

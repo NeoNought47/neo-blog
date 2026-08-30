@@ -4,6 +4,8 @@ date: 2026-07-24T09:00:00
 tags: ["Cybersecurity", "Learning Notes"]
 ---
 
+<span class="post-note">课程为小迪安全官方 2024 年上传，本文为个人学习笔记。</span>
+
 ## 1. 搭建环境
 视频里好像是用的阿里云
 但是我用的虚拟机+宝塔

@@ -4,6 +4,8 @@ date: 2026-07-24T11:00:00
 tags: ["Cybersecurity", "Learning Notes"]
 ---
 
+<span class="post-note">课程为小迪安全官方 2024 年上传，本文为个人学习笔记。</span>
+
 ## I WAF - Web Application Firewall
 **原理：Web应用防火墙，旨在提供保护  
 影响：常规Web安全测试手段会受到拦截**  
