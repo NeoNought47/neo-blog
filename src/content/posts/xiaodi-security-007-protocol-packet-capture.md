@@ -2,7 +2,6 @@
 title: "小迪安全 007：基础入门 - 抓包技术、全局协议、封包监听、网卡模式、APP、小程序、PC 应用"
 date: 2026-09-01
 tags: ["Cybersecurity", "Learning Notes"]
-cover: ../../assets/posts/xiaodi-security-007-protocol-packet-capture/007-01.png
 ---
 
 <span class="post-note">课程为小迪安全官方 2024 年上传，本文为个人学习笔记。</span>
@@ -139,10 +138,11 @@ cover: ../../assets/posts/xiaodi-security-007-protocol-packet-capture/007-01.png
 部分游戏类小程序走私有TCP协议（需科来/Wireshark）
 
 操作：
-    Step 1: 打开科来 → ==选择微信进程==（WeChatAppEx.exe）
-    Step 2: 打开小程序（如汽车之家、欢乐斗地主）
-    Step 3: 查看"==IP站点=="和"==域名=="标签
-    Step 4: 筛选HTTP协议查看Web请求
+
+1. 打开科来 → <mark>选择微信进程</mark>（WeChatAppEx.exe）
+2. 打开小程序（如汽车之家、欢乐斗地主）
+3. 查看「<mark>IP 站点</mark>」和「<mark>域名</mark>」标签
+4. 筛选 HTTP 协议查看 Web 请求
 
 ### 注意事项：
 
