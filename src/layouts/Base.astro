@@ -84,8 +84,10 @@ const canonical = new URL(path, Astro.site);
             </a>
           ))
         }
-        <button class="lang-btn" id="lang-btn" type="button">
-          <T zh={UI.langToggle.zh} en={UI.langToggle.en} />
+        <button class="lang-btn" id="lang-btn" type="button" aria-label="Language / 语言">
+          <span class="lang-btn__opt" data-opt="zh">中</span>
+          <span class="lang-btn__sep" aria-hidden="true"></span>
+          <span class="lang-btn__opt" data-opt="en">EN</span>
         </button>
         <button class="theme-btn" id="theme-btn" type="button" aria-label="切换明暗主题">
           <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -142,8 +144,16 @@ const canonical = new URL(path, Astro.site);
       });
 
       // ---- 界面语言切换 ----
-      document.getElementById("lang-btn")?.addEventListener("click", () => {
+      const langBtn = document.getElementById("lang-btn");
+      // 第一次来的人不知道这里能点，给个呼吸光圈，看过就不再提示
+      if (langBtn && !localStorage.getItem("langHintSeen")) {
+        langBtn.classList.add("hint");
+        setTimeout(() => langBtn.classList.remove("hint"), 6000);
+      }
+      langBtn?.addEventListener("click", () => {
         const root = document.documentElement;
+        langBtn.classList.remove("hint");
+        localStorage.setItem("langHintSeen", "1");
         const toEn = root.dataset.uiLang !== "en";
         if (toEn) {
           root.dataset.uiLang = "en";

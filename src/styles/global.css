@@ -363,29 +363,90 @@ main {
 }
 
 .lang-btn {
-  display: grid;
-  place-items: center;
-  min-width: 34px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.34rem;
   height: 34px;
-  padding: 0 0.5rem;
+  padding: 0 0.6rem;
   border-radius: 100px;
   border: 1px solid var(--border);
   background: var(--surface);
-  color: var(--text-muted);
   font-family: var(--font-display);
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 600;
   letter-spacing: 0.02em;
   cursor: pointer;
   box-shadow: var(--gloss);
   backdrop-filter: blur(10px) saturate(160%);
-  transition: all 0.25s var(--ease);
+  transition: border-color 0.25s var(--ease);
 }
 
 .lang-btn:hover {
-  color: var(--accent);
   border-color: var(--border-strong);
 }
+
+/* 两个选项都显示出来，高亮当前语言 —— 比只显示一个字更容易看懂能切换 */
+.lang-btn__opt {
+  color: var(--text-faint);
+  transition: color 0.25s var(--ease);
+}
+
+.lang-btn__sep {
+  width: 1px;
+  height: 11px;
+  background: var(--border-strong);
+}
+
+:root:not([data-ui-lang="en"]) .lang-btn__opt[data-opt="zh"],
+:root[data-ui-lang="en"] .lang-btn__opt[data-opt="en"] {
+  color: var(--accent);
+}
+
+.lang-btn:hover .lang-btn__opt {
+  color: var(--text-muted);
+}
+
+.lang-btn:hover .lang-btn__opt[data-opt="zh"],
+.lang-btn:hover .lang-btn__opt[data-opt="en"] {
+  color: var(--text);
+}
+
+:root:not([data-ui-lang="en"]) .lang-btn:hover .lang-btn__opt[data-opt="zh"],
+:root[data-ui-lang="en"] .lang-btn:hover .lang-btn__opt[data-opt="en"] {
+  color: var(--accent);
+}
+
+/* 首次访问的呼吸光圈 */
+.lang-btn.hint::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 100px;
+  border: 2px solid var(--accent);
+  pointer-events: none;
+  animation: lang-pulse 1.8s var(--ease) 3;
+}
+
+@keyframes lang-pulse {
+  0% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(1.32);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lang-btn.hint::after {
+    animation: none;
+    opacity: 0.5;
+  }
+}
+
 
 /* ---------- 6. 阅读进度条 ---------- */
 .progress {
