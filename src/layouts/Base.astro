@@ -172,8 +172,8 @@ const canonical = new URL(path, Astro.site);
         }
         localStorage.setItem("uiLang", toEn ? "en" : "zh");
 
-        // 第一次切到英文时说明一下翻译覆盖到什么程度，之后不再打扰
-        if (toEn && !localStorage.getItem("enNoticeSeen")) {
+        // 每次切到英文都说明一下翻译覆盖到什么程度
+        if (toEn) {
           notice?.classList.add("open");
           document.body.style.overflow = "hidden";
         }
@@ -183,7 +183,6 @@ const canonical = new URL(path, Astro.site);
       const closeNotice = () => {
         notice?.classList.remove("open");
         document.body.style.overflow = "";
-        localStorage.setItem("enNoticeSeen", "1");
       };
       document.getElementById("en-notice-ok")?.addEventListener("click", closeNotice);
       notice?.addEventListener("click", (e) => {
