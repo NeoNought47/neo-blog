@@ -9,7 +9,7 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { title, titleEn, date, tags, cover, draft } = post.data;
+const { title, titleEn, date, tags, cover, draft, hasEnglish } = post.data;
 const d = formatDateBoth(date);
 ---
 
@@ -31,6 +31,12 @@ const d = formatDateBoth(date);
       {tags.slice(0, 3).map((t) => <a class="tag" href={`/tags/${encodeURIComponent(t)}`}>{t}</a>)}
     </div>
     <div class="card__meta">
+      {hasEnglish && (
+        <>
+          <span class="en-badge" title={UI.enBadge.title.en}>{UI.enBadge.label}</span>
+          <span class="dot" />
+        </>
+      )}
       <time datetime={date.toISOString()}><T zh={d.zh} en={d.en} /></time>
       {draft && (<><span class="dot" /><span style="color:var(--accent-2)"><T zh={UI.post.draft.zh} en={UI.post.draft.en} /></span></>)}
     </div>

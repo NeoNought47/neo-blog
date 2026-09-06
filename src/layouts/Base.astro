@@ -121,6 +121,15 @@ const canonical = new URL(path, Astro.site);
       </div>
     </footer>
 
+    {/* 首次切到英文时弹一次，说明翻译覆盖范围 */}
+    <div class="en-notice" id="en-notice" role="dialog" aria-modal="true" aria-labelledby="en-notice-title">
+      <div class="en-notice__card">
+        <h2 id="en-notice-title">{UI.enNotice.title}</h2>
+        <p set:html={UI.enNotice.body} />
+        <button type="button" class="en-notice__ok" id="en-notice-ok">{UI.enNotice.dismiss}</button>
+      </div>
+    </div>
+
     {/* 图片灯箱容器，由 script 填充 */}
     <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="图片预览">
       <button class="lightbox__close" type="button" aria-label="关闭">✕</button>
@@ -163,6 +172,26 @@ const canonical = new URL(path, Astro.site);
           root.lang = "zh-CN";
         }
         localStorage.setItem("uiLang", toEn ? "en" : "zh");
+
+        // 第一次切到英文时说明一下翻译覆盖到什么程度，之后不再打扰
+        if (toEn && !localStorage.getItem("enNoticeSeen")) {
+          notice?.classList.add("open");
+          document.body.style.overflow = "hidden";
+        }
+      });
+
+      const notice = document.getElementById("en-notice");
+      const closeNotice = () => {
+        notice?.classList.remove("open");
+        document.body.style.overflow = "";
+        localStorage.setItem("enNoticeSeen", "1");
+      };
+      document.getElementById("en-notice-ok")?.addEventListener("click", closeNotice);
+      notice?.addEventListener("click", (e) => {
+        if (e.target === notice) closeNotice();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && notice?.classList.contains("open")) closeNotice();
       });
 
       // ---- 导航栏滚动出分隔线 ----

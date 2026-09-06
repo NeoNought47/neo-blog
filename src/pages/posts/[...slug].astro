@@ -21,7 +21,7 @@ export async function getStaticPaths() {
 
 const { post, newer, older } = Astro.props;
 const { Content } = await render(post);
-const { title, titleEn, date, tags, cover, description, draft } = post.data;
+const { title, titleEn, date, tags, cover, description, draft, hasEnglish } = post.data;
 const d = formatDateBoth(date);
 const mins = readingTime(post.body ?? "");
 ---
@@ -37,6 +37,7 @@ const mins = readingTime(post.body ?? "");
         <time datetime={date.toISOString()}><T zh={d.zh} en={d.en} /></time>
         <span class="dot"></span>
         <T zh={fill(UI.post.readingTime.zh, { n: mins })} en={fill(UI.post.readingTime.en, { n: mins })} />
+        {hasEnglish && (<><span class="dot"></span><span class="en-badge" title={UI.enBadge.title.en}>{UI.enBadge.label}</span></>)}
         {draft && (<><span class="dot"></span><span style="color:var(--accent-2)"><T zh={UI.post.draft.zh} en={UI.post.draft.en} /></span></>)}
       </div>
     </header>

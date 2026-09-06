@@ -63,6 +63,23 @@ export const UI = {
     },
   },
 
+  /** 有英文正文的文章上的小标记 */
+  enBadge: {
+    label: "EN",
+    title: { zh: "这篇有英文正文", en: "Full English version available" },
+  },
+
+  /** 首次切到英文时弹一次，说明翻译覆盖到什么程度 */
+  enNotice: {
+    title: "Heads up",
+    body:
+      "The interface and all post titles are fully translated. " +
+      "Post bodies are another matter: only entries marked " +
+      "<strong>EN</strong> have a full English version. Everything else " +
+      "is still in Chinese.",
+    dismiss: "Got it",
+  },
+
   langToggle: {
     /** 按钮显示的是「切换到哪一种」，所以中英是反着的 */
     zh: "EN",

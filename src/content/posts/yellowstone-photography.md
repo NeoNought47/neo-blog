@@ -3,6 +3,7 @@ title: "黄石国家公园摄影"
 titleEn: "Yellowstone National Park, in Photographs"
 date: 2026-05-06
 tags: ["Photography"]
+hasEnglish: true
 cover: ../../assets/posts/yellowstone-photography/yellowstone-01.jpg
 ---
 

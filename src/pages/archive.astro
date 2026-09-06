@@ -38,6 +38,9 @@ const years = [...byYear.entries()].sort((a, b) => b[0] - a[0]);
               <span class="archive-row__title">
                 <T zh={p.data.title} en={p.data.titleEn ?? p.data.title} />
               </span>
+              {p.data.hasEnglish && (
+                <span class="en-badge" title={UI.enBadge.title.en}>{UI.enBadge.label}</span>
+              )}
             </a>
           ))}
         </section>

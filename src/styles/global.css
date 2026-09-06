@@ -448,6 +448,112 @@ main {
 }
 
 
+/* 有英文正文的文章标记 */
+.en-badge {
+  display: inline-block;
+  padding: 0.05rem 0.36rem;
+  border-radius: 4px;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  line-height: 1.6;
+  vertical-align: middle;
+  cursor: help;
+}
+
+.archive-row .en-badge {
+  margin-left: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* 首次切英文时的说明弹窗 */
+.en-notice {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s var(--ease), visibility 0.3s;
+}
+
+.en-notice.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.en-notice__card {
+  max-width: 30rem;
+  padding: 1.9rem 2rem 1.7rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elevated);
+  box-shadow: var(--gloss), var(--shadow-lg);
+  transform: translateY(10px) scale(0.98);
+  transition: transform 0.3s var(--ease);
+}
+
+.en-notice.open .en-notice__card {
+  transform: none;
+}
+
+.en-notice__card h2 {
+  margin: 0 0 0.7rem;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.en-notice__card p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--text-muted);
+}
+
+.en-notice__card strong {
+  display: inline-block;
+  padding: 0.02rem 0.34rem;
+  border-radius: 4px;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.76em;
+  letter-spacing: 0.06em;
+}
+
+.en-notice__ok {
+  margin-top: 1.5rem;
+  padding: 0.5rem 1.3rem;
+  border-radius: 100px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--gloss);
+  transition: all 0.25s var(--ease);
+}
+
+.en-notice__ok:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
 /* ---------- 6. 阅读进度条 ---------- */
 .progress {
   position: fixed;
