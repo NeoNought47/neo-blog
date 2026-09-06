@@ -1,6 +1,6 @@
 ---
 title: "小迪安全 002：基础入门 - Web 架构、集成软件、Docker 与资源平台"
-titleEn: "XiaoDi Security 002: Getting Started — Web Architecture, Integrated Stacks, Docker & Resource Platforms"
+titleEn: "XiaoDi Security 002: Getting Started with Web Architecture, Integrated Stacks, Docker & Resource Platforms"
 date: 2026-07-24T10:00:00
 tags: ["Cybersecurity", "Learning Notes"]
 ---

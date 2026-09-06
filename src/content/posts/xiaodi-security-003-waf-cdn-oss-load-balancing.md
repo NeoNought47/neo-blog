@@ -1,6 +1,6 @@
 ---
 title: "小迪安全 003：基础入门 - WAF、CDN、OSS、反向代理与负载均衡"
-titleEn: "XiaoDi Security 003: Getting Started — WAF, CDN, OSS, Reverse Proxy & Load Balancing"
+titleEn: "XiaoDi Security 003: Getting Started with WAF, CDN, OSS, Reverse Proxy & Load Balancing"
 date: 2026-07-24T11:00:00
 tags: ["Cybersecurity", "Learning Notes"]
 ---

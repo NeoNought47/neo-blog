@@ -1,6 +1,6 @@
 ---
 title: "小迪安全 001：基础入门 - Web 演示源码、资源与工具箱"
-titleEn: "XiaoDi Security 001: Getting Started — Web Demo Source Code, Resources & Toolbox"
+titleEn: "XiaoDi Security 001: Getting Started with Web Demo Source Code, Resources & Toolbox"
 date: 2026-07-24T09:00:00
 tags: ["Cybersecurity", "Learning Notes"]
 ---

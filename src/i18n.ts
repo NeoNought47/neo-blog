@@ -1,7 +1,7 @@
 /**
  * 界面文案的中英对照。
  *
- * 只放界面字符串——文章标题在各自的 frontmatter 里用 titleEn，
+ * 只放界面字符串。文章标题在各自的 frontmatter 里用 titleEn，
  * 正文不在这里（正文走文章页的按需翻译）。
  */
 export const UI = {
@@ -47,12 +47,12 @@ export const UI = {
     title: { zh: "关于", en: "About" },
     founded: {
       zh: "本站成立于 2026 年 8 月 28 日。站内文章标注的日期，均为照片的拍摄日期或文章的创作日期，不一定是发布到这里的时间。",
-      en: "This site was founded on 28 August 2026. The date shown on each post is when the photo was taken or the piece was written — not necessarily when it was published here.",
+      en: "This site was founded on 28 August 2026. The date shown on each post is when the photo was taken or the piece was written, not necessarily when it was published here.",
     },
     aboutSiteHeading: { zh: "关于这个站", en: "About this site" },
     aboutSite: {
       zh: '用 <a href="https://astro.build">Astro</a> 搭的静态站，写完 Markdown 推上去就自动部署。图片在构建时统一压成 AVIF/WebP。',
-      en: 'A static site built with <a href="https://astro.build">Astro</a> — write Markdown, push, and it deploys itself. Images are converted to AVIF/WebP at build time.',
+      en: 'A static site built with <a href="https://astro.build">Astro</a>. Write Markdown, push, and it deploys itself. Images are converted to AVIF/WebP at build time.',
     },
   },
 
