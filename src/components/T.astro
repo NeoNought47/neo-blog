@@ -1,0 +1,22 @@
+---
+/**
+ * 双语文本。中英两份都渲染进 HTML，由 <html data-ui-lang> 决定显示哪份。
+ *
+ * 这样切换语言不需要重新请求页面，也不需要把站点页数翻倍。
+ * 代价是每个字符串的两种语言都会进 HTML —— 这些都是界面文案，量很小。
+ */
+interface Props {
+  zh: string;
+  en: string;
+  /** 默认渲染成 <span>，需要块级或其它标签时指定 */
+  as?: string;
+}
+
+const { zh, en, as: Tag = "span" } = Astro.props;
+---
+
+<Tag class="i18n" data-lang="zh" set:html={zh} /><Tag
+  class="i18n"
+  data-lang="en"
+  set:html={en}
+/>

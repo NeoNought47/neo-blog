@@ -1,5 +1,6 @@
 ---
 title: "万智牌EDH(8分/Challenge/Optimised)创机胜利械套牌展示"
+titleEn: "MTG EDH (8-Bracket / Challenge / Optimised): Shorikai, Genesis Engine Deck Showcase"
 date: 2025-11-20
 tags: ["Magic the Gathering", "Trading Card Games", "Neo's Collection"]
 cover: ../../assets/posts/shorikai-stax-1-show/shorkai_commander.jpg

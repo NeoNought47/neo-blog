@@ -1,6 +1,8 @@
 ---
 import Base from "../layouts/Base.astro";
 import { getPosts } from "../lib/posts";
+import { UI, fill } from "../i18n";
+import T from "../components/T.astro";
 
 const posts = await getPosts();
 
@@ -16,8 +18,10 @@ const years = [...byYear.entries()].sort((a, b) => b[0] - a[0]);
 
 <Base title="归档" description="全部文章按时间排列">
   <section class="hero page" style="padding-bottom:1rem">
-    <span class="hero__eyebrow">共 {posts.length} 篇</span>
-    <h1 class="hero__title">归档</h1>
+    <span class="hero__eyebrow">
+      <T zh={fill(UI.archive.total.zh, { n: posts.length })} en={fill(UI.archive.total.en, { n: posts.length })} />
+    </span>
+    <h1 class="hero__title"><T zh={UI.archive.title.zh} en={UI.archive.title.en} /></h1>
   </section>
 
   <div class="narrow" style="padding-bottom:2rem">
@@ -31,7 +35,9 @@ const years = [...byYear.entries()].sort((a, b) => b[0] - a[0]);
                 {String(p.data.date.getMonth() + 1).padStart(2, "0")}-
                 {String(p.data.date.getDate()).padStart(2, "0")}
               </span>
-              <span class="archive-row__title">{p.data.title}</span>
+              <span class="archive-row__title">
+                <T zh={p.data.title} en={p.data.titleEn ?? p.data.title} />
+              </span>
             </a>
           ))}
         </section>

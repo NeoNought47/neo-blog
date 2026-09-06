@@ -1,5 +1,6 @@
 ---
 title: "万智牌 cEDH Blue Farm 套牌指南"
+titleEn: "MTG cEDH Blue Farm Deck Primer"
 date: 2025-07-03
 tags: ["Magic the Gathering", "Trading Card Games"]
 draft: true

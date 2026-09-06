@@ -1,5 +1,6 @@
 ---
 title: "Ubuntu 26.04 装到外接 SanDisk SSD —— 双系统安装教程"
+titleEn: "Installing Ubuntu 26.04 on an External SanDisk SSD — A Dual-Boot Guide"
 date: 2026-07-07T10:00:00
 tags: ["Linux"]
 ---

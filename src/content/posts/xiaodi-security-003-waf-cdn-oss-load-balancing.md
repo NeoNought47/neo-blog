@@ -1,10 +1,11 @@
 ---
 title: "小迪安全 003：基础入门 - WAF、CDN、OSS、反向代理与负载均衡"
+titleEn: "XiaoDi Security 003: Getting Started — WAF, CDN, OSS, Reverse Proxy & Load Balancing"
 date: 2026-07-24T11:00:00
 tags: ["Cybersecurity", "Learning Notes"]
 ---
 
-<span class="post-note">课程为小迪安全官方 2024 年上传，本文为个人学习笔记。</span>
+<span class="post-note"><span class="i18n" data-lang="zh">课程为小迪安全官方 2024 年上传，本文为个人学习笔记。</span><span class="i18n" data-lang="en">Course published by XiaoDi Security in 2024. These are my personal study notes.</span></span>
 
 ## I WAF - Web Application Firewall
 **原理：Web应用防火墙，旨在提供保护  

@@ -347,6 +347,46 @@ main {
   display: none;
 }
 
+/* ---------- 双语切换 ----------
+   中英两份文案都在 HTML 里，靠根元素的 data-ui-lang 决定显示哪份。
+   :root 上没有该属性时按中文处理，这样 JS 没跑起来也不会两种语言同时出现。 */
+.i18n[data-lang="en"] {
+  display: none;
+}
+
+:root[data-ui-lang="en"] .i18n[data-lang="en"] {
+  display: revert;
+}
+
+:root[data-ui-lang="en"] .i18n[data-lang="zh"] {
+  display: none;
+}
+
+.lang-btn {
+  display: grid;
+  place-items: center;
+  min-width: 34px;
+  height: 34px;
+  padding: 0 0.5rem;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  box-shadow: var(--gloss);
+  backdrop-filter: blur(10px) saturate(160%);
+  transition: all 0.25s var(--ease);
+}
+
+.lang-btn:hover {
+  color: var(--accent);
+  border-color: var(--border-strong);
+}
+
 /* ---------- 6. 阅读进度条 ---------- */
 .progress {
   position: fixed;

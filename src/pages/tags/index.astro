@@ -1,14 +1,18 @@
 ---
 import Base from "../../layouts/Base.astro";
 import { getTags } from "../../lib/posts";
+import { UI, fill } from "../../i18n";
+import T from "../../components/T.astro";
 
 const tags = await getTags();
 ---
 
 <Base title="标签" description="按标签浏览文章">
   <section class="hero page" style="padding-bottom:1rem">
-    <span class="hero__eyebrow">{tags.length} 个标签</span>
-    <h1 class="hero__title">标签</h1>
+    <span class="hero__eyebrow">
+      <T zh={fill(UI.tags.count.zh, { n: tags.length })} en={fill(UI.tags.count.en, { n: tags.length })} />
+    </span>
+    <h1 class="hero__title"><T zh={UI.tags.title.zh} en={UI.tags.title.en} /></h1>
   </section>
 
   <div class="narrow" style="padding-bottom:3rem">

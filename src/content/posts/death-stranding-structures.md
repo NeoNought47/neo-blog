@@ -1,5 +1,6 @@
 ---
 title: "一年前在死亡搁浅留下的建筑和指示牌"
+titleEn: "Structures and Signs I Left in Death Stranding a Year Ago"
 date: 2025-06-30
 tags: ["Video Games"]
 cover: ../../assets/posts/death-stranding-structures/ds3.jpg

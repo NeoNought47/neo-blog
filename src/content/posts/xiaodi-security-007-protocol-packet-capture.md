@@ -1,10 +1,11 @@
 ---
 title: "小迪安全 007：基础入门 - 抓包技术、全局协议、封包监听、网卡模式、APP、小程序、PC 应用"
+titleEn: "XiaoDi Security 007: Getting Started — Packet Capture, Non-HTTP Protocols, Packet Sniffing, NIC-Level Capture, Apps, Mini Programs & Desktop Software"
 date: 2026-09-01
 tags: ["Cybersecurity", "Learning Notes"]
 ---
 
-<span class="post-note">课程为小迪安全官方 2024 年上传，本文为个人学习笔记。</span>
+<span class="post-note"><span class="i18n" data-lang="zh">课程为小迪安全官方 2024 年上传，本文为个人学习笔记。</span><span class="i18n" data-lang="en">Course published by XiaoDi Security in 2024. These are my personal study notes.</span></span>
 
 ## 一、课程定位与知识体系
 ### 1.1 课程关系

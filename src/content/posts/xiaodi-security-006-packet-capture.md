@@ -1,10 +1,11 @@
 ---
 title: "小迪安全 006：抓包技术"
+titleEn: "XiaoDi Security 006: Packet Capture"
 date: 2026-08-13T10:00:00
 tags: ["Cybersecurity", "Learning Notes"]
 ---
 
-<span class="post-note">课程为小迪安全官方 2024 年上传，本文为个人学习笔记。</span>
+<span class="post-note"><span class="i18n" data-lang="zh">课程为小迪安全官方 2024 年上传，本文为个人学习笔记。</span><span class="i18n" data-lang="en">Course published by XiaoDi Security in 2024. These are my personal study notes.</span></span>
 
 ## I. 课程定位与目标
 ##### 1.1 本章核心定位

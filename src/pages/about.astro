@@ -1,22 +1,18 @@
 ---
 import Base from "../layouts/Base.astro";
+import { UI } from "../i18n";
+import T from "../components/T.astro";
 ---
 
 <Base title="关于" description="关于这个博客和我">
   <section class="hero page" style="padding-bottom:1rem">
     <span class="hero__eyebrow">About</span>
-    <h1 class="hero__title">关于</h1>
+    <h1 class="hero__title"><T zh={UI.about.title.zh} en={UI.about.title.en} /></h1>
   </section>
 
   <div class="prose narrow" style="padding-bottom:3rem">
-    <p>
-      本站成立于 2026 年 8 月 28 日。站内文章标注的日期，均为照片的拍摄日期或文章的创作日期，
-      不一定是发布到这里的时间。
-    </p>
-    <h2>关于这个站</h2>
-    <p>
-      用 <a href="https://astro.build">Astro</a> 搭的静态站，写完 Markdown 推上去就自动部署。
-      图片在构建时统一压成 AVIF/WebP。
-    </p>
+    <T as="p" zh={UI.about.founded.zh} en={UI.about.founded.en} />
+    <h2><T zh={UI.about.aboutSiteHeading.zh} en={UI.about.aboutSiteHeading.en} /></h2>
+    <T as="p" zh={UI.about.aboutSite.zh} en={UI.about.aboutSite.en} />
   </div>
 </Base>

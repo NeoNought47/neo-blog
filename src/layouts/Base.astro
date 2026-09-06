@@ -1,5 +1,7 @@
 ---
 import { SITE } from "../consts";
+import { UI } from "../i18n";
+import T from "../components/T.astro";
 import "../styles/global.css";
 
 interface Props {
@@ -45,6 +47,11 @@ const canonical = new URL(path, Astro.site);
         const dark = pref ? pref === "dark" : root.dataset.theme !== "light";
         root.classList.add(dark ? "code-dark" : "code-light");
       })();
+      // 界面语言：默认中文，只有手动切过才用英文
+      if (localStorage.getItem("uiLang") === "en") {
+        document.documentElement.dataset.uiLang = "en";
+        document.documentElement.lang = "en";
+      }
       // 标记 JS 可用，入场动画只在这个前提下启用
       document.documentElement.classList.add("js");
     </script>
@@ -73,10 +80,13 @@ const canonical = new URL(path, Astro.site);
                     : undefined
               }
             >
-              {item.label}
+              <T zh={item.label} en={item.labelEn} />
             </a>
           ))
         }
+        <button class="lang-btn" id="lang-btn" type="button">
+          <T zh={UI.langToggle.zh} en={UI.langToggle.en} />
+        </button>
         <button class="theme-btn" id="theme-btn" type="button" aria-label="切换明暗主题">
           <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
@@ -99,12 +109,12 @@ const canonical = new URL(path, Astro.site);
         <address>
           {SITE.shop.address}<span class="dot"></span>{SITE.shop.phone}
         </address>
-        <span class="footer__hours">{SITE.shop.hours}</span>
+        <span class="footer__hours"><T zh={UI.home.hours.zh} en={UI.home.hours.en} /></span>
       </div>
       <div class="footer__meta">
         <span>© {SITE.startYear}–{new Date().getFullYear()} {SITE.author}</span>
         <span>
-          <a href="/rss.xml">RSS</a> · 由 <a href="https://astro.build">Astro</a> 驱动
+          <a href="/rss.xml">RSS</a> · <T zh={UI.footer.poweredBy.zh} en={UI.footer.poweredBy.en} />
         </span>
       </div>
     </footer>
@@ -129,6 +139,20 @@ const canonical = new URL(path, Astro.site);
           root.classList.toggle("code-dark", light);
           root.classList.toggle("code-light", !light);
         }
+      });
+
+      // ---- 界面语言切换 ----
+      document.getElementById("lang-btn")?.addEventListener("click", () => {
+        const root = document.documentElement;
+        const toEn = root.dataset.uiLang !== "en";
+        if (toEn) {
+          root.dataset.uiLang = "en";
+          root.lang = "en";
+        } else {
+          delete root.dataset.uiLang;
+          root.lang = "zh-CN";
+        }
+        localStorage.setItem("uiLang", toEn ? "en" : "zh");
       });
 
       // ---- 导航栏滚动出分隔线 ----

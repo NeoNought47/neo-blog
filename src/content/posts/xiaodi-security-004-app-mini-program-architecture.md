@@ -1,10 +1,11 @@
 ---
 title: "小迪安全 004：APP、小程序、模拟器、开发工具与源码案例"
+titleEn: "XiaoDi Security 004: Apps, Mini Programs, Emulators, Dev Tools & Source Code Cases"
 date: 2026-07-24T12:00:00
 tags: ["Cybersecurity", "Learning Notes"]
 ---
 
-<span class="post-note">课程为小迪安全官方 2024 年上传，本文为个人学习笔记。</span>
+<span class="post-note"><span class="i18n" data-lang="zh">课程为小迪安全官方 2024 年上传，本文为个人学习笔记。</span><span class="i18n" data-lang="en">Course published by XiaoDi Security in 2024. These are my personal study notes.</span></span>
 
 ## APP 应用开发架构
 ##### 1、原生开发

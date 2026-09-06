@@ -1,5 +1,6 @@
 ---
 title: "CS2 多普勒&伽马多普勒款式挑选指南"
+titleEn: "A Guide to Picking CS2 Doppler & Gamma Doppler Patterns"
 date: 2025-06-30
 tags: ["Video Games"]
 cover: ../../assets/posts/cs2-doppler-pattern-guide/m91.jpg

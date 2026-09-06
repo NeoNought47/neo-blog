@@ -1,10 +1,11 @@
 ---
 title: "小迪安全 005：基础入门 - 反弹 Shell、无回显带外、正反向连接、防火墙与文件下载"
+titleEn: "XiaoDi Security 005: Getting Started — Reverse Shells, Out-of-Band Exfiltration, Bind vs. Reverse Connections, Firewalls & File Transfer"
 date: 2026-08-09T10:00:00
 tags: ["Cybersecurity", "Learning Notes"]
 ---
 
-<span class="post-note">课程为小迪安全官方 2024 年上传，本文为个人学习笔记。</span>
+<span class="post-note"><span class="i18n" data-lang="zh">课程为小迪安全官方 2024 年上传，本文为个人学习笔记。</span><span class="i18n" data-lang="en">Course published by XiaoDi Security in 2024. These are my personal study notes.</span></span>
 
 无图形化下载文件可以用curl wget等
 使用网站工具生成命令 

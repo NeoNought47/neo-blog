@@ -17,9 +17,9 @@ export const SITE = {
     hours: "全天营业 · 无限续盘",
   },
   nav: [
-    { href: "/", label: "首页" },
-    { href: "/archive", label: "归档" },
-    { href: "/tags", label: "标签" },
-    { href: "/about", label: "关于" },
+    { href: "/", label: "首页", labelEn: "Home" },
+    { href: "/archive", label: "归档", labelEn: "Archive" },
+    { href: "/tags", label: "标签", labelEn: "Tags" },
+    { href: "/about", label: "关于", labelEn: "About" },
   ],
 } as const;

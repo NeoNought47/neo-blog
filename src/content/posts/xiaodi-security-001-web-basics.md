@@ -1,10 +1,11 @@
 ---
 title: "小迪安全 001：基础入门 - Web 演示源码、资源与工具箱"
+titleEn: "XiaoDi Security 001: Getting Started — Web Demo Source Code, Resources & Toolbox"
 date: 2026-07-24T09:00:00
 tags: ["Cybersecurity", "Learning Notes"]
 ---
 
-<span class="post-note">课程为小迪安全官方 2024 年上传，本文为个人学习笔记。</span>
+<span class="post-note"><span class="i18n" data-lang="zh">课程为小迪安全官方 2024 年上传，本文为个人学习笔记。</span><span class="i18n" data-lang="en">Course published by XiaoDi Security in 2024. These are my personal study notes.</span></span>
 
 ## 1. 搭建环境
 视频里好像是用的阿里云

@@ -1,13 +1,16 @@
 ---
 import { Image } from "astro:assets";
-import { formatDate, type Post } from "../lib/posts";
+import { type Post } from "../lib/posts";
+import { UI, formatDateBoth } from "../i18n";
+import T from "../components/T.astro";
 
 interface Props {
   post: Post;
 }
 
 const { post } = Astro.props;
-const { title, date, tags, cover, draft } = post.data;
+const { title, titleEn, date, tags, cover, draft } = post.data;
+const d = formatDateBoth(date);
 ---
 
 <article class="card reveal">
@@ -20,14 +23,16 @@ const { title, date, tags, cover, draft } = post.data;
   }
   <div class="card__body">
     <h3 class="card__title">
-      <a class="card__link" href={`/posts/${post.id}`}>{title}</a>
+      <a class="card__link" href={`/posts/${post.id}`}>
+        <T zh={title} en={titleEn ?? title} />
+      </a>
     </h3>
     <div class="tag-row">
       {tags.slice(0, 3).map((t) => <a class="tag" href={`/tags/${encodeURIComponent(t)}`}>{t}</a>)}
     </div>
     <div class="card__meta">
-      <time datetime={date.toISOString()}>{formatDate(date)}</time>
-      {draft && (<><span class="dot" /><span style="color:var(--accent-2)">草稿</span></>)}
+      <time datetime={date.toISOString()}><T zh={d.zh} en={d.en} /></time>
+      {draft && (<><span class="dot" /><span style="color:var(--accent-2)"><T zh={UI.post.draft.zh} en={UI.post.draft.en} /></span></>)}
     </div>
   </div>
 </article>

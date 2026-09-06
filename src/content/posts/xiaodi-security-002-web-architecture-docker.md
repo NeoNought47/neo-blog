@@ -1,10 +1,11 @@
 ---
 title: "小迪安全 002：基础入门 - Web 架构、集成软件、Docker 与资源平台"
+titleEn: "XiaoDi Security 002: Getting Started — Web Architecture, Integrated Stacks, Docker & Resource Platforms"
 date: 2026-07-24T10:00:00
 tags: ["Cybersecurity", "Learning Notes"]
 ---
 
-<span class="post-note">课程为小迪安全官方 2024 年上传，本文为个人学习笔记。</span>
+<span class="post-note"><span class="i18n" data-lang="zh">课程为小迪安全官方 2024 年上传，本文为个人学习笔记。</span><span class="i18n" data-lang="en">Course published by XiaoDi Security in 2024. These are my personal study notes.</span></span>
 
 ## I 搭建策略
 

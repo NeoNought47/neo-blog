@@ -1,5 +1,6 @@
 ---
 title: "2025年CS2自用主战武器皮肤纪念"
+titleEn: "My 2025 CS2 Primary-Weapon Skin Collection"
 date: 2025-07-05
 tags: ["Video Games"]
 cover: ../../assets/posts/cs2-2025-skin-collection/arti4_inv.jpg

@@ -6,9 +6,12 @@ const posts = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string(),
+      /** 英文标题。留空则英文界面下回退显示中文标题 */
+      titleEn: z.string().optional(),
       date: z.coerce.date(),
       tags: z.array(z.string()).default([]),
       description: z.string().optional(),
+      descriptionEn: z.string().optional(),
       // 封面走 image()，Astro 会校验路径并在构建时优化
       cover: image().optional(),
       draft: z.boolean().default(false),

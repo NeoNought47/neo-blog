@@ -3,6 +3,8 @@ import Base from "../layouts/Base.astro";
 import PostCard from "../components/PostCard.astro";
 import { getPosts } from "../lib/posts";
 import { SITE } from "../consts";
+import { UI, fill } from "../i18n";
+import T from "../components/T.astro";
 
 const posts = await getPosts();
 const [featured, ...rest] = posts;
@@ -10,19 +12,21 @@ const [featured, ...rest] = posts;
 
 <Base>
   <section class="hero page">
-    <span class="hero__eyebrow">{posts.length} 篇记录</span>
+    <span class="hero__eyebrow">
+      <T zh={fill(UI.home.count.zh, { n: posts.length })} en={fill(UI.home.count.en, { n: posts.length })} />
+    </span>
     <h1 class="hero__title" set:html={SITE.heroTitle} />
     <address class="hero__shop">
       <span>{SITE.shop.address}</span>
       <span>{SITE.shop.phone}</span>
-      <span class="hero__hours">{SITE.shop.hours}</span>
+      <span class="hero__hours"><T zh={UI.home.hours.zh} en={UI.home.hours.en} /></span>
     </address>
   </section>
 
   <div class="page">
     <div class="section-head">
-      <h2>最新</h2>
-      <a href="/archive">查看全部 →</a>
+      <h2><T zh={UI.home.latest.zh} en={UI.home.latest.en} /></h2>
+      <a href="/archive"><T zh={UI.home.viewAll.zh} en={UI.home.viewAll.en} /></a>
     </div>
 
     <div class="grid">
