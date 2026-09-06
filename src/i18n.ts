@@ -71,12 +71,10 @@ export const UI = {
 
   /** 首次切到英文时弹一次，说明翻译覆盖到什么程度 */
   enNotice: {
-    title: "Heads up",
     body:
       "The interface and all post titles are fully translated. " +
-      "Post bodies are another matter: only entries marked " +
-      "<strong>EN</strong> have a full English version. Everything else " +
-      "is still in Chinese.",
+      "Only articles marked <strong>EN</strong> have a full English version. " +
+      "Everything else is still in Chinese.",
     dismiss: "Got it",
   },
 

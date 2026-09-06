@@ -122,9 +122,8 @@ const canonical = new URL(path, Astro.site);
     </footer>
 
     {/* 首次切到英文时弹一次，说明翻译覆盖范围 */}
-    <div class="en-notice" id="en-notice" role="dialog" aria-modal="true" aria-labelledby="en-notice-title">
+    <div class="en-notice" id="en-notice" role="dialog" aria-modal="true" aria-label="Language note">
       <div class="en-notice__card">
-        <h2 id="en-notice-title">{UI.enNotice.title}</h2>
         <p set:html={UI.enNotice.body} />
         <button type="button" class="en-notice__ok" id="en-notice-ok">{UI.enNotice.dismiss}</button>
       </div>
