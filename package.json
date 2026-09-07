@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "new": "node scripts/new-post.mjs"
+    "new": "node scripts/new-post.mjs",
+    "from-heic": "node scripts/from-heic.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.8",

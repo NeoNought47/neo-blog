@@ -29,6 +29,24 @@ npm run new "文章标题"
 
 写完把 frontmatter 里的 `draft: true` 删掉，就会出现在正式站上。
 
+### iPhone 的 HEIC 照片
+
+Astro 不认 `.heic`，而且不会报错，只会静默生成一个没有 `src` 的坏标签。
+必须先转格式：
+
+```bash
+npm run from-heic ~/Desktop/照片目录            # 无损 WebP
+npm run from-heic ~/Desktop/照片目录 -- --jpeg  # JPEG 95，体积约为无损的三分之一
+```
+
+结果放在该目录的 `converted/` 里。
+
+脚本先用 macOS 自带的 `sips` 解码（无损，走 Apple 的解码器），再交给 sharp 编码。
+不直接用 sharp 读 HEIC 是因为它的 libheif 有引用数上限 16，
+而 iPhone 大图是瓦片网格结构、动辄几十个引用，会报 Security limit exceeded 失败。
+
+需要说明：HEIC 本身是有损格式，所谓无损只是指转换过程不再叠加新的损失。
+
 ### frontmatter 字段
 
 ```yaml
