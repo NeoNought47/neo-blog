@@ -53,13 +53,25 @@ for (const f of files) {
   // 第一步：用 Apple 的解码器解到 PNG，无损
   execFileSync("sips", ["-s", "format", "png", src, "--out", png], { stdio: "ignore" });
 
+  // sips 转格式时不会把 EXIF 旋转烘进像素，而 PNG 又不带 EXIF，
+  // 旋转信息会在这一步丢掉，竖拍的照片就会横过来。
+  // 所以另外转一张 64px 的小 JPEG 当探针，把方向值读出来。
+  const probe = path.join(tmp, `${stem}-probe.jpg`);
+  execFileSync("sips", ["-s", "format", "jpeg", "-Z", "64", src, "--out", probe], { stdio: "ignore" });
+  const orientation = (await sharp(probe).metadata()).orientation ?? 1;
+  fs.unlinkSync(probe);
+  // 90 度整数倍旋转是纯像素重排，不会损失画质
+  const ROT = { 3: 180, 6: 90, 8: 270 };
+  const angle = ROT[orientation] ?? 0;
+
   const ext = mode === "jpeg" ? "jpg" : mode;
   const out = path.join(outDir, `${stem}.${ext}`);
 
   if (mode === "png") {
-    fs.copyFileSync(png, out);
+    if (angle) await sharp(png).rotate(angle).png({ compressionLevel: 9 }).toFile(out);
+    else fs.copyFileSync(png, out);
   } else {
-    const pipe = sharp(png);
+    const pipe = angle ? sharp(png).rotate(angle) : sharp(png);
     await (mode === "jpeg"
       ? pipe.jpeg({ quality: 95, chromaSubsampling: "4:4:4", mozjpeg: true })
       : pipe.webp({ lossless: true })

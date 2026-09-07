@@ -1,7 +1,7 @@
 ---
 title: "Hot Toys Genisys Terminator Endoskeleton MMS352"
 titleEn: "Hot Toys Genisys Terminator Endoskeleton MMS352"
-date: 2026-09-07
+date: 2026-08-20
 tags: ["Neo's Collection", "Hot Toys"]
 cover: ../../assets/posts/hottoys-genisys-terminator-endoskeleton/terminator-01.webp
 ---
