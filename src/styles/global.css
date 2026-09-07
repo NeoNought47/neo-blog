@@ -1094,6 +1094,7 @@ a.tag:hover {
   font-size: 0.8rem;
   letter-spacing: 0.02em;
   color: var(--text-faint);
+  text-align: center;
 }
 
 /* 摄影类文章：贴在对应照片下方的图注 */
