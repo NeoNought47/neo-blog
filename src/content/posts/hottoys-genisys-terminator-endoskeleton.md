@@ -3,7 +3,6 @@ title: "Hot Toys Genisys Terminator Endoskeleton MMS352"
 titleEn: "Hot Toys Genisys Terminator Endoskeleton MMS352"
 date: 2026-08-20
 tags: ["Neo's Collection", "Hot Toys"]
-cover: ../../assets/posts/hottoys-genisys-terminator-endoskeleton/terminator-01.webp
 ---
 
 <span class="photo-meta-inline">代号：MM#352　·　发售日期：2017　·　比例：1:6</span>
