@@ -13,9 +13,9 @@ import sharpService from "astro/assets/services/sharp";
  * quality 本来就在 DEFAULT_HASH_PROPS 里，所以改这个值会正常触发重新生成，
  * 不会命中旧缓存。
  */
-/** 渲染上限。正文图显示宽约 680px，灯箱最大约 1800px，
- *  2560 已经远超任何屏幕的实际需要，再高只是白白增加下载量。 */
-const MAX_WIDTH = 2560;
+/** 渲染上限。正文图显示宽约 680px，灯箱在 4K 屏上可达约 3600 物理像素，
+ *  3840 覆盖到这个上限；再高就纯属浪费带宽了。 */
+const MAX_WIDTH = 3840;
 
 export default {
   ...sharpService,

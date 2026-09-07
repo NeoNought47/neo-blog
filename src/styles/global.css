@@ -1085,6 +1085,17 @@ a.tag:hover {
   color: var(--text-faint);
 }
 
+/* 写在正文最前的规格信息，压小并弱化 */
+.prose .photo-meta-inline {
+  display: block;
+  max-width: var(--measure);
+  margin: 0 auto 2em;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  color: var(--text-faint);
+}
+
 /* 摄影类文章：贴在对应照片下方的图注 */
 .prose .photo-caption {
   display: block;
