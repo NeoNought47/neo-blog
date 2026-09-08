@@ -85,6 +85,9 @@ export const UI = {
     hint: { zh: "输入关键词开始搜索", en: "Type to start searching" },
     countLabel: { zh: "{n} 条结果", en: "{n} results" },
     loading: { zh: "正在载入索引…", en: "Loading index…" },
+    navHint: { zh: "选择", en: "to navigate" },
+    openHint: { zh: "打开", en: "to open" },
+    closeHint: { zh: "关闭", en: "to close" },
   },
 
   langToggle: {

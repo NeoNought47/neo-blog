@@ -735,8 +735,14 @@ main {
 }
 
 .hit:hover,
-.hit:focus-visible {
+.hit:focus-visible,
+.hit--on {
   background: var(--surface-hover);
+}
+
+/* 键盘选中的那条左侧加一道竖线，和 hover 区分开 */
+.hit--on {
+  box-shadow: inset 2px 0 0 var(--accent);
 }
 
 .hit__title {
@@ -763,6 +769,31 @@ main {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.sheet__foot {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.55rem 1.1rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.72rem;
+  color: var(--text-faint);
+}
+
+.sheet__foot kbd {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  padding: 0.05rem 0.32rem;
+  margin-right: 0.28rem;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+}
+
+@media (max-width: 560px) {
+  .sheet__foot {
+    display: none;
+  }
 }
 
 .hit__snippet mark,

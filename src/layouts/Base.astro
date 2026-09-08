@@ -153,6 +153,11 @@ const canonical = new URL(path, Astro.site);
             <T zh={UI.search.hint.zh} en={UI.search.hint.en} />
           </p>
         </div>
+        <div class="sheet__foot">
+          <span><kbd>↑</kbd><kbd>↓</kbd> <T zh={UI.search.navHint.zh} en={UI.search.navHint.en} /></span>
+          <span><kbd>↵</kbd> <T zh={UI.search.openHint.zh} en={UI.search.openHint.en} /></span>
+          <span><kbd>esc</kbd> <T zh={UI.search.closeHint.zh} en={UI.search.closeHint.en} /></span>
+        </div>
       </div>
     </div>
 
@@ -329,16 +334,31 @@ const canonical = new URL(path, Astro.site);
         }
 
         results.innerHTML = hits
-          .map(({ p, rank }: any) => {
+          .map(({ p, rank }: any, i: number) => {
             const title = lang() === "en" && p.titleEn ? p.titleEn : p.title;
             const sn = rank === 2 ? snippet(p.body, lq) : "";
-            return `<a class="hit" href="/posts/${p.id}">
+            return `<a class="hit${i === 0 ? " hit--on" : ""}" data-i="${i}" href="/posts/${p.id}">
               <span class="hit__title">${esc(title)}</span>
               <span class="hit__meta">${p.date}${p.tags.map((x: string) => ` · ${esc(x)}`).join("")}</span>
               ${sn ? `<span class="hit__snippet">${sn}</span>` : ""}
             </a>`;
           })
           .join("");
+        cur = 0;
+      };
+
+      /** 当前高亮的结果序号。-1 表示没有结果 */
+      let cur = -1;
+
+      const hitEls = () => [...(results?.querySelectorAll<HTMLAnchorElement>(".hit") ?? [])];
+
+      const move = (delta: number) => {
+        const els = hitEls();
+        if (!els.length) return;
+        cur = (cur + delta + els.length) % els.length;
+        els.forEach((el, i) => el.classList.toggle("hit--on", i === cur));
+        // 只在需要时滚动，避免每次按键都跳
+        els[cur].scrollIntoView({ block: "nearest" });
       };
 
       const openSearch = async () => {
@@ -360,6 +380,33 @@ const canonical = new URL(path, Astro.site);
         if (e.target === sheet) closeSearch();
       });
       input?.addEventListener("input", () => render(input.value.trim()));
+
+      // 上下键选择、回车打开。输入框始终保持焦点，所以绑在它上面
+      input?.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          move(1);
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault();
+          move(-1);
+        } else if (e.key === "Enter") {
+          const el = hitEls()[cur];
+          if (el) {
+            e.preventDefault();
+            window.location.href = el.href;
+          }
+        }
+      });
+
+      // 鼠标移到某条上时把高亮跟过去，免得键盘和鼠标各有一个高亮
+      results?.addEventListener("mouseover", (e) => {
+        const el = (e.target as HTMLElement).closest<HTMLAnchorElement>(".hit");
+        if (!el) return;
+        const i = Number(el.dataset.i);
+        if (Number.isNaN(i) || i === cur) return;
+        cur = i;
+        hitEls().forEach((x, n) => x.classList.toggle("hit--on", n === cur));
+      });
 
       document.addEventListener("keydown", (e) => {
         if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
