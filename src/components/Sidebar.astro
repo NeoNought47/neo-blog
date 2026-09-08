@@ -1,15 +1,24 @@
 ---
+import { Image } from "astro:assets";
 import { SITE } from "../consts";
-import { UI } from "../i18n";
+import { UI, formatDateBoth } from "../i18n";
+import { getCover } from "../lib/covers";
+import type { Post } from "../lib/posts";
 import T from "./T.astro";
 
 interface Props {
   posts: number;
   tags: number;
   images: number;
+  /** 「最近更新」列表 */
+  recent: Post[];
 }
 
-const { posts, tags, images } = Astro.props;
+const { posts, tags, images, recent } = Astro.props;
+
+const recentWithCover = await Promise.all(
+  recent.map(async (p) => ({ post: p, cover: await getCover(p) })),
+);
 ---
 
 <aside class="side">
@@ -34,8 +43,38 @@ const { posts, tags, images } = Astro.props;
     </div>
   </div>
 
+  <div class="side__card side__card--flush">
+    <span class="side__label"><T zh="最近更新" en="Recent" /></span>
+    <ul class="recent">
+      {
+        recentWithCover.map(({ post, cover }) => {
+          const d = formatDateBoth(post.data.date);
+          return (
+            <li class="recent__item">
+              <a class="recent__thumb" href={`/posts/${post.id}`} tabindex="-1" aria-hidden="true">
+                {cover ? (
+                  <Image src={cover} alt="" width={160} height={160} loading="lazy" />
+                ) : (
+                  <span class="recent__ph">{post.data.tags[0] ?? ""}</span>
+                )}
+              </a>
+              <div class="recent__info">
+                <a class="recent__title" href={`/posts/${post.id}`}>
+                  <T zh={post.data.title} en={post.data.titleEn ?? post.data.title} />
+                </a>
+                <time class="recent__date" datetime={post.data.date.toISOString()}>
+                  <T zh={d.zh} en={d.en} />
+                </time>
+              </div>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+
   <div class="side__card side__card--shop">
-    <span class="side__shop-label"><T zh="到店" en="Visit" /></span>
+    <span class="side__label"><T zh="到店" en="Visit" /></span>
     <address>
       <span>{SITE.shop.address}</span>
       <span>{SITE.shop.phone}</span>

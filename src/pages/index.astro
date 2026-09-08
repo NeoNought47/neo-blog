@@ -2,6 +2,7 @@
 import Base from "../layouts/Base.astro";
 import Sidebar from "../components/Sidebar.astro";
 import PostRow from "../components/PostRow.astro";
+import PostTile from "../components/PostTile.astro";
 import { getPosts, getTags } from "../lib/posts";
 import { countImages } from "../lib/covers";
 import { UI, fill } from "../i18n";
@@ -9,14 +10,23 @@ import T from "../components/T.astro";
 
 const posts = await getPosts();
 const tags = await getTags();
+
+/** 前几篇用大横行，其余压成方格，避免首页拉得太长 */
+const FEATURED = 4;
+const featured = posts.slice(0, FEATURED);
+const rest = posts.slice(FEATURED);
 ---
 
 <Base>
   <div class="home page">
-    <Sidebar posts={posts.length} tags={tags.length} images={countImages()} />
+    <Sidebar
+      posts={posts.length}
+      tags={tags.length}
+      images={countImages()}
+      recent={posts.slice(0, 5)}
+    />
 
     <div class="home__main">
-      {/* 标签横条，仿参考站的分类栏 */}
       <nav class="catbar" aria-label="按标签浏览">
         <span class="catbar__item catbar__item--active">
           <T zh={UI.home.latest.zh} en={UI.home.latest.en} />
@@ -34,8 +44,21 @@ const tags = await getTags();
       </nav>
 
       <div class="rows">
-        {posts.map((p, i) => <PostRow post={p} flip={i % 2 === 1} />)}
+        {featured.map((p, i) => <PostRow post={p} flip={i % 2 === 1} />)}
       </div>
+
+      {
+        rest.length > 0 && (
+          <>
+            <div class="home__divider">
+              <span><T zh="更早" en="Earlier" /></span>
+            </div>
+            <div class="tiles">
+              {rest.map((p) => <PostTile post={p} />)}
+            </div>
+          </>
+        )
+      }
 
       <a class="home__all" href="/archive">
         <T

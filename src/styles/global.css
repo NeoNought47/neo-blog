@@ -780,7 +780,7 @@ a.side__stat:hover span {
   color: var(--text-muted);
 }
 
-.side__shop-label {
+.side__label {
   display: block;
   margin-bottom: 0.5rem;
   font-family: var(--font-display);
@@ -802,6 +802,95 @@ a.side__stat:hover span {
   margin-top: 0.5rem;
   font-size: 0.76rem;
   color: var(--accent);
+}
+
+/* ---- 侧栏「最近更新」---- */
+.side__card--flush {
+  padding: 1.2rem 0 0.4rem;
+  text-align: left;
+}
+
+.side__card--flush .side__label {
+  padding: 0 1.4rem;
+}
+
+.recent {
+  list-style: none;
+  margin: 0.7rem 0 0;
+  padding: 0;
+}
+
+.recent__item {
+  display: grid;
+  grid-template-columns: 62px minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.7rem 1.4rem;
+  transition: background-color 0.25s var(--ease);
+}
+
+.recent__item + .recent__item {
+  border-top: 1px dashed var(--border);
+}
+
+.recent__item:hover {
+  background: var(--surface-hover);
+}
+
+.recent__thumb {
+  display: block;
+  width: 62px;
+  height: 62px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.recent__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.recent__ph {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  padding: 0 0.2rem;
+  font-size: 0.5rem;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--text-faint);
+}
+
+.recent__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.recent__title {
+  font-size: 0.83rem;
+  line-height: 1.45;
+  font-weight: 500;
+  /* 标题可能很长，压到两行 */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.25s var(--ease);
+}
+
+.recent__item:hover .recent__title {
+  color: var(--accent);
+}
+
+.recent__date {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-faint);
 }
 
 /* ---- 标签横条 ---- */
@@ -962,6 +1051,130 @@ a.catbar__item:hover {
   gap: 0.55rem;
   flex-wrap: wrap;
   font-size: 0.78rem;
+  color: var(--text-faint);
+}
+
+/* ---- 分段：更早的文章压成方格 ---- */
+.home__divider {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin: 2rem 0 1.15rem;
+  color: var(--text-faint);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.home__divider::after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid var(--border);
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(228px, 1fr));
+  gap: 1.15rem;
+}
+
+.tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.038) 0%,
+    rgba(255, 255, 255, 0.014) 48%,
+    rgba(255, 255, 255, 0.003) 48.5%,
+    rgba(255, 255, 255, 0.016) 100%
+  );
+  backdrop-filter: blur(30px) saturate(190%);
+  -webkit-backdrop-filter: blur(30px) saturate(190%);
+  box-shadow: var(--gloss), var(--shadow-md);
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease),
+    border-color 0.4s var(--ease);
+}
+
+.tile:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-strong);
+  box-shadow: var(--gloss), var(--shadow-lg), var(--glow);
+}
+
+/* 正方形封面 */
+.tile__media {
+  display: block;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: var(--bg-elevated);
+}
+
+.tile__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.94);
+  transition: transform 0.7s var(--ease), filter 0.5s var(--ease);
+}
+
+.tile:hover .tile__media img {
+  transform: scale(1.05);
+  filter: saturate(1.05);
+}
+
+/* 没有封面时放一块带标签文字的底 */
+.tile__ph {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  padding: 1rem;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  color: var(--text-faint);
+  background: var(--aero);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0.55;
+}
+
+.tile__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.95rem 1.05rem 1.1rem;
+  flex: 1;
+}
+
+.tile__title {
+  margin: 0;
+  font-size: 0.94rem;
+  font-weight: 600;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tile__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.tile__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  margin-top: auto;
+  font-size: 0.73rem;
   color: var(--text-faint);
 }
 
