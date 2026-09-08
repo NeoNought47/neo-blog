@@ -78,6 +78,15 @@ export const UI = {
     dismiss: "Got it",
   },
 
+  search: {
+    open: { zh: "搜索", en: "Search" },
+    placeholder: { zh: "搜索文章、标签、正文…", en: "Search titles, tags, content…" },
+    empty: { zh: "没有匹配的文章", en: "No matching posts" },
+    hint: { zh: "输入关键词开始搜索", en: "Type to start searching" },
+    countLabel: { zh: "{n} 条结果", en: "{n} results" },
+    loading: { zh: "正在载入索引…", en: "Loading index…" },
+  },
+
   langToggle: {
     /** 按钮显示的是「切换到哪一种」，所以中英是反着的 */
     zh: "EN",

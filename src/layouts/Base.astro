@@ -84,6 +84,15 @@ const canonical = new URL(path, Astro.site);
             </a>
           ))
         }
+        <button class="search-btn" id="search-btn" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4.2-4.2"></path>
+          </svg>
+          <span class="search-btn__label">
+            <T zh={UI.search.open.zh} en={UI.search.open.en} />
+          </span>
+          <kbd class="search-btn__kbd">⌘K</kbd>
+        </button>
         <button class="lang-btn" id="lang-btn" type="button" aria-label="Language / 语言">
           <span class="lang-btn__opt" data-opt="zh">中</span>
           <span class="lang-btn__sep" aria-hidden="true"></span>
@@ -120,6 +129,32 @@ const canonical = new URL(path, Astro.site);
         </span>
       </div>
     </footer>
+
+    {/* 搜索面板。索引在首次打开时才拉取 */}
+    <div class="sheet" id="search" role="dialog" aria-modal="true" aria-label="Search">
+      <div class="sheet__card">
+        <div class="sheet__head">
+          <svg class="sheet__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4.2-4.2"></path>
+          </svg>
+          <input
+            class="sheet__input"
+            id="search-input"
+            type="search"
+            autocomplete="off"
+            data-ph-zh={UI.search.placeholder.zh}
+            data-ph-en={UI.search.placeholder.en}
+          />
+          <span class="sheet__count" id="search-count"></span>
+          <button class="sheet__close" id="search-close" type="button" aria-label="关闭">✕</button>
+        </div>
+        <div class="sheet__results" id="search-results">
+          <p class="sheet__msg">
+            <T zh={UI.search.hint.zh} en={UI.search.hint.en} />
+          </p>
+        </div>
+      </div>
+    </div>
 
     {/* 首次切到英文时弹一次，说明翻译覆盖范围 */}
     <div class="en-notice" id="en-notice" role="dialog" aria-modal="true" aria-label="Language note">
@@ -171,6 +206,8 @@ const canonical = new URL(path, Astro.site);
           root.lang = "zh-CN";
         }
         localStorage.setItem("uiLang", toEn ? "en" : "zh");
+        syncPlaceholder();
+        if (sheet?.classList.contains("open")) render(input?.value.trim() ?? "");
 
         // 每次切到英文都说明一下翻译覆盖到什么程度
         if (toEn) {
@@ -190,6 +227,147 @@ const canonical = new URL(path, Astro.site);
       });
       document.addEventListener("keydown", (e) => {
         if (e.key === "Escape" && notice?.classList.contains("open")) closeNotice();
+      });
+
+      // ---- 搜索 ----
+      const S = {
+        zh: {
+          empty: "没有匹配的文章",
+          hint: "输入关键词开始搜索",
+          count: "{n} 条结果",
+          loading: "正在载入索引…",
+        },
+        en: {
+          empty: "No matching posts",
+          hint: "Type to start searching",
+          count: "{n} results",
+          loading: "Loading index…",
+        },
+      };
+      const lang = () => (document.documentElement.dataset.uiLang === "en" ? "en" : "zh");
+
+      const sheet = document.getElementById("search");
+      const input = document.getElementById("search-input") as HTMLInputElement | null;
+      const results = document.getElementById("search-results");
+      const countEl = document.getElementById("search-count");
+
+      let index: any[] | null = null;
+      let loading = false;
+
+      const syncPlaceholder = () => {
+        if (!input) return;
+        input.placeholder = input.dataset[lang() === "en" ? "phEn" : "phZh"] ?? "";
+      };
+      syncPlaceholder();
+
+      const loadIndex = async () => {
+        if (index || loading) return;
+        loading = true;
+        try {
+          const r = await fetch("/search-index.json");
+          index = await r.json();
+        } catch {
+          index = [];
+        }
+        loading = false;
+      };
+
+      const esc = (s: string) =>
+        s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
+
+      /** 命中处高亮，并截一段上下文 */
+      const snippet = (text: string, q: string) => {
+        const i = text.toLowerCase().indexOf(q);
+        if (i < 0) return "";
+        const from = Math.max(0, i - 30);
+        const raw = text.slice(from, i + q.length + 70);
+        const pre = from > 0 ? "…" : "";
+        const at = i - from;
+        return (
+          pre +
+          esc(raw.slice(0, at)) +
+          "<mark>" +
+          esc(raw.slice(at, at + q.length)) +
+          "</mark>" +
+          esc(raw.slice(at + q.length)) +
+          "…"
+        );
+      };
+
+      const render = (q: string) => {
+        if (!results || !countEl) return;
+        const t = S[lang()];
+        if (!q) {
+          results.innerHTML = `<p class="sheet__msg">${t.hint}</p>`;
+          countEl.textContent = "";
+          return;
+        }
+        if (!index) {
+          results.innerHTML = `<p class="sheet__msg">${t.loading}</p>`;
+          return;
+        }
+
+        const lq = q.toLowerCase();
+        // 中文没有词边界，用子串匹配；标题命中排在正文命中前面
+        const hits = index
+          .map((p) => {
+            const inTitle =
+              p.title.toLowerCase().includes(lq) || p.titleEn.toLowerCase().includes(lq);
+            const inTag = p.tags.some((x: string) => x.toLowerCase().includes(lq));
+            const inBody = p.body.toLowerCase().includes(lq);
+            if (!inTitle && !inTag && !inBody) return null;
+            return { p, rank: inTitle ? 0 : inTag ? 1 : 2 };
+          })
+          .filter(Boolean)
+          .sort((a: any, b: any) => a.rank - b.rank || (a.p.date < b.p.date ? 1 : -1));
+
+        countEl.textContent = t.count.replace("{n}", String(hits.length));
+
+        if (!hits.length) {
+          results.innerHTML = `<p class="sheet__msg">${t.empty}</p>`;
+          return;
+        }
+
+        results.innerHTML = hits
+          .map(({ p, rank }: any) => {
+            const title = lang() === "en" && p.titleEn ? p.titleEn : p.title;
+            const sn = rank === 2 ? snippet(p.body, lq) : "";
+            return `<a class="hit" href="/posts/${p.id}">
+              <span class="hit__title">${esc(title)}</span>
+              <span class="hit__meta">${p.date}${p.tags.map((x: string) => ` · ${esc(x)}`).join("")}</span>
+              ${sn ? `<span class="hit__snippet">${sn}</span>` : ""}
+            </a>`;
+          })
+          .join("");
+      };
+
+      const openSearch = async () => {
+        sheet?.classList.add("open");
+        document.body.style.overflow = "hidden";
+        syncPlaceholder();
+        input?.focus();
+        await loadIndex();
+        render(input?.value.trim() ?? "");
+      };
+      const closeSearch = () => {
+        sheet?.classList.remove("open");
+        document.body.style.overflow = "";
+      };
+
+      document.getElementById("search-btn")?.addEventListener("click", openSearch);
+      document.getElementById("search-close")?.addEventListener("click", closeSearch);
+      sheet?.addEventListener("click", (e) => {
+        if (e.target === sheet) closeSearch();
+      });
+      input?.addEventListener("input", () => render(input.value.trim()));
+
+      document.addEventListener("keydown", (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+          e.preventDefault();
+          sheet?.classList.contains("open") ? closeSearch() : openSearch();
+        } else if (e.key === "Escape" && sheet?.classList.contains("open")) {
+          closeSearch();
+        }
       });
 
       // ---- 导航栏滚动出分隔线 ----
