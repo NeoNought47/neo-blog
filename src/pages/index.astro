@@ -1,37 +1,48 @@
 ---
 import Base from "../layouts/Base.astro";
-import PostCard from "../components/PostCard.astro";
-import { getPosts } from "../lib/posts";
-import { SITE } from "../consts";
+import Sidebar from "../components/Sidebar.astro";
+import PostRow from "../components/PostRow.astro";
+import { getPosts, getTags } from "../lib/posts";
+import { countImages } from "../lib/covers";
 import { UI, fill } from "../i18n";
 import T from "../components/T.astro";
 
 const posts = await getPosts();
-const [featured, ...rest] = posts;
+const tags = await getTags();
 ---
 
 <Base>
-  <section class="hero page">
-    <span class="hero__eyebrow">
-      <T zh={fill(UI.home.count.zh, { n: posts.length })} en={fill(UI.home.count.en, { n: posts.length })} />
-    </span>
-    <h1 class="hero__title" set:html={SITE.heroTitle} />
-    <address class="hero__shop">
-      <span>{SITE.shop.address}</span>
-      <span>{SITE.shop.phone}</span>
-      <span class="hero__hours"><T zh={UI.home.hours.zh} en={UI.home.hours.en} /></span>
-    </address>
-  </section>
+  <div class="home page">
+    <Sidebar posts={posts.length} tags={tags.length} images={countImages()} />
 
-  <div class="page">
-    <div class="section-head">
-      <h2><T zh={UI.home.latest.zh} en={UI.home.latest.en} /></h2>
-      <a href="/archive"><T zh={UI.home.viewAll.zh} en={UI.home.viewAll.en} /></a>
-    </div>
+    <div class="home__main">
+      {/* 标签横条，仿参考站的分类栏 */}
+      <nav class="catbar" aria-label="按标签浏览">
+        <span class="catbar__item catbar__item--active">
+          <T zh={UI.home.latest.zh} en={UI.home.latest.en} />
+        </span>
+        {
+          tags.map(({ tag, count }) => (
+            <a class="catbar__item" href={`/tags/${encodeURIComponent(tag)}`}>
+              {tag}<sup>{count}</sup>
+            </a>
+          ))
+        }
+        <a class="catbar__more" href="/archive">
+          <T zh={UI.home.viewAll.zh} en={UI.home.viewAll.en} />
+        </a>
+      </nav>
 
-    <div class="grid">
-      {featured && <PostCard post={featured} />}
-      {rest.map((p) => <PostCard post={p} />)}
+      <div class="rows">
+        {posts.map((p, i) => <PostRow post={p} flip={i % 2 === 1} />)}
+      </div>
+
+      <a class="home__all" href="/archive">
+        <T
+          zh={fill(UI.archive.total.zh, { n: posts.length })}
+          en={fill(UI.archive.total.en, { n: posts.length })}
+        />
+      </a>
     </div>
   </div>
 </Base>

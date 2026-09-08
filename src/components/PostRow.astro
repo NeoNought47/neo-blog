@@ -1,0 +1,49 @@
+---
+import { Image } from "astro:assets";
+import { type Post, readingTime } from "../lib/posts";
+import { getCover } from "../lib/covers";
+import { UI, fill, formatDateBoth } from "../i18n";
+import T from "./T.astro";
+
+interface Props {
+  post: Post;
+  /** 奇偶行封面左右交替 */
+  flip?: boolean;
+}
+
+const { post, flip = false } = Astro.props;
+const { title, titleEn, date, tags, draft, hasEnglish } = post.data;
+const cover = await getCover(post);
+const d = formatDateBoth(date);
+const mins = readingTime(post.body ?? "");
+---
+
+<article class:list={["row", "reveal", { "row--flip": flip, "row--nocover": !cover }]}>
+  {
+    cover && (
+      <a class="row__cover" href={`/posts/${post.id}`} tabindex="-1" aria-hidden="true">
+        <Image src={cover} alt="" width={820} height={492} loading="lazy" />
+      </a>
+    )
+  }
+
+  <div class="row__body">
+    <div class="tag-row">
+      {tags.slice(0, 3).map((t) => <a class="tag" href={`/tags/${encodeURIComponent(t)}`}>{t}</a>)}
+    </div>
+
+    <h3 class="row__title">
+      <a class="row__link" href={`/posts/${post.id}`}>
+        <T zh={title} en={titleEn ?? title} />
+      </a>
+    </h3>
+
+    <div class="row__meta">
+      <time datetime={date.toISOString()}><T zh={d.zh} en={d.en} /></time>
+      <span class="dot"></span>
+      <T zh={fill(UI.post.readingTime.zh, { n: mins })} en={fill(UI.post.readingTime.en, { n: mins })} />
+      {hasEnglish && (<><span class="dot" /><span class="en-badge" title={UI.enBadge.title.en}>{UI.enBadge.label}</span></>)}
+      {draft && (<><span class="dot" /><span style="color:var(--accent-2)"><T zh={UI.post.draft.zh} en={UI.post.draft.en} /></span></>)}
+    </div>
+  </div>
+</article>

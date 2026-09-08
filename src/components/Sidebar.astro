@@ -1,0 +1,45 @@
+---
+import { SITE } from "../consts";
+import { UI } from "../i18n";
+import T from "./T.astro";
+
+interface Props {
+  posts: number;
+  tags: number;
+  images: number;
+}
+
+const { posts, tags, images } = Astro.props;
+---
+
+<aside class="side">
+  <div class="side__card">
+    <img class="side__avatar" src="/favicon.svg" alt="" width="76" height="76" />
+    <div class="side__name" set:html={SITE.brand} />
+    <div class="side__tagline" set:html={SITE.heroTitle} />
+
+    <div class="side__stats">
+      <a class="side__stat" href="/archive">
+        <b>{posts}</b>
+        <span><T zh="文章" en="Posts" /></span>
+      </a>
+      <a class="side__stat" href="/tags">
+        <b>{tags}</b>
+        <span><T zh="标签" en="Tags" /></span>
+      </a>
+      <span class="side__stat">
+        <b>{images}</b>
+        <span><T zh="图片" en="Images" /></span>
+      </span>
+    </div>
+  </div>
+
+  <div class="side__card side__card--shop">
+    <span class="side__shop-label"><T zh="到店" en="Visit" /></span>
+    <address>
+      <span>{SITE.shop.address}</span>
+      <span>{SITE.shop.phone}</span>
+    </address>
+    <span class="side__hours"><T zh={UI.home.hours.zh} en={UI.home.hours.en} /></span>
+  </div>
+</aside>
