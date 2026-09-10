@@ -128,14 +128,27 @@ const oldDays = days(OLD_FROM, OLD_TO);
   const fmt = (d: Date) =>
     `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 
+  // Date.parse 把 2026-08-28 当成 UTC 零点，和本地时区的今天不是一个基准，
+  // 差值会带一个小数，取整后可能多出一天。所以两边都按本地零点来算。
+  const localMidnight = (s: string) => {
+    const [y, m, d] = s.split("-").map(Number);
+    return new Date(y, m - 1, d).getTime();
+  };
+  const todayMidnight = () => {
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    return d.getTime();
+  };
+
   const paint = () => {
     const en = document.documentElement.dataset.uiLang === "en";
     document.querySelectorAll<HTMLElement>("[data-today]").forEach((el) => {
       el.textContent = fmt(new Date());
     });
     document.querySelectorAll<HTMLElement>("[data-since]").forEach((el) => {
-      const from = Date.parse(el.dataset.since!);
-      const n = Math.max(0, Math.round((Date.now() - from) / 86400000));
+      const from = localMidnight(el.dataset.since!);
+      // 两个都是本地零点，除完本来就是整数，round 只是为了兜住夏令时那一小时
+      const n = Math.max(0, Math.round((todayMidnight() - from) / 86400000));
       const tpl = (en ? el.dataset.tplEn : el.dataset.tplZh) ?? "{n}";
       el.textContent = tpl.replace("{n}", String(n));
     });
