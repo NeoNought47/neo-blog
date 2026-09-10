@@ -949,10 +949,40 @@ main {
 }
 
 .side__name {
+  display: block;
   font-family: var(--font-display);
   font-size: 1.12rem;
   font-weight: 600;
   letter-spacing: 0.01em;
+  transition: color 0.25s var(--ease);
+}
+
+a.side__name:hover {
+  color: var(--accent);
+}
+
+/* 渐变文字改不了颜色，hover 时在下面补一道渐变线做反馈 */
+.side__name em {
+  position: relative;
+}
+
+.side__name em::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--aero);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s var(--ease);
+}
+
+a.side__name:hover em::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 .side__name em {
@@ -1956,8 +1986,10 @@ a.tag:hover {
   transition: opacity 0.25s var(--ease);
 }
 
+/* 是链接就要看得出来：换色 + 阴影跟着变，比单纯降透明度明显得多 */
 .about__name:hover {
-  opacity: 0.82;
+  color: var(--accent-3);
+  text-shadow: 0.045em 0.045em 0 var(--accent);
 }
 
 .about__motto {
