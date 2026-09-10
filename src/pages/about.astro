@@ -46,6 +46,52 @@ const oldDays = days(OLD_FROM, OLD_TO);
           </span>
         </div>
       </div>
+
+      <div class="side__card side__card--flush">
+        <span class="side__label">
+            <T zh={UI.about.timelineHeading.zh} en={UI.about.timelineHeading.en} />
+        </span>
+        <ol class="tl">
+          <li class="tl__item">
+            <div class="tl__head">
+              <span class="tl__name"><T zh={UI.about.oldSite.zh} en={UI.about.oldSite.en} /></span>
+              <span class="tl__badge tl__badge--off">
+                <T zh={UI.about.retired.zh} en={UI.about.retired.en} />
+              </span>
+            </div>
+            <div class="tl__range">
+              <time datetime={OLD_FROM}>{OLD_FROM}</time>
+              <span class="tl__arrow">→</span>
+              <time datetime={OLD_TO}>{OLD_TO}</time>
+              <span class="dot"></span>
+              <T zh={fill(UI.about.days.zh, { n: oldDays })} en={fill(UI.about.days.en, { n: oldDays })} />
+            </div>
+            <p class="tl__note">
+              <T zh={UI.about.oldSiteNote.zh} en={UI.about.oldSiteNote.en} />
+            </p>
+          </li>
+
+          <li class="tl__item tl__item--on">
+            <div class="tl__head">
+              <span class="tl__name"><T zh={UI.about.newSite.zh} en={UI.about.newSite.en} /></span>
+              <span class="tl__badge">
+                <T zh={UI.about.running.zh} en={UI.about.running.en} />
+              </span>
+            </div>
+            <div class="tl__range">
+              <time datetime={NEW_FROM}>{NEW_FROM}</time>
+              <span class="tl__arrow">→</span>
+              <span data-today>…</span>
+              <span class="dot"></span>
+              {/* 天数在浏览器里算，不然不重新构建就会停在上次部署那天 */}
+              <span
+                data-since={NEW_FROM}
+                data-tpl-zh={UI.about.days.zh}
+                data-tpl-en={UI.about.days.en}>…</span>
+            </div>
+          </li>
+        </ol>
+      </div>
     </aside>
 
     <div class="about__main">
@@ -72,48 +118,6 @@ const oldDays = days(OLD_FROM, OLD_TO);
       <h2><T zh={UI.aboutSite.aboutSiteHeading.zh} en={UI.aboutSite.aboutSiteHeading.en} /></h2>
       <T as="p" zh={UI.aboutSite.founded.zh} en={UI.aboutSite.founded.en} />
       <T as="p" zh={UI.aboutSite.aboutSite.zh} en={UI.aboutSite.aboutSite.en} />
-
-      <h2><T zh={UI.about.timelineHeading.zh} en={UI.about.timelineHeading.en} /></h2>
-      <ol class="tl">
-        <li class="tl__item">
-          <div class="tl__head">
-            <span class="tl__name"><T zh={UI.about.oldSite.zh} en={UI.about.oldSite.en} /></span>
-            <span class="tl__badge tl__badge--off">
-              <T zh={UI.about.retired.zh} en={UI.about.retired.en} />
-            </span>
-          </div>
-          <div class="tl__range">
-            <time datetime={OLD_FROM}>{OLD_FROM}</time>
-            <span class="tl__arrow">→</span>
-            <time datetime={OLD_TO}>{OLD_TO}</time>
-            <span class="dot"></span>
-            <T zh={fill(UI.about.days.zh, { n: oldDays })} en={fill(UI.about.days.en, { n: oldDays })} />
-          </div>
-          <p class="tl__note">
-            <T zh={UI.about.oldSiteNote.zh} en={UI.about.oldSiteNote.en} />
-          </p>
-        </li>
-
-        <li class="tl__item tl__item--on">
-          <div class="tl__head">
-            <span class="tl__name"><T zh={UI.about.newSite.zh} en={UI.about.newSite.en} /></span>
-            <span class="tl__badge">
-              <T zh={UI.about.running.zh} en={UI.about.running.en} />
-            </span>
-          </div>
-          <div class="tl__range">
-            <time datetime={NEW_FROM}>{NEW_FROM}</time>
-            <span class="tl__arrow">→</span>
-            <span data-today>…</span>
-            <span class="dot"></span>
-            {/* 天数在浏览器里算，不然不重新构建就会停在上次部署那天 */}
-            <span
-              data-since={NEW_FROM}
-              data-tpl-zh={UI.about.days.zh}
-              data-tpl-en={UI.about.days.en}>…</span>
-          </div>
-        </li>
-      </ol>
 
     </div>
   </div>
