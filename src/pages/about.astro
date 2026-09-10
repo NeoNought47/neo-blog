@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
-import { UI } from "../i18n";
+import { UI, fill } from "../i18n";
 import T from "../components/T.astro";
 import { getPosts, getTags } from "../lib/posts";
 import { countImages } from "../lib/covers";
@@ -13,31 +13,45 @@ const tagCount = new Map(tags.map((t) => [t.tag, t.count]));
 
 /** 只显示站内确实有文章的那几类 */
 const interests = UI.interests.filter((i) => tagCount.has(i.tag));
+
+/** 两个站的起止。旧站的日期取自 blog-repo 的首末提交 */
+const OLD_FROM = "2025-12-19";
+const OLD_TO = "2026-04-12";
+const NEW_FROM = "2026-08-28";
+
+const days = (a: string, b: string) =>
+  Math.round((Date.parse(b) - Date.parse(a)) / 86400000);
+const oldDays = days(OLD_FROM, OLD_TO);
 ---
 
 <Base title="关于" description="关于 Neo 和这个站">
   <div class="about page">
-    <header class="about__hero">
-      <Image class="about__avatar" src={avatar} alt="Neo" width={132} height={132} loading="eager" />
-      <h1 class="about__name">{UI.about.name}</h1>
-      <p class="about__motto">
-        <T zh={UI.about.motto.zh} en={UI.about.motto.en} />
-      </p>
+    <aside class="side">
+      <div class="side__card">
+        <Image class="about__avatar" src={avatar} alt="Neo" width={112} height={112} loading="eager" />
+        <a class="about__name" href="/about">{UI.about.name}</a>
+        <p class="about__motto">
+          <T zh={UI.about.motto.zh} en={UI.about.motto.en} />
+        </p>
 
-      <div class="about__stats">
-        <a class="about__stat" href="/archive">
-          <b>{posts.length}</b><span><T zh="文章" en="Posts" /></span>
-        </a>
-        <a class="about__stat" href="/tags">
-          <b>{tags.length}</b><span><T zh="标签" en="Tags" /></span>
-        </a>
-        <span class="about__stat">
-          <b>{countImages()}</b><span><T zh="图片" en="Images" /></span>
-        </span>
+        <div class="side__stats">
+          <a class="side__stat" href="/archive">
+            <b>{posts.length}</b><span><T zh="文章" en="Posts" /></span>
+          </a>
+          <a class="side__stat" href="/tags">
+            <b>{tags.length}</b><span><T zh="标签" en="Tags" /></span>
+          </a>
+          <span class="side__stat">
+            <b>{countImages()}</b><span><T zh="图片" en="Images" /></span>
+          </span>
+        </div>
       </div>
-    </header>
+    </aside>
 
-    <div class="about__body narrow">
+    <div class="about__main">
+      <span class="hero__eyebrow">About</span>
+      <h1 class="about__h1"><T zh={UI.about.title.zh} en={UI.about.title.en} /></h1>
+
       <T as="p" zh={UI.about.intro.zh} en={UI.about.intro.en} />
 
       <h2><T zh={UI.about.interestsHeading.zh} en={UI.about.interestsHeading.en} /></h2>
@@ -57,6 +71,48 @@ const interests = UI.interests.filter((i) => tagCount.has(i.tag));
         }
       </div>
 
+      <h2><T zh={UI.about.timelineHeading.zh} en={UI.about.timelineHeading.en} /></h2>
+      <ol class="tl">
+        <li class="tl__item">
+          <div class="tl__head">
+            <span class="tl__name"><T zh={UI.about.oldSite.zh} en={UI.about.oldSite.en} /></span>
+            <span class="tl__badge tl__badge--off">
+              <T zh={UI.about.retired.zh} en={UI.about.retired.en} />
+            </span>
+          </div>
+          <div class="tl__range">
+            <time datetime={OLD_FROM}>{OLD_FROM}</time>
+            <span class="tl__arrow">→</span>
+            <time datetime={OLD_TO}>{OLD_TO}</time>
+            <span class="dot"></span>
+            <T zh={fill(UI.about.days.zh, { n: oldDays })} en={fill(UI.about.days.en, { n: oldDays })} />
+          </div>
+          <p class="tl__note">
+            <T zh={UI.about.oldSiteNote.zh} en={UI.about.oldSiteNote.en} />
+          </p>
+        </li>
+
+        <li class="tl__item tl__item--on">
+          <div class="tl__head">
+            <span class="tl__name"><T zh={UI.about.newSite.zh} en={UI.about.newSite.en} /></span>
+            <span class="tl__badge">
+              <T zh={UI.about.running.zh} en={UI.about.running.en} />
+            </span>
+          </div>
+          <div class="tl__range">
+            <time datetime={NEW_FROM}>{NEW_FROM}</time>
+            <span class="tl__arrow">→</span>
+            <span data-today>…</span>
+            <span class="dot"></span>
+            {/* 天数在浏览器里算，不然不重新构建就会停在上次部署那天 */}
+            <span
+              data-since={NEW_FROM}
+              data-tpl-zh={UI.about.days.zh}
+              data-tpl-en={UI.about.days.en}>…</span>
+          </div>
+        </li>
+      </ol>
+
       <h2><T zh={UI.aboutSite.aboutSiteHeading.zh} en={UI.aboutSite.aboutSiteHeading.en} /></h2>
       <T as="p" zh={UI.aboutSite.founded.zh} en={UI.aboutSite.founded.en} />
       <T as="p" zh={UI.aboutSite.aboutSite.zh} en={UI.aboutSite.aboutSite.en} />
@@ -68,3 +124,25 @@ const interests = UI.interests.filter((i) => tagCount.has(i.tag));
     </div>
   </div>
 </Base>
+
+<script>
+  // 运行天数按当天算，避免长时间不部署时数字停住
+  const fmt = (d: Date) =>
+    `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+
+  const paint = () => {
+    const en = document.documentElement.dataset.uiLang === "en";
+    document.querySelectorAll<HTMLElement>("[data-today]").forEach((el) => {
+      el.textContent = fmt(new Date());
+    });
+    document.querySelectorAll<HTMLElement>("[data-since]").forEach((el) => {
+      const from = Date.parse(el.dataset.since!);
+      const n = Math.max(0, Math.round((Date.now() - from) / 86400000));
+      const tpl = (en ? el.dataset.tplEn : el.dataset.tplZh) ?? "{n}";
+      el.textContent = tpl.replace("{n}", String(n));
+    });
+  };
+
+  paint();
+  document.getElementById("lang-btn")?.addEventListener("click", () => setTimeout(paint, 0));
+</script>

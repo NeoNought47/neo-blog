@@ -24,7 +24,7 @@ const recentWithCover = await Promise.all(
 <aside class="side">
   <div class="side__card">
     <img class="side__avatar" src="/favicon.svg" alt="" width="76" height="76" />
-    <div class="side__name" set:html={SITE.brand} />
+    <a class="side__name" href="/about" set:html={SITE.brand} />
     <div class="side__tagline" set:html={SITE.heroTitle} />
 
     <div class="side__stats">

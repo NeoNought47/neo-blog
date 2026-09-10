@@ -57,6 +57,17 @@ export const UI = {
       en: "This site is my notebook. There is no unifying theme, just whatever I happen to be playing, learning, or collecting.",
     },
     interestsHeading: { zh: "这里会写什么", en: "What you will find here" },
+    timelineHeading: { zh: "运行日期", en: "Timeline" },
+    oldSite: { zh: "旧站 · Flask", en: "Old site · Flask" },
+    newSite: { zh: "本站 · Astro", en: "This site · Astro" },
+    retired: { zh: "已停用", en: "Retired" },
+    running: { zh: "运行中", en: "Running" },
+    days: { zh: "{n} 天", en: "{n} days" },
+    /** 旧站从建站到最后一次更新；之后一直挂着，直到本站上线取代它 */
+    oldSiteNote: {
+      zh: "旧站是用 Flask 手写的，每篇文章一个路由。文章和图片已全部迁到这里。",
+      en: "The old site was hand-written in Flask, one route per post. All posts and images have been migrated here.",
+    },
     contactHeading: { zh: "找我", en: "Get in touch" },
     contactNote: {
       zh: "邮箱和社交账号还没填，想公开的话在 src/i18n.ts 里补上。",

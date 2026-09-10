@@ -1926,79 +1926,57 @@ a.tag:hover {
 }
 
 /* ---------- 关于页 ---------- */
+/* 和首页同一套两栏骨架 */
 .about {
-  padding: 3.2rem 0 1rem;
-}
-
-.about__hero {
-  text-align: center;
-  margin-bottom: 3rem;
+  display: grid;
+  grid-template-columns: 296px minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+  padding: 2.5rem 0 1rem;
 }
 
 .about__avatar {
-  width: 132px;
-  height: 132px;
-  margin: 0 auto 1.1rem;
-  border-radius: 34px;
+  width: 112px;
+  height: 112px;
+  margin: 0 auto 1rem;
+  border-radius: 28px;
   border: 1px solid var(--border-strong);
-  box-shadow: var(--gloss), var(--shadow-lg);
+  box-shadow: var(--gloss), var(--shadow-md);
   object-fit: cover;
 }
 
 .about__name {
-  margin: 0;
+  display: block;
   font-family: var(--font-display);
-  font-size: clamp(2.1rem, 5vw, 2.9rem);
+  font-size: 1.7rem;
   font-weight: 600;
   letter-spacing: -0.01em;
+  color: var(--accent);
+  text-shadow: 0.045em 0.045em 0 var(--accent-2);
+  transition: opacity 0.25s var(--ease);
+}
+
+.about__name:hover {
+  opacity: 0.82;
+}
+
+.about__motto {
+  margin: 0.5rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.86rem;
+}
+
+.about__h1 {
+  margin: 0.9rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.4vw, 2.7rem);
+  font-weight: 600;
+  letter-spacing: -0.015em;
   color: var(--accent);
   text-shadow: 0.05em 0.05em 0 var(--accent-2);
 }
 
-.about__motto {
-  margin: 0.7rem 0 0;
-  color: var(--text-muted);
-  font-size: 0.98rem;
-}
-
-.about__stats {
-  display: inline-grid;
-  grid-auto-flow: column;
-  gap: 2.4rem;
-  margin-top: 1.9rem;
-  padding: 0.9rem 2rem;
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  background: var(--surface);
-  backdrop-filter: blur(24px) saturate(180%);
-  box-shadow: var(--gloss), var(--shadow-sm);
-}
-
-.about__stat {
-  display: flex;
-  flex-direction: column;
-  gap: 0.05rem;
-  transition: color 0.25s var(--ease);
-}
-
-.about__stat b {
-  font-family: var(--font-display);
-  font-size: 1.28rem;
-  font-weight: 600;
-}
-
-.about__stat span {
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  color: var(--text-faint);
-}
-
-a.about__stat:hover b,
-a.about__stat:hover span {
-  color: var(--accent);
-}
-
-.about__body h2 {
+.about__main h2 {
   margin: 2.6em 0 1em;
   font-size: 1.2rem;
   font-weight: 600;
@@ -2008,7 +1986,7 @@ a.about__stat:hover span {
 
 /* 不要在这里写 display —— 会和语言切换的隐藏规则特异性打平，
    位置靠后就把隐藏覆盖掉，中英文会同时显示 */
-.about__body > .i18n {
+.about__main > .i18n {
   margin: 1.3em 0;
   color: var(--text-muted);
   line-height: 1.85;
@@ -2075,6 +2053,98 @@ a.about__stat:hover span {
   font-size: 0.86rem;
   line-height: 1.75;
   color: var(--text-muted);
+}
+
+/* ---- 运行日期时间线 ---- */
+.tl {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 1.15rem;
+  border-left: 1px solid var(--border);
+}
+
+.tl__item {
+  position: relative;
+  padding: 0 0 1.5rem 0.55rem;
+}
+
+.tl__item:last-child {
+  padding-bottom: 0;
+}
+
+.tl__item::before {
+  content: "";
+  position: absolute;
+  left: -1.55rem;
+  top: 0.5rem;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--border-strong);
+}
+
+.tl__item--on::before {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+.tl__head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.tl__name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.tl__badge {
+  padding: 0.05rem 0.5rem;
+  border-radius: 100px;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+}
+
+.tl__badge--off {
+  border-color: var(--border-strong);
+  background: var(--surface);
+  color: var(--text-faint);
+}
+
+.tl__range {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.tl__arrow {
+  color: var(--text-faint);
+}
+
+.tl__note {
+  margin: 0.5rem 0 0;
+  font-size: 0.84rem;
+  line-height: 1.75;
+  color: var(--text-faint);
+}
+
+@media (max-width: 900px) {
+  .about {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 /* ---------- 12. 文章头部 ---------- */
