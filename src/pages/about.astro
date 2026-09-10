@@ -52,8 +52,6 @@ const oldDays = days(OLD_FROM, OLD_TO);
       <span class="hero__eyebrow">About</span>
       <h1 class="about__h1"><T zh={UI.about.title.zh} en={UI.about.title.en} /></h1>
 
-      <T as="p" zh={UI.about.intro.zh} en={UI.about.intro.en} />
-
       <h2><T zh={UI.about.interestsHeading.zh} en={UI.about.interestsHeading.en} /></h2>
       <div class="cards">
         {
@@ -70,6 +68,10 @@ const oldDays = days(OLD_FROM, OLD_TO);
           ))
         }
       </div>
+
+      <h2><T zh={UI.aboutSite.aboutSiteHeading.zh} en={UI.aboutSite.aboutSiteHeading.en} /></h2>
+      <T as="p" zh={UI.aboutSite.founded.zh} en={UI.aboutSite.founded.en} />
+      <T as="p" zh={UI.aboutSite.aboutSite.zh} en={UI.aboutSite.aboutSite.en} />
 
       <h2><T zh={UI.about.timelineHeading.zh} en={UI.about.timelineHeading.en} /></h2>
       <ol class="tl">
@@ -113,14 +115,6 @@ const oldDays = days(OLD_FROM, OLD_TO);
         </li>
       </ol>
 
-      <h2><T zh={UI.aboutSite.aboutSiteHeading.zh} en={UI.aboutSite.aboutSiteHeading.en} /></h2>
-      <T as="p" zh={UI.aboutSite.founded.zh} en={UI.aboutSite.founded.en} />
-      <T as="p" zh={UI.aboutSite.aboutSite.zh} en={UI.aboutSite.aboutSite.en} />
-
-      <h2><T zh={UI.about.contactHeading.zh} en={UI.about.contactHeading.en} /></h2>
-      <p class="about__contact">
-        <T zh={UI.about.contactNote.zh} en={UI.about.contactNote.en} />
-      </p>
     </div>
   </div>
 </Base>

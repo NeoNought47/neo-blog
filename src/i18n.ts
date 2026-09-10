@@ -51,11 +51,6 @@ export const UI = {
       zh: "什么都吃一点，什么都记一点。",
       en: "A little of everything, written down.",
     },
-    /** 自我介绍。这段是照着站内实际内容写的，想改直接动这里 */
-    intro: {
-      zh: "这个站是我的记录本。写的东西没什么统一主题，大致就是手上在玩的、在学的、在收的那些。",
-      en: "This site is my notebook. There is no unifying theme, just whatever I happen to be playing, learning, or collecting.",
-    },
     interestsHeading: { zh: "这里会写什么", en: "What you will find here" },
     timelineHeading: { zh: "运行日期", en: "Timeline" },
     oldSite: { zh: "旧站 · Flask", en: "Old site · Flask" },
@@ -67,11 +62,6 @@ export const UI = {
     oldSiteNote: {
       zh: "旧站是用 Flask 手写的，每篇文章一个路由。文章和图片已全部迁到这里。",
       en: "The old site was hand-written in Flask, one route per post. All posts and images have been migrated here.",
-    },
-    contactHeading: { zh: "找我", en: "Get in touch" },
-    contactNote: {
-      zh: "邮箱和社交账号还没填，想公开的话在 src/i18n.ts 里补上。",
-      en: "Email and social links are not filled in yet.",
     },
   },
 
