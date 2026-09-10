@@ -46,11 +46,6 @@ export const UI = {
   about: {
     title: { zh: "关于", en: "About" },
     name: "Neo",
-    /** 头像下面那句 */
-    motto: {
-      zh: "什么都吃一点，什么都记一点。",
-      en: "A little of everything, written down.",
-    },
     interestsHeading: { zh: "这里会写什么", en: "What you will find here" },
     timelineHeading: { zh: "运行日期", en: "Timeline" },
     oldSite: { zh: "旧站 · Flask", en: "Old site · Flask" },
@@ -58,11 +53,6 @@ export const UI = {
     retired: { zh: "已停用", en: "Retired" },
     running: { zh: "运行中", en: "Running" },
     days: { zh: "{n} 天", en: "{n} days" },
-    /** 旧站从建站到最后一次更新；之后一直挂着，直到本站上线取代它 */
-    oldSiteNote: {
-      zh: "旧站是用 Flask 手写的，每篇文章一个路由。文章和图片已全部迁到这里。",
-      en: "The old site was hand-written in Flask, one route per post. All posts and images have been migrated here.",
-    },
   },
 
   /** 关于页里按主题分组的兴趣说明 */

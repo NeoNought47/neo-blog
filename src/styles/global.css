@@ -1992,12 +1992,6 @@ a.tag:hover {
   text-shadow: 0.045em 0.045em 0 var(--accent);
 }
 
-.about__motto {
-  margin: 0.5rem 0 0;
-  color: var(--text-muted);
-  font-size: 0.86rem;
-}
-
 .about__h1 {
   margin: 0.9rem 0 0;
   font-family: var(--font-display);
@@ -2173,13 +2167,6 @@ a.tag:hover {
 }
 
 .tl__arrow {
-  color: var(--text-faint);
-}
-
-.tl__note {
-  margin: 0.4rem 0 0;
-  font-size: 0.74rem;
-  line-height: 1.7;
   color: var(--text-faint);
 }
 

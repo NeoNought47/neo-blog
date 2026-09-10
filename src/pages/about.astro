@@ -30,9 +30,6 @@ const oldDays = days(OLD_FROM, OLD_TO);
       <div class="side__card">
         <Image class="about__avatar" src={avatar} alt="Neo" width={112} height={112} loading="eager" />
         <a class="about__name" href="/about">{UI.about.name}</a>
-        <p class="about__motto">
-          <T zh={UI.about.motto.zh} en={UI.about.motto.en} />
-        </p>
 
         <div class="side__stats">
           <a class="side__stat" href="/archive">
@@ -66,9 +63,6 @@ const oldDays = days(OLD_FROM, OLD_TO);
               <span class="dot"></span>
               <T zh={fill(UI.about.days.zh, { n: oldDays })} en={fill(UI.about.days.en, { n: oldDays })} />
             </div>
-            <p class="tl__note">
-              <T zh={UI.about.oldSiteNote.zh} en={UI.about.oldSiteNote.en} />
-            </p>
           </li>
 
           <li class="tl__item tl__item--on">
