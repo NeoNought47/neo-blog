@@ -1925,6 +1925,158 @@ a.tag:hover {
   font-size: 0.8em;
 }
 
+/* ---------- 关于页 ---------- */
+.about {
+  padding: 3.2rem 0 1rem;
+}
+
+.about__hero {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.about__avatar {
+  width: 132px;
+  height: 132px;
+  margin: 0 auto 1.1rem;
+  border-radius: 34px;
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--gloss), var(--shadow-lg);
+  object-fit: cover;
+}
+
+.about__name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 5vw, 2.9rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--accent);
+  text-shadow: 0.05em 0.05em 0 var(--accent-2);
+}
+
+.about__motto {
+  margin: 0.7rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.98rem;
+}
+
+.about__stats {
+  display: inline-grid;
+  grid-auto-flow: column;
+  gap: 2.4rem;
+  margin-top: 1.9rem;
+  padding: 0.9rem 2rem;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  background: var(--surface);
+  backdrop-filter: blur(24px) saturate(180%);
+  box-shadow: var(--gloss), var(--shadow-sm);
+}
+
+.about__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+  transition: color 0.25s var(--ease);
+}
+
+.about__stat b {
+  font-family: var(--font-display);
+  font-size: 1.28rem;
+  font-weight: 600;
+}
+
+.about__stat span {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+}
+
+a.about__stat:hover b,
+a.about__stat:hover span {
+  color: var(--accent);
+}
+
+.about__body h2 {
+  margin: 2.6em 0 1em;
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* 不要在这里写 display —— 会和语言切换的隐藏规则特异性打平，
+   位置靠后就把隐藏覆盖掉，中英文会同时显示 */
+.about__body > .i18n {
+  margin: 1.3em 0;
+  color: var(--text-muted);
+  line-height: 1.85;
+}
+
+.about__contact {
+  margin: 1.3em 0;
+  font-size: 0.9rem;
+  color: var(--text-faint);
+}
+
+/* 兴趣分块 */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(228px, 1fr));
+  gap: 1rem;
+}
+
+.ic {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1.15rem 1.25rem 1.3rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.038) 0%,
+    rgba(255, 255, 255, 0.014) 48%,
+    rgba(255, 255, 255, 0.003) 48.5%,
+    rgba(255, 255, 255, 0.016) 100%
+  );
+  backdrop-filter: blur(30px) saturate(190%);
+  -webkit-backdrop-filter: blur(30px) saturate(190%);
+  box-shadow: var(--gloss), var(--shadow-md);
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease),
+    border-color 0.35s var(--ease);
+}
+
+.ic:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-strong);
+  box-shadow: var(--gloss), var(--shadow-lg), var(--glow);
+}
+
+.ic__count {
+  position: absolute;
+  top: 1rem;
+  right: 1.1rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-faint);
+}
+
+.ic__title {
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.ic__body {
+  font-size: 0.86rem;
+  line-height: 1.75;
+  color: var(--text-muted);
+}
+
 /* ---------- 12. 文章头部 ---------- */
 .post-head {
   padding: clamp(3rem, 9vh, 5.5rem) 0 2.5rem;

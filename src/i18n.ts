@@ -45,6 +45,50 @@ export const UI = {
 
   about: {
     title: { zh: "关于", en: "About" },
+    name: "Neo",
+    /** 头像下面那句 */
+    motto: {
+      zh: "什么都吃一点，什么都记一点。",
+      en: "A little of everything, written down.",
+    },
+    /** 自我介绍。这段是照着站内实际内容写的，想改直接动这里 */
+    intro: {
+      zh: "这个站是我的记录本。写的东西没什么统一主题，大致就是手上在玩的、在学的、在收的那些。",
+      en: "This site is my notebook. There is no unifying theme, just whatever I happen to be playing, learning, or collecting.",
+    },
+    interestsHeading: { zh: "这里会写什么", en: "What you will find here" },
+    contactHeading: { zh: "找我", en: "Get in touch" },
+    contactNote: {
+      zh: "邮箱和社交账号还没填，想公开的话在 src/i18n.ts 里补上。",
+      en: "Email and social links are not filled in yet.",
+    },
+  },
+
+  /** 关于页里按主题分组的兴趣说明 */
+  interests: [
+    {
+      tag: "Neo's Collection",
+      zh: { title: "收藏", body: "Hot Toys 的 1:6 人偶、CS2 饰品，还有一些万智牌套牌的实物。买回来拍照存档，顺便记一下当时的想法。" },
+      en: { title: "Collecting", body: "Hot Toys 1:6 figures, CS2 skins, and a few Magic decks in paper. I photograph them and note down what I was thinking at the time." },
+    },
+    {
+      tag: "Cybersecurity",
+      zh: { title: "安全与技术", body: "跟着课程做的学习笔记，抓包、反弹 shell、Web 架构这类基础内容，也有装系统折腾双系统的记录。" },
+      en: { title: "Security & tech", body: "Study notes from courses I follow: packet capture, reverse shells, web architecture, plus the occasional dual-boot install log." },
+    },
+    {
+      tag: "Photography",
+      zh: { title: "拍照", body: "出门带着相机拍的东西。目前主要是黄石那趟。" },
+      en: { title: "Photography", body: "Whatever I point a camera at. Mostly the Yellowstone trip so far." },
+    },
+    {
+      tag: "Magic the Gathering",
+      zh: { title: "万智牌", body: "主要玩 cEDH，偶尔写写套牌构筑和对局思路。" },
+      en: { title: "Magic: The Gathering", body: "Mostly cEDH. Occasionally I write up a deck or a line of play." },
+    },
+  ],
+
+  aboutSite: {
     founded: {
       zh: "本站成立于 2026 年 8 月 28 日。站内文章标注的日期，均为照片的拍摄日期或文章的创作日期，不一定是发布到这里的时间。",
       en: "This site was founded on 28 August 2026. The date shown on each post is when the photo was taken or the piece was written, not necessarily when it was published here.",

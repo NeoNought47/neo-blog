@@ -1,18 +1,70 @@
 ---
+import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
 import { UI } from "../i18n";
 import T from "../components/T.astro";
+import { getPosts, getTags } from "../lib/posts";
+import { countImages } from "../lib/covers";
+import avatar from "../assets/site/avatar.png";
+
+const posts = await getPosts();
+const tags = await getTags();
+const tagCount = new Map(tags.map((t) => [t.tag, t.count]));
+
+/** 只显示站内确实有文章的那几类 */
+const interests = UI.interests.filter((i) => tagCount.has(i.tag));
 ---
 
-<Base title="关于" description="关于这个博客和我">
-  <section class="hero page" style="padding-bottom:1rem">
-    <span class="hero__eyebrow">About</span>
-    <h1 class="hero__title"><T zh={UI.about.title.zh} en={UI.about.title.en} /></h1>
-  </section>
+<Base title="关于" description="关于 Neo 和这个站">
+  <div class="about page">
+    <header class="about__hero">
+      <Image class="about__avatar" src={avatar} alt="Neo" width={132} height={132} loading="eager" />
+      <h1 class="about__name">{UI.about.name}</h1>
+      <p class="about__motto">
+        <T zh={UI.about.motto.zh} en={UI.about.motto.en} />
+      </p>
 
-  <div class="prose narrow" style="padding-bottom:3rem">
-    <T as="p" zh={UI.about.founded.zh} en={UI.about.founded.en} />
-    <h2><T zh={UI.about.aboutSiteHeading.zh} en={UI.about.aboutSiteHeading.en} /></h2>
-    <T as="p" zh={UI.about.aboutSite.zh} en={UI.about.aboutSite.en} />
+      <div class="about__stats">
+        <a class="about__stat" href="/archive">
+          <b>{posts.length}</b><span><T zh="文章" en="Posts" /></span>
+        </a>
+        <a class="about__stat" href="/tags">
+          <b>{tags.length}</b><span><T zh="标签" en="Tags" /></span>
+        </a>
+        <span class="about__stat">
+          <b>{countImages()}</b><span><T zh="图片" en="Images" /></span>
+        </span>
+      </div>
+    </header>
+
+    <div class="about__body narrow">
+      <T as="p" zh={UI.about.intro.zh} en={UI.about.intro.en} />
+
+      <h2><T zh={UI.about.interestsHeading.zh} en={UI.about.interestsHeading.en} /></h2>
+      <div class="cards">
+        {
+          interests.map((i) => (
+            <a class="ic" href={`/tags/${encodeURIComponent(i.tag)}`}>
+              <span class="ic__count">{tagCount.get(i.tag)}</span>
+              <span class="ic__title">
+                <T zh={i.zh.title} en={i.en.title} />
+              </span>
+              <span class="ic__body">
+                <T zh={i.zh.body} en={i.en.body} />
+              </span>
+            </a>
+          ))
+        }
+      </div>
+
+      <h2><T zh={UI.aboutSite.aboutSiteHeading.zh} en={UI.aboutSite.aboutSiteHeading.en} /></h2>
+      <T as="p" zh={UI.aboutSite.founded.zh} en={UI.aboutSite.founded.en} />
+      <T as="p" zh={UI.aboutSite.aboutSite.zh} en={UI.aboutSite.aboutSite.en} />
+
+      <h2><T zh={UI.about.contactHeading.zh} en={UI.about.contactHeading.en} /></h2>
+      <p class="about__contact">
+        <T zh={UI.about.contactNote.zh} en={UI.about.contactNote.en} />
+      </p>
+    </div>
   </div>
 </Base>
