@@ -1,0 +1,71 @@
+---
+import Base from "../layouts/Base.astro";
+import { UI, fill, formatDateBoth } from "../i18n";
+import T from "../components/T.astro";
+import { CHANGELOG, KIND_LABEL } from "../data/changelog";
+
+/** 按年分组，和归档页一个口径 */
+const byYear = new Map<number, typeof CHANGELOG>();
+for (const e of CHANGELOG) {
+  const y = Number(e.date.slice(0, 4));
+  if (!byYear.has(y)) byYear.set(y, []);
+  byYear.get(y)!.push(e);
+}
+const years = [...byYear.entries()].sort((a, b) => b[0] - a[0]);
+---
+
+<Base title="更新日志" description="这个站在技术和外观上的改动记录">
+  <section class="hero page" style="padding-bottom:1rem">
+    <span class="hero__eyebrow">
+      <T
+        zh={fill(UI.changelog.count.zh, { n: CHANGELOG.length })}
+        en={fill(UI.changelog.count.en, { n: CHANGELOG.length })}
+      />
+    </span>
+    <h1 class="hero__title"><T zh={UI.changelog.title.zh} en={UI.changelog.title.en} /></h1>
+  </section>
+
+  <div class="narrow" style="padding-bottom:3rem">
+    <p class="log__lead">
+      <T zh={UI.changelog.lead.zh} en={UI.changelog.lead.en} />
+    </p>
+
+    {
+      years.map(([year, items]) => (
+        <section>
+          <h2 class="archive-year">{year}</h2>
+          <ol class="log">
+            {items.map((e) => {
+              const d = formatDateBoth(new Date(`${e.date}T00:00:00`));
+              return (
+                <li class="log__item reveal">
+                  <div class="log__meta">
+                    <time class="log__date" datetime={e.date}>
+                      <T zh={d.zh} en={d.en} />
+                    </time>
+                    <span class={`log__kind log__kind--${e.kind}`}>
+                      <T zh={KIND_LABEL[e.kind].zh} en={KIND_LABEL[e.kind].en} />
+                    </span>
+                  </div>
+                  <h3 class="log__title">
+                    <T zh={e.zh.title} en={e.en.title} />
+                  </h3>
+                  {/* 中英两边条目数一样，按下标配对 */}
+                  <ul class="log__list">
+                    {e.zh.items.map((zh, i) => (
+                      <li><T zh={zh} en={e.en.items[i] ?? zh} /></li>
+                    ))}
+                  </ul>
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+      ))
+    }
+
+    <a class="log__back" href="/about">
+      <T zh={UI.changelog.back.zh} en={UI.changelog.back.en} />
+    </a>
+  </div>
+</Base>

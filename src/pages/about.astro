@@ -113,6 +113,15 @@ const oldDays = days(OLD_FROM, OLD_TO);
       <T as="p" zh={UI.aboutSite.founded.zh} en={UI.aboutSite.founded.en} />
       <T as="p" zh={UI.aboutSite.aboutSite.zh} en={UI.aboutSite.aboutSite.en} />
 
+      <a class="about__more" href="/changelog">
+        <span>
+          <b><T zh={UI.aboutSite.changelogLink.zh} en={UI.aboutSite.changelogLink.en} /></b>
+          <small>
+            <T zh={UI.aboutSite.changelogLinkNote.zh} en={UI.aboutSite.changelogLinkNote.en} />
+          </small>
+        </span>
+        <span aria-hidden="true">→</span>
+      </a>
     </div>
   </div>
 </Base>

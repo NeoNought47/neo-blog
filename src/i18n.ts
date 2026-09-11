@@ -89,6 +89,22 @@ export const UI = {
       zh: '用 <a href="https://astro.build">Astro</a> 搭的静态站，写完 Markdown 推上去就自动部署。图片在构建时统一压成 AVIF/WebP。',
       en: 'A static site built with <a href="https://astro.build">Astro</a>. Write Markdown, push, and it deploys itself. Images are converted to AVIF/WebP at build time.',
     },
+    /** 指向 /changelog 的入口 */
+    changelogLink: { zh: "站点更新日志", en: "Site changelog" },
+    changelogLinkNote: {
+      zh: "这个站自己的改动记录，发文章不算在里面",
+      en: "What changed about the site itself, not counting new posts",
+    },
+  },
+
+  changelog: {
+    title: { zh: "更新日志", en: "Changelog" },
+    count: { zh: "{n} 次改动", en: "{n} entries" },
+    lead: {
+      zh: "这个站自己的更新记录：外观、功能、部署和图片处理上的改动。新发的文章不记在这里，那些在<a href=\"/archive\">归档</a>里。",
+      en: "What changed about the site itself: look, features, deployment and image handling. New posts are not listed here, they live in the <a href=\"/archive\">archive</a>.",
+    },
+    back: { zh: "← 关于", en: "← About" },
   },
 
   footer: {
