@@ -2,6 +2,7 @@
 title: "Ubuntu 26.04 装到笔记本内置硬盘 —— 双系统安装教程"
 titleEn: "Installing Ubuntu 26.04 on the Laptop's Internal Drive: A Dual-Boot Guide"
 date: 2026-07-07T11:00:00
+posted: 2026-08-30T15:30:00
 tags: ["Linux"]
 ---
 

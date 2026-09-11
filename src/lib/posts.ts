@@ -10,6 +10,19 @@ export async function getPosts(): Promise<Post[]> {
     .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 }
 
+/** 写作日期。没标 posted 的老文章就按显示日期算 */
+export function postedAt(p: Post): Date {
+  return p.data.posted ?? p.data.date;
+}
+
+/** 「最近更新」用的顺序：按什么时候写的排，不是按文章标的日期排 */
+export async function getRecent(n: number): Promise<Post[]> {
+  const all = await getPosts();
+  return [...all]
+    .sort((a, b) => postedAt(b).getTime() - postedAt(a).getTime())
+    .slice(0, n);
+}
+
 export function formatDate(d: Date): string {
   return d.toLocaleDateString("zh-CN", {
     year: "numeric",

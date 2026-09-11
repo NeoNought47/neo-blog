@@ -3,7 +3,7 @@ import Base from "../layouts/Base.astro";
 import Sidebar from "../components/Sidebar.astro";
 import PostRow from "../components/PostRow.astro";
 import PostTile from "../components/PostTile.astro";
-import { getPosts, getTags } from "../lib/posts";
+import { getPosts, getRecent, getTags } from "../lib/posts";
 import { countImages } from "../lib/covers";
 import { UI, fill } from "../i18n";
 import T from "../components/T.astro";
@@ -23,7 +23,7 @@ const rest = posts.slice(FEATURED);
       posts={posts.length}
       tags={tags.length}
       images={countImages()}
-      recent={posts.slice(0, 5)}
+      recent={await getRecent(5)}
     />
 
     <div class="home__main">
