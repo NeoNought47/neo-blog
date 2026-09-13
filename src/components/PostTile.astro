@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import type { Post } from "../lib/posts";
-import { getCover } from "../lib/covers";
+import { getCover, getFallback } from "../lib/covers";
 import { UI, formatDateBoth } from "../i18n";
 import T from "./T.astro";
 
@@ -12,6 +12,8 @@ interface Props {
 const { post } = Astro.props;
 const { title, titleEn, date, tags, draft, hasEnglish } = post.data;
 const cover = await getCover(post);
+/** 没封面时按标签垫一张图，都没有才回落到标签文字 */
+const fallback = cover ? undefined : getFallback(post);
 const d = formatDateBoth(date);
 ---
 
@@ -20,6 +22,10 @@ const d = formatDateBoth(date);
     {
       cover ? (
         <Image src={cover} alt="" width={560} height={560} loading="lazy" layout="none" />
+      ) : fallback ? (
+        <span class="tile__logo">
+          <Image src={fallback} alt="" width={320} loading="lazy" layout="none" />
+        </span>
       ) : (
         <span class="tile__ph">{tags[0] ?? ""}</span>
       )

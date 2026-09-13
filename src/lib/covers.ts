@@ -33,3 +33,31 @@ export async function getCover(post: Post): Promise<ImageMetadata | undefined> {
 export function countImages(): number {
   return Object.keys(assets).length;
 }
+
+/**
+ * 没有封面时按标签垫一张图，比干放一行标签文字好看。
+ *
+ * 白底已经在导入前抠掉了，透明背景，深浅两套主题都能直接用。
+ * 加新的填充图：图片丢进 src/assets/site/fallback/，在这里挂上标签。
+ */
+const fallbacks = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/site/fallback/*.{png,svg,webp}",
+  { eager: true },
+);
+
+const FALLBACK_BY_TAG: Record<string, string> = {
+  Cybersecurity: "cybersecurity",
+  Linux: "linux",
+};
+
+/** 按文章标签的先后顺序找第一个挂得上的 */
+export function getFallback(post: Post): ImageMetadata | undefined {
+  for (const tag of post.data.tags) {
+    const name = FALLBACK_BY_TAG[tag];
+    if (!name) continue;
+    for (const [path, mod] of Object.entries(fallbacks)) {
+      if (path.includes(`/fallback/${name}.`)) return mod.default;
+    }
+  }
+  return undefined;
+}

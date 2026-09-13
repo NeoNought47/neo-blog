@@ -1401,7 +1401,37 @@ a.catbar__item:hover {
   filter: saturate(1.05);
 }
 
-/* 没有封面时放一块带标签文字的底 */
+/* 没有封面时按标签垫一张图。图本身是透明底，深浅主题都能直接放 */
+.tile__logo,
+.recent__logo {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.tile__logo {
+  padding: 19%;
+}
+
+.recent__logo {
+  padding: 16%;
+}
+
+.tile__logo img,
+.recent__logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* 压一点存在感，别抢正经封面的风头 */
+  opacity: 0.9;
+}
+
+.tile:hover .tile__logo img {
+  opacity: 1;
+}
+
+/* 没有封面也没有填充图时，退回标签文字 */
 .tile__ph {
   display: grid;
   place-items: center;

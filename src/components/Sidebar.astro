@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 import { SITE } from "../consts";
 import { UI, formatDateBoth } from "../i18n";
-import { getCover } from "../lib/covers";
+import { getCover, getFallback } from "../lib/covers";
 import type { Post } from "../lib/posts";
 import T from "./T.astro";
 
@@ -17,7 +17,10 @@ interface Props {
 const { posts, tags, images, recent } = Astro.props;
 
 const recentWithCover = await Promise.all(
-  recent.map(async (p) => ({ post: p, cover: await getCover(p) })),
+  recent.map(async (p) => {
+    const cover = await getCover(p);
+    return { post: p, cover, fallback: cover ? undefined : getFallback(p) };
+  }),
 );
 ---
 
@@ -47,13 +50,17 @@ const recentWithCover = await Promise.all(
     <span class="side__label"><T zh="最近更新" en="Recent" /></span>
     <ul class="recent">
       {
-        recentWithCover.map(({ post, cover }) => {
+        recentWithCover.map(({ post, cover, fallback }) => {
           const d = formatDateBoth(post.data.date);
           return (
             <li class="recent__item">
               <a class="recent__thumb" href={`/posts/${post.id}`} tabindex="-1" aria-hidden="true">
                 {cover ? (
                   <Image src={cover} alt="" width={160} height={160} loading="lazy" layout="none" />
+                ) : fallback ? (
+                  <span class="recent__logo">
+                    <Image src={fallback} alt="" width={120} loading="lazy" layout="none" />
+                  </span>
                 ) : (
                   <span class="recent__ph">{post.data.tags[0] ?? ""}</span>
                 )}

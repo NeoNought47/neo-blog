@@ -23,6 +23,24 @@ export const KIND_LABEL: Record<LogKind, { zh: string; en: string }> = {
 export const CHANGELOG: LogEntry[] = [
   {
     date: "2026-09-14",
+    kind: "look",
+    zh: {
+      title: "没有封面的文章垫一张图",
+      items: [
+        "首页方格和侧栏里没有配图的文章，以前只放一行标签文字，现在按标签垫一张图。目前 Cybersecurity 和 Linux 两类有。",
+        "填充图的白底在导入前抠掉了，透明背景，深浅两套主题都能直接用。",
+      ],
+    },
+    en: {
+      title: "Artwork for posts without a cover",
+      items: [
+        "Posts with no image used to show just a line of tag text in the homepage tiles and the sidebar. They now fall back to per-tag artwork, currently for Cybersecurity and Linux.",
+        "The white backgrounds were keyed out before import, so the transparent artwork works in both light and dark themes.",
+      ],
+    },
+  },
+  {
+    date: "2026-09-14",
     kind: "image",
     zh: {
       title: "正文图片按屏幕挑尺寸",
