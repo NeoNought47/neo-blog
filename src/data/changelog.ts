@@ -22,6 +22,44 @@ export const KIND_LABEL: Record<LogKind, { zh: string; en: string }> = {
 
 export const CHANGELOG: LogEntry[] = [
   {
+    date: "2026-09-14",
+    kind: "image",
+    zh: {
+      title: "正文图片按屏幕挑尺寸",
+      items: [
+        "每张正文图现在出 880、1320、1760 和原尺寸四档，浏览器按自己的屏幕挑一档下载，不再是所有人都下最大的那张。",
+        "图多的文章流量降了一半以上，铁血那篇滚动浏览从 36MB 降到 14.4MB，手机上单张从 5.2MB 降到 0.46MB。",
+        "屏幕上的显示尺寸和清晰度都没变，点开看大图仍然加载原尺寸。",
+      ],
+    },
+    en: {
+      title: "Body images sized to the screen",
+      items: [
+        "Each body image now ships in four sizes (880, 1320, 1760 and full). The browser picks one that fits its screen instead of everyone downloading the largest.",
+        "Image-heavy posts dropped by more than half. Scrolling the Predator post went from 36MB to 14.4MB, and a single image on a phone from 5.2MB to 0.46MB.",
+        "On-screen size and sharpness are unchanged, and the lightbox still loads the full-resolution file.",
+      ],
+    },
+  },
+  {
+    date: "2026-09-11",
+    kind: "feature",
+    zh: {
+      title: "加了这个更新日志",
+      items: [
+        "就是你正在看的这一页。只记这个站本身的改动，发文章不算，那些在归档里。",
+        "入口在关于页「关于这个站」下面。",
+      ],
+    },
+    en: {
+      title: "Added this changelog",
+      items: [
+        "The page you are reading. It only tracks changes to the site itself. New posts are not listed here, they live in the archive.",
+        "Linked from the about page under About this site.",
+      ],
+    },
+  },
+  {
     date: "2026-09-11",
     kind: "feature",
     zh: {
