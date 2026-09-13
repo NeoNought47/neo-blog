@@ -26,9 +26,16 @@ export default defineConfig({
     },
   },
   image: {
-    // 默认质量抬到 92，见 src/plugins/image-service.mjs
+    // 默认质量抬到 95，见 src/plugins/image-service.mjs
     service: { entrypoint: "./src/plugins/image-service.mjs" },
-    // 84 张图全部本地优化成 webp/avif，构建时一次性完成
+    // 全部图片本地优化成 webp，构建时一次性完成
     responsiveStyles: true,
+
+    // 正文里的 ![](...) 自动出 srcset，浏览器按屏幕挑一档下载。
+    // 组件里的 <Image> 都显式写了 layout="none"，不受这里影响。
+    layout: "constrained",
+    // 正文图最宽 880 CSS px：1x 屏取 880，3x 手机取 1320，2x 桌面取 1760。
+    // 再往上就超过显示需要了，点开看大图时由灯箱单独加载原尺寸。
+    breakpoints: [880, 1320, 1760],
   },
 });

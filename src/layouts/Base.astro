@@ -477,10 +477,27 @@ const canonical = new URL(path, Astro.site);
 
       // ---- 正文图片：绝不放大显示 ----
       // 屏幕是几倍屏，一张图就得有几倍的像素才不算放大。
-      // CSS 读不到图片的真实像素数，只能在这里按 naturalWidth / DPR 封顶。
+      // CSS 读不到图片的真实像素数，只能在这里按真实像素 / DPR 封顶。
+
+      // 有 srcset 时 naturalWidth 不是文件的像素数，而是被密度换算过的
+      // 「该显示多宽」，拿它再除一次 DPR 就会把图缩到一半。
+      // 所以从 srcset 里按 currentSrc 找回这一档真正的像素宽。
+      const pixelWidth = (img: HTMLImageElement) => {
+        const set = img.getAttribute("srcset");
+        if (!set || !img.currentSrc) return img.naturalWidth;
+        const cur = new URL(img.currentSrc, location.href).pathname;
+        for (const part of set.split(",")) {
+          const [url, d] = part.trim().split(/\s+/);
+          if (!url || !d?.endsWith("w")) continue;
+          if (new URL(url, location.href).pathname === cur) return parseInt(d);
+        }
+        return img.naturalWidth;
+      };
+
       const capImage = (img: HTMLImageElement) => {
-        if (!img.naturalWidth) return;
-        const maxCss = img.naturalWidth / (window.devicePixelRatio || 1);
+        const w = pixelWidth(img);
+        if (!w) return;
+        const maxCss = w / (window.devicePixelRatio || 1);
         img.style.maxWidth = `min(100%, ${Math.floor(maxCss)}px)`;
       };
       document.querySelectorAll<HTMLImageElement>(".prose img").forEach((img) => {
@@ -495,11 +512,24 @@ const canonical = new URL(path, Astro.site);
         lb?.classList.remove("open");
         document.body.style.overflow = "";
       };
+      // 页面上显示的那档是按显示宽度挑的，点开看大图要的是最大的那档。
+      // 从 srcset 里挑 w 最大的一条，没有 srcset 就还用 src。
+      const fullSrc = (img: HTMLImageElement) => {
+        const set = img.getAttribute("srcset");
+        if (!set) return img.currentSrc || img.src;
+        let best = { url: img.currentSrc || img.src, w: 0 };
+        for (const part of set.split(",")) {
+          const [url, d] = part.trim().split(/\s+/);
+          const w = d?.endsWith("w") ? parseInt(d) : 0;
+          if (url && w > best.w) best = { url, w };
+        }
+        return best.url;
+      };
+
       document.querySelectorAll<HTMLImageElement>(".prose img").forEach((img) => {
         img.addEventListener("click", () => {
           if (!lb || !lbImg) return;
-          // 用 currentSrc 拿到浏览器实际选中的那档尺寸
-          lbImg.src = img.currentSrc || img.src;
+          lbImg.src = fullSrc(img);
           lbImg.alt = img.alt;
           lb.classList.add("open");
           document.body.style.overflow = "hidden";

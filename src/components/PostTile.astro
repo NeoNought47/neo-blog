@@ -19,7 +19,7 @@ const d = formatDateBoth(date);
   <a class="tile__media" href={`/posts/${post.id}`} tabindex="-1" aria-hidden="true">
     {
       cover ? (
-        <Image src={cover} alt="" width={560} height={560} loading="lazy" />
+        <Image src={cover} alt="" width={560} height={560} loading="lazy" layout="none" />
       ) : (
         <span class="tile__ph">{tags[0] ?? ""}</span>
       )

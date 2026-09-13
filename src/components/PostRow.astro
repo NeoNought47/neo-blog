@@ -22,7 +22,7 @@ const mins = readingTime(post.body ?? "");
   {
     cover && (
       <a class="row__cover" href={`/posts/${post.id}`} tabindex="-1" aria-hidden="true">
-        <Image src={cover} alt="" width={820} height={492} loading="lazy" />
+        <Image src={cover} alt="" width={820} height={492} loading="lazy" layout="none" />
       </a>
     )
   }

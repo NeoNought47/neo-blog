@@ -45,7 +45,7 @@ const mins = readingTime(post.body ?? "");
     {
       cover && (
         <div class="post-cover">
-          <Image src={cover} alt={title} width={2000} loading="eager" />
+          <Image src={cover} alt={title} width={2000} loading="eager" layout="none" />
         </div>
       )
     }

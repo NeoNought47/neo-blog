@@ -53,7 +53,7 @@ const recentWithCover = await Promise.all(
             <li class="recent__item">
               <a class="recent__thumb" href={`/posts/${post.id}`} tabindex="-1" aria-hidden="true">
                 {cover ? (
-                  <Image src={cover} alt="" width={160} height={160} loading="lazy" />
+                  <Image src={cover} alt="" width={160} height={160} loading="lazy" layout="none" />
                 ) : (
                   <span class="recent__ph">{post.data.tags[0] ?? ""}</span>
                 )}
