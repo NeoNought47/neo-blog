@@ -23,6 +23,24 @@ export const KIND_LABEL: Record<LogKind, { zh: string; en: string }> = {
 export const CHANGELOG: LogEntry[] = [
   {
     date: "2026-09-15",
+    kind: "feature",
+    zh: {
+      title: "正文可以插旁注浮窗",
+      items: [
+        "正文里点一个带虚线的词，跳出一个毛玻璃浮窗放补充内容，看完按 Esc 或点旁边就关掉，不用离开文章。适合放那种展开写会打断主线、但又不想砍掉的背景材料。",
+        "旁注的正文其实一直在页面 DOM 里，只是平时藏着，所以站内搜索照样能搜到里面的内容。",
+      ],
+    },
+    en: {
+      title: "Side notes in a popover",
+      items: [
+        "Clicking a dashed term in a post opens a frosted-glass panel with supplementary material. Press Escape or click outside to dismiss it without leaving the article. Good for background that would derail the main thread but is worth keeping.",
+        "The note text stays in the page DOM and is only hidden visually, so site search still finds what is inside it.",
+      ],
+    },
+  },
+  {
+    date: "2026-09-15",
     kind: "look",
     zh: {
       title: "竖构图的照片不再高过一屏",
