@@ -2098,6 +2098,40 @@ a.tag:hover {
   }
 }
 
+/* 文章开头的摘要。比正文稍紧一档，靠一层浅底和左边的竖线和正文分开 */
+.prose .abstract {
+  max-width: var(--measure);
+  margin: 0 auto 3em;
+  padding: 1.15rem 1.35rem 1.2rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--accent);
+  background: var(--surface-hover);
+  font-size: 0.92rem;
+  line-height: 1.8;
+  color: var(--text-muted);
+}
+
+.prose .abstract p {
+  margin: 0.45em 0;
+  color: inherit;
+}
+
+.prose .abstract p:first-child {
+  margin-top: 0;
+}
+
+.prose .abstract p:last-child {
+  margin-bottom: 0;
+}
+
+.prose .abstract b {
+  display: inline-block;
+  min-width: 2.6em;
+  color: var(--accent);
+  font-weight: 600;
+}
+
 /* 文章开头的来源说明，压小并弱化，不抢正文 */
 .prose .post-note {
   display: block;
