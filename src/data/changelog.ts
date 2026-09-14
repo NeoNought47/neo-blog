@@ -22,6 +22,26 @@ export const KIND_LABEL: Record<LogKind, { zh: string; en: string }> = {
 
 export const CHANGELOG: LogEntry[] = [
   {
+    date: "2026-09-15",
+    kind: "look",
+    zh: {
+      title: "竖构图的照片不再高过一屏",
+      items: [
+        "正文图加了 82vh 的高度上限。之前竖图按栏宽算出来有 1059px 高，比屏幕还高，一张照片要滚两下才过得去。",
+        "横图本来就不到这个高度，看起来没有变化。只会缩小不会放大，和原来「该多大就多大」的规矩不冲突。",
+        "终结者那篇从 16 屏缩到 12 屏。",
+      ],
+    },
+    en: {
+      title: "Portrait photos now fit on one screen",
+      items: [
+        "Body images are capped at 82vh. A portrait photo at full column width came out 1059px tall, taller than the window, so you could never see one whole photo at once.",
+        "Landscape photos were already shorter than that and look unchanged. The cap only shrinks, never enlarges, so it does not conflict with the no-upscaling rule.",
+        "The Terminator post went from 16 screens down to 12.",
+      ],
+    },
+  },
+  {
     date: "2026-09-14",
     kind: "look",
     zh: {

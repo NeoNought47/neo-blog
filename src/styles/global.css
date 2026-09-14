@@ -1929,6 +1929,11 @@ a.tag:hover {
      用 max-width 让图片最多占满容器，但绝不超过自身尺寸。 */
   max-width: 100%;
   width: auto;
+  /* 竖构图的照片按 880 宽算出来比一屏还高，一张都看不全。
+     限个高，让竖图也能一屏装下；横图本来就不到这个高度，不受影响。
+     只会缩小不会放大，和上面那条不放大的规矩不冲突。 */
+  max-height: 82vh;
+  height: auto;
   margin-inline: auto;
   border-radius: var(--radius);
   border: 1px solid var(--border);
