@@ -25,6 +25,24 @@ export const CHANGELOG: LogEntry[] = [
     date: "2026-09-15",
     kind: "feature",
     zh: {
+      title: "整篇文章可以出中英两版",
+      items: [
+        "以前只有图注这种短句能做中英对照，长文没法整篇翻。现在正文外面套一层语言块就行，块里照常写 Markdown，切换语言时整篇换掉。",
+        "有英文版的文章，正文顶上自动出现一句提示，告诉你可以切到另一种语言，中英各提示对方那版。",
+      ],
+    },
+    en: {
+      title: "Whole posts can now run in two languages",
+      items: [
+        "Only short things like photo captions could be bilingual before. A post body can now be wrapped in a language block, with normal Markdown inside, and the whole thing swaps when you change language.",
+        "Posts that have a translation get an automatic line at the top of the body pointing at the other version.",
+      ],
+    },
+  },
+  {
+    date: "2026-09-15",
+    kind: "feature",
+    zh: {
       title: "正文可以插旁注浮窗",
       items: [
         "正文里点一个带虚线的词，跳出一个毛玻璃浮窗放补充内容，看完按 Esc 或点旁边就关掉，不用离开文章。适合放那种展开写会打断主线、但又不想砍掉的背景材料。",

@@ -51,6 +51,13 @@ const mins = readingTime(post.body ?? "");
     }
 
     <div class="prose page">
+      {
+        hasEnglish && (
+          <p class="langhint">
+            <T zh={UI.langHint.zh} en={UI.langHint.en} />
+          </p>
+        )
+      }
       <Content />
     </div>
 

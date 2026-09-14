@@ -2098,6 +2098,46 @@ a.tag:hover {
   }
 }
 
+/* 整篇中英对照时，正文最外层多包一个 .i18n。
+   宽度限制要往下挪一层，否则包了之后正文会被卡在包装盒的宽度里。
+   这里千万不要写 display，会和语言切换的隐藏规则打平。 */
+.prose > .i18n {
+  max-width: none;
+}
+
+.prose > .i18n > * {
+  max-width: var(--measure);
+  margin-inline: auto;
+}
+
+/* 有英文版时在正文顶上提示一句，中英各显示对方那句 */
+.langhint {
+  max-width: var(--measure);
+  margin: 0 auto 2.4em;
+  padding: 0.62rem 0.95rem;
+  border-radius: 100px;
+  border: 1px dashed color-mix(in srgb, var(--accent) 42%, transparent);
+  background: var(--accent-soft);
+  font-size: 0.84rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.langhint b {
+  display: inline-block;
+  margin: 0 0.12em;
+  padding: 0.02rem 0.36rem;
+  border-radius: 5px;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  background: var(--surface);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
 /* 文章开头的摘要。比正文稍紧一档，靠一层浅底和左边的竖线和正文分开 */
 .prose .abstract {
   max-width: var(--measure);

@@ -4,8 +4,12 @@ titleEn: "Doxxing on the Chinese Internet"
 date: 2026-09-15
 posted: 2026-09-15
 tags: ["Cybersecurity"]
+hasEnglish: true
 description: "社工库里的数据从哪来、为什么连家人都能查到、为什么治理这么难，以及它对个人和企业安全意味着什么。"
+descriptionEn: "Where the data comes from, why it reaches your whole family, why it is so hard to police, and what it means for personal and corporate security."
 ---
+
+<div class="i18n" data-lang="zh">
 
 <div class="abstract">
   <p><b>成本</b>几十到几千元，视数据敏感度而定，查询在 Telegram 的机器人上自动完成，付款即出结果。</p>
@@ -205,3 +209,208 @@ description: "社工库里的数据从哪来、为什么连家人都能查到、
 
   <p>而《个人信息保护法》是 2021 年 11 月施行的，正好在这套体系运行到一半的时候。法律上有依据要求删除，但执行与核查的机制在这个规模和分散度下很难建立。</p>
 </aside>
+
+</div>
+
+<div class="i18n" data-lang="en">
+
+<div class="abstract">
+  <p><b>Cost</b>Tens to a few thousand yuan depending on how sensitive the data is. Lookups run on Telegram bots, automated end to end: you pay, the result comes back.</p>
+  <p><b>Harm</b>Harassment, intimidation, targeted fraud, and in the worst cases physical attacks. The same data is also step one in breaking into a company.</p>
+  <p><b>Defence</b>Limited, but separating phone numbers and email addresses, avoiding SMS 2FA on important accounts, and deliberately answering security questions with lies all measurably lower your chances of being hit precisely.</p>
+</div>
+
+## Why the results are so complete: it is aggregation, not one breach
+
+What makes these databases dangerous is **cross-source aggregation**. The ==mobile number== works as the index key, stitching fragments from dozens of different channels into one complete profile of a person.
+
+The reason this works is ==real-name registration==. SIM cards, online accounts, train tickets, hotels, parcels, ride-hailing, banks and hospital appointments are all bound to the national ID. Any single leak that yields a phone number can therefore be walked outward to reach everything else. The ID number itself also encodes place of birth and date of birth.
+
+## Where the data leaks from
+
+### First source: insiders
+
+Front-line staff at a great many institutions hold query rights far beyond what their job requires, and there is little fine-grained auditing. Fine-grained here means how precise the data is: how specific and how narrow the subject of a single record is.
+
+- Telecom carriers and their retail agents: registration details, call records, cell-tower location
+- Couriers and logistics: name, phone, address down to the apartment number, full shipping history
+- Hotel check-in systems, which are wired into the police network
+- Banks, payment providers and lending platforms: accounts, transaction history, linked identities
+- Local government and police systems: household registration, vehicles, property records
+- Schools, hospitals, social insurance systems
+- Customer service and fraud-control consoles at large platforms
+
+An auxiliary police officer in a county town, a sorter at a courier depot, a clerk at a carrier's agency shop: any of them can be the starting point of a lookup chain. Prices run from tens to thousands of yuan depending on sensitivity. Successive "Clean Net" campaigns have produced a large number of convictions, and judgments under Article 253(a) of the Criminal Law, the offence of infringing on citizens' personal information, run into the thousands on the public judgment database.
+
+### Second source: technical breaches
+
+- Weak security at early internet companies, including passwords stored in plaintext. Credential stuffing then links accounts across platforms: you take usernames and passwords leaked from site A and replay them in bulk against site B, betting that plenty of people reuse one password everywhere
+- Operational mistakes: large numbers of databases left on the public internet with no access control at all, found by scanners
+- The <button type="button" class="notelink" data-note="note-healthcode-en">health-code, contact-tracing and neighbourhood registration systems</button> thrown together during the pandemic, which were generally poorly secured while holding unusually granular data
+- In 2022 a large police database in Shanghai was offered for sale on the dark web, a widely reported landmark case
+
+## Why relatives show up too
+
+Family relationships are not inferred. They are fields in the source data.
+
+- Household registration is organised by household, so one lookup returns the whole family
+- Emergency contacts: the parent or spouse you list when starting a job, opening an account, taking a loan, or enrolling at a school
+- School records, which include parents' names, occupations, employers and phone numbers
+- Dependant relationships in social insurance, co-owners on property deeds, family broadband and shared mobile plans
+- Pandemic-era neighbourhood registers, compiled by household and address
+
+Leaking one person therefore usually means leaking an entire social graph. The person doxxing you does not have to do any social-engineering inference. The relationship map came with the purchase.
+
+## Why it happens on Telegram
+
+This is what you get when platform characteristics meet the limits of enforcement.
+
+- Servers are outside China, so Chinese authorities cannot easily obtain evidence, compel disclosure, or order a shutdown
+- The bot ecosystem suits an automated query, pay, deliver loop with nobody staffing it
+- Payment in cryptocurrency, which makes the money trail hard to follow
+- Registration with virtual numbers, so an account costs nearly nothing; ban one and a replacement appears immediately with the audience following
+- Channels and groups spread fast
+
+It effectively replaced the QQ groups and dark web forums of an earlier era. Those were either subject to domestic regulation or too hard to get into.
+
+## The demand side: who buys this
+
+- Online mobs and factional fights: fandom wars, gaming disputes, forum rivalries. The Chinese term for doxxing, 开盒, came out of exactly this setting
+- Personal revenge between ex-partners, classmates and colleagues
+- Stalking and harassment, the most dangerous category, because it puts people in physical danger
+- Upstream of telecom fraud: precise scams need precise information, and "we know which school your child attends" comes from here
+- Aggressive debt collection and corporate investigation
+
+One striking pattern in recent reporting is how many of the people doing the doxxing are minors. They treat it as the ultimate weapon in an online argument, with little grasp of the consequences, while the target absorbs real harassment, real threats, and sometimes real offline harm.
+
+## Why this is hard to govern
+
+The legal framework is not the missing piece. The Personal Information Protection Law, the Data Security Law and the Cybersecurity Law, together with Article 253(a) of the Criminal Law, carry meaningful penalties. The Cyberspace Administration has also made doxxing a focus of its work on online violence in recent years.
+
+The difficulty is elsewhere.
+
+1. **The sources are extremely dispersed.** There is no single hole to plug, there are thousands of privileged job roles
+2. **The existing data is already out.** More than a decade of leaks is already in the databases. Even if every new leak stopped today, what is already there remains queryable
+3. **Cross-border enforcement.** The platform is outside the jurisdiction
+4. **A structural problem in how permissions were designed.** Many systems assumed from the start that front-line staff need broad query rights, with no principle of least privilege and no after-the-fact audit
+5. **Individuals have no practical remedy.** The law grants rights to deletion and disclosure, but exercising them costs far more than it is worth, and you have no way of knowing which databases hold your data in the first place
+
+## What an individual can do
+
+==Individual defence can only do so much against a structure like this==, but it still lowers your chances of being hit precisely.
+
+- Tier your phone numbers. Keep the main one for banking, government services and other necessities, and never use it to register apps. Use a second number for social, shopping and food delivery
+- Same for email, and in particular avoid registering everywhere with the same address prefix, which hands over the join key for free
+- Use masked numbers and pickup points for parcels, and do not write your real name or a precise apartment number
+- Post less that can be cross-referenced to a location: the shops you frequent, the look of your building, your child's school uniform, your work badge, your licence plate
+- Reduce linkage between your accounts. The same handle and the same avatar across platforms is the easiest thread for a human to pull, no database required
+
+If you have already been doxxed: preserve evidence immediately (screenshots, screen recordings, saved links), report it to the platform, and file a police report explicitly citing infringement of personal information or the offence of picking quarrels. Contact the Cyberspace Administration's reporting channels if needed. Where the harassment involves threats to a person's safety, it is chargeable as a crime.
+
+## The other angle: what these databases mean for attackers
+
+There is a saying in the field: the first phase of an attack is not the attack, it is reconnaissance. These databases have driven the cost of that phase to nearly zero.
+
+### Against individuals
+
+**Identity verification is bypassed.** The questions that banks, carriers and platform support desks use to verify you, name, ID number, most recent transaction, usual address, mother's name, are all ready-made fields in these databases. The whole mechanism assumes only you know the answers. That assumption no longer holds.
+
+The clearest consequence is the SIM swap: an attacker walks into a shop or calls support with your identity details, has your number reissued to a new SIM, and every SMS code now arrives on their phone. This is why 2FA should go through an authenticator app rather than text messages.
+
+**Password guessing gets sharper.** Knowing your birthday, your spouse's and children's birthdays, your licence plate, your pet's name and your home town lets an attacker generate a targeted wordlist. For a lot of people, the password is some combination of exactly those things.
+
+**Security questions simply stop working.** "Your mother's name", "the secondary school you attended": these are plaintext fields.
+
+**Phishing becomes credible.** An email that knows your real name, your employer, your job title and what you bought last week gets opened at a rate orders of magnitude above "Dear valued customer".
+
+### Against companies
+
+This is the more serious threat model.
+
+**Mapping the attack surface.** Filter the leaked data for one company's staff emails, names, job titles and phone numbers and you have a complete target list. Who handles finance, who is in HR, who has production access: all visible at a glance.
+
+**Spear phishing and BEC.** Knowing the org chart lets you fake a reporting relationship. Business Email Compromise turns entirely on knowing who reports to whom and who can authorise a payment. Losses from this category have exceeded ransomware for years.
+
+**Vishing and IT helpdesk impersonation.** The initial foothold in several large breaches in recent years was a phone call: pose as internal IT support, use the personal details you already hold to establish trust, and talk the employee into handing over credentials or approving an MFA push. These databases make the trust-building step easy. MFA fatigue attacks likewise need a working set of credentials first, and those usually come from credential stuffing.
+
+### The loop closes
+
+```
+institutional leak → aggregation → credential stuffing links identities → full profile
+                                                                    ↓
+                                          used for doxxing (harms a person)
+                                          used for social engineering (breaches an org)
+                                                                    ↓
+                                                    new leaks → fed back into the databases
+```
+
+The output of one leak becomes the tooling for the next. That is why it compounds, and why a leak can never really be undone. It is not just that information became known; it is a permanent increase in attack capability.
+
+### How to defend
+
+Technology alone does not solve this.
+
+At the organisational level:
+
+- Identity verification cannot rest on knowledge factors (what you know). It has to move to possession factors (what device you hold) and biometrics
+- High-risk actions (changing the bound phone number, large transfers, resetting privileges) need out-of-band confirmation and a delay
+- Security awareness training has to include one specific lesson: someone knowing your personal details does not make them an insider
+- Treat leaks of your own employees' data as threat intelligence and monitor for them
+
+At the technical level:
+
+- Passkeys and FIDO2 hardware keys are immune to phishing by design, because the credential is bound to the domain and a fake site cannot use it
+- Port-out locks on phone numbers, and carrier-side secondary verification before reissuing a SIM
+- Behavioural anomaly detection rather than static rules
+
+At the personal level:
+
+- Answer security questions with deliberate lies and store them in a password manager as a second password. This is one of the few changes that works immediately
+- Keep SMS 2FA off your important accounts
+- Shrink the publicly linkable surface
+
+## How this compares elsewhere
+
+**No universal identity number.** The American SSN and the various European identity numbers are nowhere near as broadly adopted or as deeply bound as the Chinese national ID. Without that master key, joining records across databases means fuzzy matching on name plus date of birth plus address, which is far less accurate and falls apart on common names.
+
+**Weaker real-name requirements.** SIM cards, online accounts, hotels and transport largely do not require verified identity, which breaks the single most important link: phone number to real person. Prepaid SIMs are anonymous in many countries.
+
+**The data is not centralised.** There is no national household registration system. American records are spread across 50 states and thousands of counties in inconsistent formats.
+
+**Family ties are not a ready-made field.** This is the biggest difference. Chinese household registration is organised by household and one lookup returns the whole family. Elsewhere you have to infer relationships from marriage records, obituaries and shared-address history, which is laborious and error-prone.
+
+**Regulatory pressure has teeth.** GDPR fines reach 4% of global revenue, and California's CCPA sees real enforcement. Compliance spending by companies is real money, and breach notification is mandatory.
+
+<aside class="note" id="note-healthcode-en">
+  <h3>Why the pandemic-era systems were so poorly secured</h3>
+
+  <p>The problem was not that it could not be done technically. It was how these systems were built.</p>
+
+  <p><strong>First, time.</strong> In early 2020 many of these systems went live within two weeks, sometimes within days. Security design, permission models and audit logging are the first things cut on that timescale.</p>
+
+  <p><strong>Second, extreme fragmentation.</strong> The health code was never one national system. Provinces, cities and districts each built their own, and some neighbourhoods and subdistricts put together their own mini-programs and spreadsheets on top. Thousands of related systems ran simultaneously, built by a long tail of small local vendors. Overall security is set by the worst of them.</p>
+
+  <p><strong>Third, who handled the data.</strong> The people doing the work were community staff, hastily recruited volunteers and seconded officials. No background checks, no data security training, no operational auditing. Paper forms, spreadsheets passed around in WeChat groups, photos of ID cards taken on personal phones: these were the normal working methods at the time, not isolated lapses.</p>
+
+  <p><strong>Fourth, checking necessarily required broad access.</strong> To verify people at the entrance of a residential compound or a shopping centre, the most junior staff have to be able to read an individual's status. Least privilege is very hard to apply in that setting.</p>
+
+  <h3>Documented incidents with official outcomes</h3>
+
+  <p><strong>The Zhengzhou red-code incident (June 2022).</strong> Depositors at rural banks were preparing to travel to Zhengzhou to protest, and someone locally flipped their health codes to red to restrict their movement. After investigation, the Henan provincial disciplinary commission sanctioned several officials, including a deputy secretary of the Zhengzhou political and legal affairs commission who was removed from office. This is an officially confirmed and publicly reported case, and the most direct evidence of function creep: a system used for something other than what it was designed for.</p>
+
+  <p><strong>Contact-tracing data leaks.</strong> In December 2020 the full contact-tracing record of a 20-year-old woman in Chengdu was posted online. She was subjected to a large-scale online pile-on and personal attacks, and the person who leaked it received an administrative penalty. Similar cases occurred in Shenyang and Qingdao, all with published outcomes. The pattern is consistent: the leaker is usually a front-line worker with legitimate read access, and the motive may be nothing more than sharing it in a group chat.</p>
+
+  <p><strong>Xi'an's health-code system crashed twice (January 2022).</strong> An availability failure rather than a leak, but it exposed the engineering quality of this class of system. The head of the Xi'an big data administration was suspended over it.</p>
+
+  <h3>What happened to the data afterwards</h3>
+
+  <p>After the policy shift in December 2022, the travel-history card was retired on 13 December and the three carriers announced they would delete the associated data. Health codes were withdrawn region by region, and some provinces and cities stated the data would be destroyed or sealed.</p>
+
+  <p>But there is a structural problem here: <strong>deletion cannot be verified.</strong></p>
+
+  <p>The reason goes back to fragmentation. There were thousands of systems and hundreds of contractors. Development, testing and operations produced large numbers of intermediate copies and backups, and at ground level there were paper records and spreadsheets scattered across personal devices. Even if the top-level systems really were wiped, nothing tracks those downstream copies, and there is no independent third-party audit.</p>
+
+  <p>The Personal Information Protection Law took effect in November 2021, halfway through the life of this apparatus. There is a legal basis for demanding deletion, but building the machinery to enforce and verify it at this scale and this degree of dispersion is very hard.</p>
+</aside>
+
+</div>

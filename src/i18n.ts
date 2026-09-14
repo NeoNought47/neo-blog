@@ -120,6 +120,12 @@ export const UI = {
     title: { zh: "这篇有英文正文", en: "Full English version available" },
   },
 
+  /** 有英文正文时，正文顶上那一句。中英各提示对方那版 */
+  langHint: {
+    zh: '这篇有完整英文版，点右上角 <b>EN</b> 切换。',
+    en: 'This post also has a full Chinese version. Use the <b>中</b> toggle at the top right.',
+  },
+
   /** 首次切到英文时弹一次，说明翻译覆盖到什么程度 */
   enNotice: {
     body:
