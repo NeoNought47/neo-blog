@@ -39,10 +39,6 @@ export const UI = {
   music: {
     title: { zh: "在听", en: "On Rotation" },
     count: { zh: "{n} 首", en: "{n} tracks" },
-    lead: {
-      zh: "单曲为单位，想起来就加一首。点封面或曲名跳到能听的地方。",
-      en: "One track at a time, added whenever something sticks. The cover and the title link out to somewhere you can hear it.",
-    },
     /** 侧栏卡片的标题 */
     recent: { zh: "最近在听", en: "On Rotation" },
     viewAll: { zh: "全部 →", en: "All →" },

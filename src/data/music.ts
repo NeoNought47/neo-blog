@@ -31,9 +31,9 @@ export interface Track {
   };
   /** 加进列表的日期 YYYY-MM-DD */
   added: string;
-  /** 一两句你自己的话 */
-  zh: string;
-  en: string;
+  /** 想说点什么就写，不写就只显示曲名和艺人。写了就中英各来一份 */
+  zh?: string;
+  en?: string;
 }
 
 export const PLATFORM_LABEL: Record<string, string> = {
@@ -54,8 +54,6 @@ export const TRACKS: Track[] = [
     year: 2010,
     genres: ["Synthwave", "Electronic"],
     added: "2026-09-18",
-    zh: "开头那段合成器一进来就知道要开夜车了。副歌那句变声处理听了十几年还是觉得聪明。",
-    en: "You know a night drive is coming the moment that synth line starts. The vocoded chorus still sounds like a clever idea after a decade.",
   },
   {
     title: "Teardrop",
@@ -64,8 +62,6 @@ export const TRACKS: Track[] = [
     year: 1998,
     genres: ["Trip Hop"],
     added: "2026-09-18",
-    zh: "那个心跳一样的鼓点是整首歌的地基。Elizabeth Fraser 的声音飘在上面，两层几乎不在同一个空间里。",
-    en: "That heartbeat of a drum pattern is the whole foundation. Elizabeth Fraser's voice floats above it, as though the two were recorded in different rooms.",
   },
   {
     title: "青春",
@@ -74,8 +70,6 @@ export const TRACKS: Track[] = [
     year: 2011,
     genres: ["Post-rock", "古琴"],
     added: "2026-09-18",
-    zh: "古琴接进后摇的结构里，听着不像拼贴，是真的长在一起的。中段那段渐强每次都顶到该顶的位置。",
-    en: "Guqin folded into a post-rock structure without sounding like a collage. The crescendo in the middle lands exactly where it should, every time.",
   },
 ];
 

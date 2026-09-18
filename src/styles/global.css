@@ -2505,7 +2505,7 @@ a.tag:hover {
   font-size: 1.05rem;
 }
 
-.music__lead {
+.music__empty {
   margin: 0 0 1.4rem;
   font-size: 0.92rem;
   line-height: 1.85;
@@ -2528,7 +2528,8 @@ a.tag:hover {
   grid-template-columns: 104px minmax(0, 1fr);
   gap: 1.1rem;
   padding: 1.2rem 0;
-  align-items: start;
+  /* 没写评语时文字比封面矮一截，居中比顶对齐看着稳 */
+  align-items: center;
 }
 
 .track + .track {

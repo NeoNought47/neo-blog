@@ -38,13 +38,9 @@ for (const t of tracks) {
   </section>
 
   <div class="narrow" style="padding-bottom:3rem">
-    <p class="music__lead">
-      <T zh={UI.music.lead.zh} en={UI.music.lead.en} />
-    </p>
-
     {
       tracks.length === 0 && (
-        <p class="music__lead"><T zh={UI.music.empty.zh} en={UI.music.empty.en} /></p>
+        <p class="music__empty"><T zh={UI.music.empty.zh} en={UI.music.empty.en} /></p>
       )
     }
 
@@ -92,9 +88,11 @@ for (const t of tracks) {
                       {t.year && (<><span class="dot" />{t.year}</>)}
                     </p>
 
-                    <p class="track__note">
-                      <T zh={t.zh} en={t.en} />
-                    </p>
+                    {t.zh && (
+                      <p class="track__note">
+                        <T zh={t.zh} en={t.en ?? t.zh} />
+                      </p>
+                    )}
 
                     <div class="track__foot">
                       {t.genres?.slice(0, 3).map((g) => <span class="track__genre">{g}</span>)}
