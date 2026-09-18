@@ -15,7 +15,7 @@ export interface Track {
   artist: string;
   /** 出自哪张专辑，单曲发行的可以不写 */
   album?: string;
-  /** 发行年份 */
+  /** 这首歌自己的发行年份，不是专辑的。Nightcall 单曲 2010，OutRun 专辑到 2013 才出 */
   year?: number;
   /** 风格，最多显示三个 */
   genres?: string[];
@@ -46,29 +46,20 @@ export const PLATFORM_LABEL: Record<string, string> = {
 
 /** 新的加在最前面 */
 export const TRACKS: Track[] = [
-  // ⚠️ 下面三条是占位示例，用来看版式。换成你自己的之后把这行注释删掉。
+  {
+    title: "Smooth Criminal",
+    artist: "Michael Jackson",
+    album: "Bad",
+    year: 1988,
+    genres: ["Pop", "Funk"],
+    added: "2026-09-18",
+  },
   {
     title: "Nightcall",
     artist: "Kavinsky",
     album: "OutRun",
     year: 2010,
     genres: ["Synthwave", "Electronic"],
-    added: "2026-09-18",
-  },
-  {
-    title: "Teardrop",
-    artist: "Massive Attack",
-    album: "Mezzanine",
-    year: 1998,
-    genres: ["Trip Hop"],
-    added: "2026-09-18",
-  },
-  {
-    title: "青春",
-    artist: "沼泽",
-    album: "沧浪之水",
-    year: 2011,
-    genres: ["Post-rock", "古琴"],
     added: "2026-09-18",
   },
 ];
