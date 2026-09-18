@@ -1,0 +1,124 @@
+---
+import Base from "../layouts/Base.astro";
+import TrackCover from "../components/TrackCover.astro";
+import { UI, fill, formatDateBoth } from "../i18n";
+import T from "../components/T.astro";
+import { sortedTracks, PLATFORM_LABEL, type Track } from "../data/music";
+
+const tracks = sortedTracks();
+
+/** 按加入的月份分组，一个月一小段 */
+const groups: { key: string; zh: string; en: string; items: Track[] }[] = [];
+for (const t of tracks) {
+  const d = new Date(`${t.added}T00:00:00`);
+  const key = `${d.getFullYear()}-${d.getMonth() + 1}`;
+  let g = groups.find((x) => x.key === key);
+  if (!g) {
+    g = {
+      key,
+      zh: `${d.getFullYear()} 年 ${d.getMonth() + 1} 月`,
+      en: d.toLocaleDateString("en-GB", { month: "long", year: "numeric" }),
+      items: [],
+    };
+    groups.push(g);
+  }
+  g.items.push(t);
+}
+---
+
+<Base title="在听" description="听到觉得好的单曲，攒在这里。">
+  <section class="hero page" style="padding-bottom:1rem">
+    <span class="hero__eyebrow">
+      <T
+        zh={fill(UI.music.count.zh, { n: tracks.length })}
+        en={fill(UI.music.count.en, { n: tracks.length })}
+      />
+    </span>
+    <h1 class="hero__title"><T zh={UI.music.title.zh} en={UI.music.title.en} /></h1>
+  </section>
+
+  <div class="narrow" style="padding-bottom:3rem">
+    <p class="music__lead">
+      <T zh={UI.music.lead.zh} en={UI.music.lead.en} />
+    </p>
+
+    {
+      tracks.length === 0 && (
+        <p class="music__lead"><T zh={UI.music.empty.zh} en={UI.music.empty.en} /></p>
+      )
+    }
+
+    {
+      groups.map((g) => (
+        <section>
+          <h2 class="archive-year music__month">
+            <T zh={g.zh} en={g.en} />
+          </h2>
+          <ul class="tracks">
+            {g.items.map((t) => {
+              const d = formatDateBoth(new Date(`${t.added}T00:00:00`));
+              const platforms = Object.entries(t.links ?? {}).filter(([, url]) => url);
+              const primary = platforms[0]?.[1];
+              return (
+                <li class="track reveal">
+                  {primary ? (
+                    <a class="track__art" href={primary} target="_blank" rel="noopener noreferrer">
+                      <TrackCover track={t} size={104} />
+                    </a>
+                  ) : (
+                    <span class="track__art"><TrackCover track={t} size={104} /></span>
+                  )}
+
+                  <div class="track__body">
+                    <h3 class="track__title">
+                      {primary ? (
+                        <a href={primary} target="_blank" rel="noopener noreferrer">{t.title}</a>
+                      ) : (
+                        t.title
+                      )}
+                    </h3>
+
+                    <p class="track__by">
+                      <span class="track__artist">{t.artist}</span>
+                      {t.album && (
+                        <>
+                          <span class="dot" />
+                          <span class="track__album">
+                            <T zh={UI.music.from.zh} en={UI.music.from.en} />
+                            {" "}<i>{t.album}</i>
+                          </span>
+                        </>
+                      )}
+                      {t.year && (<><span class="dot" />{t.year}</>)}
+                    </p>
+
+                    <p class="track__note">
+                      <T zh={t.zh} en={t.en} />
+                    </p>
+
+                    <div class="track__foot">
+                      {t.genres?.slice(0, 3).map((g) => <span class="track__genre">{g}</span>)}
+                      {platforms.map(([k, url]) => (
+                        <a
+                          class="track__link"
+                          href={url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {PLATFORM_LABEL[k] ?? k}
+                        </a>
+                      ))}
+                      <time class="track__added" datetime={t.added}>
+                        <T zh={d.zh} en={d.en} />
+                      </time>
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+</Base>

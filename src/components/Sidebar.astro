@@ -3,6 +3,8 @@ import { Image } from "astro:assets";
 import { SITE } from "../consts";
 import { UI, formatDateBoth } from "../i18n";
 import { getCover, getFallback } from "../lib/covers";
+import { recentTracks } from "../data/music";
+import TrackCover from "./TrackCover.astro";
 import type { Post } from "../lib/posts";
 import T from "./T.astro";
 
@@ -15,6 +17,8 @@ interface Props {
 }
 
 const { posts, tags, images, recent } = Astro.props;
+
+const nowPlaying = recentTracks(3);
 
 const recentWithCover = await Promise.all(
   recent.map(async (p) => {
@@ -79,6 +83,32 @@ const recentWithCover = await Promise.all(
       }
     </ul>
   </div>
+
+  {
+    nowPlaying.length > 0 && (
+      <div class="side__card side__card--flush">
+        <span class="side__label side__label--row">
+          <T zh={UI.music.recent.zh} en={UI.music.recent.en} />
+          <a class="side__more" href="/music">
+            <T zh={UI.music.viewAll.zh} en={UI.music.viewAll.en} />
+          </a>
+        </span>
+        <ul class="np">
+          {nowPlaying.map((t) => (
+            <li class="np__item">
+              <a class="np__art" href="/music" tabindex="-1" aria-hidden="true">
+                <TrackCover track={t} size={44} />
+              </a>
+              <div class="np__info">
+                <a class="np__title" href="/music">{t.title}</a>
+                <span class="np__artist">{t.artist}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
 
   <div class="side__card side__card--shop">
     <span class="side__label"><T zh="到店" en="Visit" /></span>

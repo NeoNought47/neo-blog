@@ -20,6 +20,7 @@ export const SITE = {
     { href: "/", label: "首页", labelEn: "Home" },
     { href: "/archive", label: "归档", labelEn: "Archive" },
     { href: "/tags", label: "标签", labelEn: "Tags" },
+    { href: "/music", label: "音乐", labelEn: "Music" },
     { href: "/about", label: "关于", labelEn: "About" },
   ],
 } as const;

@@ -22,6 +22,26 @@ export const KIND_LABEL: Record<LogKind, { zh: string; en: string }> = {
 
 export const CHANGELOG: LogEntry[] = [
   {
+    date: "2026-09-18",
+    kind: "feature",
+    zh: {
+      title: "加了音乐板块",
+      items: [
+        "新开 /music，以单曲为单位，一条记曲名、艺人、出自哪张专辑、风格和一两句自己的话，按加进来的月份分组。",
+        "封面和曲名链到 Spotify、Apple Music、网易云这些地方，没有嵌播放器，不引第三方脚本。没放封面的会垫一块带首字母的底。",
+        "首页侧栏多一张「最近在听」小卡，显示最新三首。",
+      ],
+    },
+    en: {
+      title: "Added a music section",
+      items: [
+        "A new /music page, one track per entry, with the title, artist, source album, genres and a line or two of my own, grouped by the month it was added.",
+        "Covers and titles link out to Spotify, Apple Music, NetEase and the like. No embedded players and no third-party scripts. Entries without a cover get a lettered placeholder tile.",
+        "The homepage sidebar gained an On Rotation card showing the three most recent.",
+      ],
+    },
+  },
+  {
     date: "2026-09-15",
     kind: "feature",
     zh: {

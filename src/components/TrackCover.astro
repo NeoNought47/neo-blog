@@ -1,0 +1,30 @@
+---
+import { Image } from "astro:assets";
+import { getCover, coverLetter, type Track } from "../data/music";
+
+interface Props {
+  track: Track;
+  /** 渲染尺寸，同时决定生成多大的图 */
+  size: number;
+}
+
+const { track, size } = Astro.props;
+const cover = getCover(track);
+---
+
+{
+  cover ? (
+    <Image
+      class="tcover"
+      src={cover}
+      alt=""
+      width={size * 2}
+      height={size * 2}
+      loading="lazy"
+      layout="none"
+    />
+  ) : (
+    /* 没封面就垫一块底，放首字母，比留空白好看 */
+    <span class="tcover tcover--ph" aria-hidden="true">{coverLetter(track)}</span>
+  )
+}
