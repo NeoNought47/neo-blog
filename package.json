@@ -7,7 +7,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "new": "node scripts/new-post.mjs",
-    "from-heic": "node scripts/from-heic.mjs"
+    "from-heic": "node scripts/from-heic.mjs",
+    "import-obsidian": "node scripts/import-obsidian.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.8",
