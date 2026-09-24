@@ -1,5 +1,5 @@
 ---
-title: "小迪安全 006：抓包技术"
+title: "小迪安全 006：抓包技术&HTTPS协议&APP&小程序&PC应用&WEB&转发联动"
 titleEn: "XiaoDi Security 006: Packet Capture"
 date: 2026-08-13T10:00:00
 tags: ["Cybersecurity", "Learning Notes"]
