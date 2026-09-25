@@ -2491,6 +2491,99 @@ a.tag:hover {
   transform: translateX(4px);
 }
 
+/* ---- 首页右下角的「我的电脑」 ---- */
+.launcher {
+  position: fixed;
+  right: max(1.4rem, env(safe-area-inset-right));
+  bottom: max(1.4rem, env(safe-area-inset-bottom));
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.45rem 0.5rem 0.4rem;
+  border-radius: 14px;
+  text-decoration: none;
+  transition: transform 0.3s var(--ease), background-color 0.3s var(--ease);
+}
+
+.launcher__icon {
+  width: 64px;
+  height: 64px;
+  filter: drop-shadow(0 4px 8px rgba(58, 42, 34, 0.18));
+  transition: transform 0.3s var(--ease);
+}
+
+.launcher__label {
+  padding: 0.05rem 0.4rem;
+  border-radius: 4px;
+  font-family: Tahoma, "PingFang SC", sans-serif;
+  font-size: 0.72rem;
+  color: var(--text);
+  text-shadow: 0 1px 0 color-mix(in srgb, var(--bg) 70%, transparent);
+  transition: background-color 0.25s var(--ease), color 0.25s var(--ease);
+}
+
+/* 悬浮时学 XP 桌面图标被选中的样子：文字底变蓝，图标往上抬一点 */
+.launcher:hover .launcher__icon,
+.launcher:focus-visible .launcher__icon {
+  transform: translateY(-3px);
+}
+
+.launcher:hover .launcher__label,
+.launcher:focus-visible .launcher__label {
+  background: #316ac5;
+  color: #fff;
+  text-shadow: none;
+}
+
+.launcher:focus-visible {
+  outline: 1px dotted var(--text-muted);
+  outline-offset: 2px;
+}
+
+/* 仿 XP 的黄色气泡提示 */
+.launcher__tip {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 0.35rem);
+  padding: 0.35rem 0.6rem;
+  border: 1px solid #000;
+  border-radius: 6px;
+  background: #ffffe1;
+  font-family: Tahoma, "PingFang SC", sans-serif;
+  font-size: 0.72rem;
+  white-space: nowrap;
+  color: #000;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transform: translateY(4px);
+  pointer-events: none;
+  transition: opacity 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.launcher:hover .launcher__tip,
+.launcher:focus-visible .launcher__tip {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 620px) {
+  .launcher__icon {
+    width: 46px;
+    height: 46px;
+  }
+
+  .launcher__label {
+    font-size: 0.66rem;
+  }
+
+  /* 手机上没有悬停，提示气泡只会挡字 */
+  .launcher__tip {
+    display: none;
+  }
+}
+
 /* ---- 音乐 ---- */
 /* 封面统一用这一个类，有图是 <img>，没图是一块带首字母的底 */
 .tcover {

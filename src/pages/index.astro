@@ -7,6 +7,7 @@ import { getPosts, getRecent, getTags } from "../lib/posts";
 import { countImages } from "../lib/covers";
 import { UI, fill } from "../i18n";
 import T from "../components/T.astro";
+import Win98Launcher from "../components/Win98Launcher.astro";
 
 const posts = await getPosts();
 const tags = await getTags();
@@ -68,4 +69,5 @@ const rest = posts.slice(FEATURED);
       </a>
     </div>
   </div>
+  <Win98Launcher />
 </Base>

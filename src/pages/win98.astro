@@ -1,0 +1,559 @@
+---
+/**
+ * Windows 98 风格的首页预览。独立页面，不走 Base 布局、不加载 global.css，
+ * 所以不会影响现在的站。数据和真站一样：真实的文章、标签、图片数、音乐。
+ * 没有挂在导航里，只能直接访问 /win98。
+ */
+import { Image, getImage } from "astro:assets";
+import { getPosts, getTags, readingTime } from "../lib/posts";
+import { getCover, getFallback, countImages } from "../lib/covers";
+import { sortedTracks } from "../data/music";
+import { SITE } from "../consts";
+import avatar from "../assets/site/avatar.png";
+
+const posts = await getPosts();
+const tags = await getTags();
+const tracks = sortedTracks();
+
+/** Win98 资源管理器里日期是 2026-9-24 这种不补零的写法 */
+const d98 = (d: Date) => `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+
+const rows = await Promise.all(
+  posts.map(async (p) => {
+    const cover = (await getCover(p)) ?? getFallback(p);
+    const thumb = cover ? (await getImage({ src: cover, width: 360 })).src : "";
+    const kb = Math.max(1, Math.round(new TextEncoder().encode(p.body ?? "").length / 1024));
+    return {
+      href: `/posts/${p.id}`,
+      title: p.data.title,
+      date: d98(p.data.date),
+      tag: p.data.tags[0] ?? "文档",
+      tags: p.data.tags.join("，"),
+      size: `${kb} KB`,
+      mins: readingTime(p.body ?? ""),
+      thumb,
+    };
+  }),
+);
+const first = rows[0];
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{SITE.title} 98</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+
+  <body class="w98">
+    <main class="desk" id="desk">
+      {/* ---------- 桌面图标 ---------- */}
+      <nav class="icons" aria-label="桌面">
+        <a class="icon" href="/">
+          <svg viewBox="0 0 16 16"><rect x="2" y="1" width="12" height="9" fill="#dfdfdf"/><rect x="2" y="1" width="12" height="1" fill="#fff"/><rect x="13" y="1" width="1" height="9" fill="#404040"/><rect x="2" y="9" width="12" height="1" fill="#404040"/><rect x="3" y="2" width="10" height="7" fill="#000080"/><rect x="4" y="3" width="4" height="1" fill="#1084d0"/><rect x="6" y="10" width="4" height="2" fill="#808080"/><rect x="3" y="12" width="10" height="3" fill="#c0c0c0"/><rect x="3" y="14" width="10" height="1" fill="#404040"/><rect x="11" y="13" width="1" height="1" fill="#00c000"/></svg>
+          <span>我的电脑</span>
+        </a>
+        <a class="icon" href="/archive">
+          <svg viewBox="0 0 16 16"><rect x="1" y="3" width="6" height="2" fill="#d8b040"/><rect x="1" y="4" width="14" height="10" fill="#f8d860"/><rect x="1" y="4" width="14" height="1" fill="#fff4b0"/><rect x="1" y="13" width="14" height="1" fill="#906800"/><rect x="14" y="4" width="1" height="10" fill="#906800"/><rect x="3" y="7" width="10" height="5" fill="#fff" opacity=".35"/></svg>
+          <span>我的文档</span>
+        </a>
+        <a class="icon" href="/tags">
+          <svg viewBox="0 0 16 16"><rect x="2" y="4" width="9" height="8" fill="#ffff80"/><rect x="11" y="5" width="1" height="6" fill="#ffff80"/><rect x="12" y="6" width="1" height="4" fill="#ffff80"/><rect x="13" y="7" width="1" height="2" fill="#ffff80"/><rect x="2" y="12" width="9" height="1" fill="#808000"/><rect x="4" y="7" width="2" height="2" fill="#808000"/></svg>
+          <span>标签</span>
+        </a>
+        <a class="icon" href="/music">
+          <svg viewBox="0 0 16 16"><rect x="4" y="1" width="8" height="14" fill="#d0d0e8"/><rect x="2" y="3" width="12" height="10" fill="#d0d0e8"/><rect x="1" y="5" width="14" height="6" fill="#d0d0e8"/><rect x="9" y="3" width="3" height="3" fill="#ffc0f0"/><rect x="3" y="9" width="3" height="3" fill="#c0f0ff"/><rect x="6" y="6" width="4" height="4" fill="#808080"/><rect x="7" y="7" width="2" height="2" fill="#008080"/></svg>
+          <span>CD 播放器</span>
+        </a>
+        <a class="icon" href="/about">
+          <svg viewBox="0 0 16 16"><rect x="3" y="1" width="10" height="14" fill="#fff"/><rect x="12" y="1" width="1" height="14" fill="#808080"/><rect x="3" y="14" width="10" height="1" fill="#808080"/><rect x="5" y="4" width="6" height="1" fill="#000080"/><rect x="5" y="6" width="6" height="1" fill="#000080"/><rect x="5" y="8" width="4" height="1" fill="#000080"/><rect x="5" y="10" width="6" height="1" fill="#000080"/></svg>
+          <span>关于 Neo.txt</span>
+        </a>
+        <a class="icon" href="/changelog">
+          <svg viewBox="0 0 16 16"><rect x="3" y="3" width="10" height="1" fill="#808080"/><rect x="6" y="2" width="4" height="1" fill="#808080"/><rect x="4" y="4" width="8" height="11" fill="#c0c0c0"/><rect x="4" y="4" width="1" height="11" fill="#fff"/><rect x="11" y="4" width="1" height="11" fill="#404040"/><rect x="6" y="6" width="1" height="7" fill="#808080"/><rect x="9" y="6" width="1" height="7" fill="#808080"/></svg>
+          <span>回收站</span>
+        </a>
+      </nav>
+
+      {/* ---------- 资源管理器：文章列表 ---------- */}
+      <section class="win win--explorer is-active" data-win="explorer" style="z-index:3">
+        <header class="w-title">
+          <svg class="w-ico" viewBox="0 0 16 16"><rect x="1" y="3" width="6" height="2" fill="#d8b040"/><rect x="1" y="4" width="14" height="10" fill="#f8d860"/><rect x="1" y="13" width="14" height="1" fill="#906800"/></svg>
+          <span class="w-name">C:\Neo's Buffet\Posts</span>
+          <span class="w-btns">
+            <button class="w-btn" data-act="min" aria-label="最小化"><i class="g-min"></i></button>
+            <button class="w-btn" data-act="max" aria-label="最大化"><i class="g-max"></i></button>
+            <button class="w-btn" data-act="close" aria-label="关闭"><i class="g-close">×</i></button>
+          </span>
+        </header>
+
+        <div class="menubar">
+          <span>文件(<u>F</u>)</span><span>编辑(<u>E</u>)</span><span>查看(<u>V</u>)</span><span>收藏(<u>A</u>)</span><span>帮助(<u>H</u>)</span>
+        </div>
+
+        <div class="toolbar">
+          <span class="tb"><b>⇦</b>后退</span>
+          <span class="tb tb--off"><b>⇨</b>前进</span>
+          <span class="tb"><b>⇧</b>向上</span>
+          <span class="tb-sep"></span>
+          <a class="tb" href="/tags"><b>▦</b>标签</a>
+          <a class="tb" href="/archive"><b>☰</b>归档</a>
+        </div>
+
+        <div class="addr">
+          <span>地址(<u>D</u>)</span>
+          <div class="field addr__field">
+            <svg class="w-ico" viewBox="0 0 16 16"><rect x="1" y="3" width="6" height="2" fill="#d8b040"/><rect x="1" y="4" width="14" height="10" fill="#f8d860"/></svg>
+            C:\Neo's Buffet\Posts
+            <span class="addr__drop">▾</span>
+          </div>
+        </div>
+
+        <div class="explorer">
+          {/* Win98 的「Web 视图」：左边一栏显示选中项的详情 */}
+          <aside class="webview">
+            <h2>Posts</h2>
+            <div class="webview__rule"></div>
+            <div class="webview__thumb field">
+              {first?.thumb && <img id="wv-img" src={first.thumb} alt="" />}
+            </div>
+            <p class="webview__title" id="wv-title">{first?.title}</p>
+            <p class="webview__meta">
+              修改时间：<span id="wv-date">{first?.date}</span><br />
+              分类：<span id="wv-tags">{first?.tags}</span><br />
+              大小：<span id="wv-size">{first?.size}</span>，约 <span id="wv-mins">{first?.mins}</span> 分钟
+            </p>
+            <a class="btn" id="wv-open" href={first?.href}>打开(<u>O</u>)</a>
+          </aside>
+
+          <div class="list field">
+            <table>
+              <thead>
+                <tr><th>名称</th><th class="r">大小</th><th>分类</th><th>修改时间</th></tr>
+              </thead>
+              <tbody id="rows">
+                {rows.map((r, i) => (
+                  <tr
+                    class={i === 0 ? "sel" : ""}
+                    tabindex="0"
+                    data-href={r.href}
+                    data-title={r.title}
+                    data-date={r.date}
+                    data-tags={r.tags}
+                    data-size={r.size}
+                    data-mins={r.mins}
+                    data-thumb={r.thumb}
+                  >
+                    <td class="name">
+                      <svg class="w-ico" viewBox="0 0 16 16"><rect x="3" y="1" width="10" height="14" fill="#fff"/><rect x="12" y="1" width="1" height="14" fill="#808080"/><rect x="3" y="14" width="10" height="1" fill="#808080"/><rect x="5" y="4" width="6" height="1" fill="#000080"/><rect x="5" y="7" width="6" height="1" fill="#000080"/><rect x="5" y="10" width="4" height="1" fill="#000080"/></svg>
+                      <span>{r.title}</span>
+                    </td>
+                    <td class="r">{r.size}</td>
+                    <td>{r.tag}</td>
+                    <td>{r.date}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <footer class="status">
+          <span class="field">{posts.length} 个对象</span>
+          <span class="field">{countImages()} 张图片，{tags.length} 个分类</span>
+          <span class="field status__grow">All you can eat · 双击打开</span>
+        </footer>
+      </section>
+
+      {/* ---------- 关于 ---------- */}
+      <section class="win win--about" data-win="about" style="z-index:2">
+        <header class="w-title">
+          <span class="w-name">关于 Neo</span>
+          <span class="w-btns">
+            <button class="w-btn" data-act="close" aria-label="关闭"><i class="g-close">×</i></button>
+          </span>
+        </header>
+        <div class="about">
+          <Image class="about__avatar" src={avatar} alt="Neo" width={96} height={96} layout="none" />
+          <div>
+            <p class="about__name">Neo's Buffet Infinity 98</p>
+            <p>第二版 (SE)</p>
+            <p>注册给：<b>Neo</b></p>
+          </div>
+        </div>
+        <div class="rule"></div>
+        <dl class="stats">
+          <dt>文章：</dt><dd class="field">{posts.length}</dd>
+          <dt>分类：</dt><dd class="field">{tags.length}</dd>
+          <dt>图片：</dt><dd class="field">{countImages()}</dd>
+        </dl>
+        <div class="dlg-btns">
+          <a class="btn btn--default" href="/about">确定</a>
+        </div>
+      </section>
+
+      {/* ---------- CD 播放器 ---------- */}
+      <section class="win win--cd" data-win="cd" style="z-index:1">
+        <header class="w-title">
+          <span class="w-name">CD 播放器</span>
+          <span class="w-btns">
+            <button class="w-btn" data-act="min" aria-label="最小化"><i class="g-min"></i></button>
+            <button class="w-btn" data-act="close" aria-label="关闭"><i class="g-close">×</i></button>
+          </span>
+        </header>
+        <div class="cd">
+          <div class="cd__lcd" id="cd-lcd">[01] 00:00</div>
+          <div class="cd__keys">
+            <button class="btn btn--sq" id="cd-play" title="播放">▶</button>
+            <button class="btn btn--sq" id="cd-stop" title="停止">■</button>
+            <button class="btn btn--sq" id="cd-prev" title="上一首">|◀</button>
+            <button class="btn btn--sq" id="cd-next" title="下一首">▶|</button>
+          </div>
+        </div>
+        <dl class="cd__info">
+          <dt>艺术家：</dt><dd class="field" id="cd-artist">{tracks[0]?.artist}</dd>
+          <dt>标题：</dt><dd class="field" id="cd-album">{tracks[0]?.album ?? ""}</dd>
+          <dt>曲目：</dt><dd class="field" id="cd-title">{tracks[0]?.title}</dd>
+        </dl>
+        <script type="application/json" id="cd-data" set:html={JSON.stringify(tracks.map((t) => ({ a: t.artist, b: t.album ?? "", t: t.title })))} />
+      </section>
+
+      {/* ---------- 每日提示 ---------- */}
+      <section class="win win--tip" data-win="tip" style="z-index:1">
+        <header class="w-title">
+          <span class="w-name">欢迎</span>
+          <span class="w-btns">
+            <button class="w-btn" data-act="close" aria-label="关闭"><i class="g-close">×</i></button>
+          </span>
+        </header>
+        <div class="tip">
+          <div class="tip__bulb">💡</div>
+          <div class="tip__text field">
+            <b>你知道吗...</b>
+            <p>本店{SITE.shop.hours}。所有菜品都可以无限续盘，点开任意一篇就能开吃。</p>
+          </div>
+        </div>
+        <div class="dlg-btns dlg-btns--split">
+          <label><input type="checkbox" checked /> 每次启动时显示提示</label>
+          <button class="btn btn--default" data-act="close">关闭</button>
+        </div>
+      </section>
+    </main>
+
+    {/* ---------- 开始菜单 ---------- */}
+    <div class="start-menu" id="start-menu" hidden>
+      <div class="start-menu__banner"><b>Neo's Buffet</b>98</div>
+      <ul>
+        <li><a href="/"><span class="sm-ico">🖥</span>首页(<u>H</u>)</a></li>
+        <li><a href="/archive"><span class="sm-ico">📁</span>归档(<u>A</u>)</a></li>
+        <li><a href="/tags"><span class="sm-ico">🏷</span>标签(<u>T</u>)</a></li>
+        <li><a href="/music"><span class="sm-ico">💿</span>音乐(<u>M</u>)</a></li>
+        <li><a href="/about"><span class="sm-ico">📄</span>关于(<u>B</u>)</a></li>
+        <li class="sep"></li>
+        <li><a href="/changelog"><span class="sm-ico">📋</span>更新日志(<u>L</u>)</a></li>
+        <li class="sep"></li>
+        <li><a href="/"><span class="sm-ico">⏻</span>关闭系统，回到现代版(<u>U</u>)...</a></li>
+      </ul>
+    </div>
+
+    {/* ---------- 任务栏 ---------- */}
+    <footer class="taskbar">
+      <button class="btn start" id="start-btn">
+        <svg viewBox="0 0 16 16" class="flag"><rect x="1" y="2" width="6" height="5" fill="#e03020"/><rect x="8" y="1" width="6" height="5" fill="#30a030"/><rect x="1" y="8" width="6" height="5" fill="#2060e0"/><rect x="8" y="7" width="6" height="5" fill="#f0c000"/></svg>
+        <b>开始</b>
+      </button>
+      <span class="task-sep"></span>
+      <div class="tasks">
+        <button class="btn task" data-task="explorer">📁 Posts</button>
+        <button class="btn task" data-task="about">📄 关于 Neo</button>
+        <button class="btn task" data-task="cd">💿 CD 播放器</button>
+        <button class="btn task" data-task="tip">💡 欢迎</button>
+      </div>
+      <div class="tray field">
+        <span class="tray__lang">中</span>
+        <span id="clock">--:--</span>
+      </div>
+    </footer>
+
+    <style is:global>
+      /* 经典 Win98 配色和立体边。立体感全靠四层 inset 阴影，不用图片 */
+      .w98 {
+        --face: #c0c0c0;
+        --hi: #ffffff;
+        --light: #dfdfdf;
+        --shadow: #808080;
+        --dark: #0a0a0a;
+        --navy: #000080;
+        --raised: inset -1px -1px var(--dark), inset 1px 1px var(--hi), inset -2px -2px var(--shadow), inset 2px 2px var(--light);
+        --sunken: inset -1px -1px var(--hi), inset 1px 1px var(--shadow), inset -2px -2px var(--light), inset 2px 2px var(--dark);
+        --pressed: inset -1px -1px var(--hi), inset 1px 1px var(--dark), inset -2px -2px var(--light), inset 2px 2px var(--shadow);
+
+        margin: 0;
+        height: 100vh;
+        overflow: hidden;
+        background: #008080;
+        /* 中文 Win98 的系统字就是宋体 12px */
+        font: 12px/1.35 Tahoma, "Songti SC", SimSun, "宋体", sans-serif;
+        color: #000;
+        user-select: none;
+      }
+
+      .w98 * { box-sizing: border-box; }
+      .w98 a { color: inherit; text-decoration: none; }
+      .w98 u { text-decoration: underline; }
+      .w98 svg { shape-rendering: crispEdges; }
+      .w98 p { margin: 0; }
+
+      .desk { position: relative; height: calc(100vh - 30px); }
+
+      /* ---- 桌面图标 ---- */
+      .icons { position: absolute; top: 10px; left: 8px; display: flex; flex-direction: column; gap: 14px; width: 80px; }
+      .icon { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 2px; color: #fff; text-align: center; }
+      .icon svg { width: 32px; height: 32px; }
+      .icon span { padding: 1px 2px; }
+      .icon:focus, .icon:hover { outline: none; }
+      .icon:focus span, .icon:hover span { background: var(--navy); outline: 1px dotted #ff0; }
+      .icon:focus svg, .icon:hover svg { filter: sepia(1) saturate(4) hue-rotate(190deg) brightness(.7); }
+
+      /* ---- 窗口 ---- */
+      .win { position: absolute; display: flex; flex-direction: column; padding: 3px; background: var(--face); box-shadow: var(--raised); }
+      .win[hidden] { display: none; }
+      .win.is-max { inset: 0 !important; width: auto !important; height: auto !important; }
+
+      .w-title { display: flex; align-items: center; gap: 3px; height: 18px; padding: 0 2px 0 3px; background: linear-gradient(90deg, #808080, #b5b5b5); color: #dfdfdf; font-weight: bold; cursor: default; }
+      .win.is-active .w-title { background: linear-gradient(90deg, var(--navy), #1084d0); color: #fff; }
+      .w-name { flex: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+      .w-ico { width: 16px; height: 16px; flex: none; }
+      .w-btns { display: flex; gap: 0; }
+      .w-btn { width: 16px; height: 14px; padding: 0; border: 0; margin-left: 2px; background: var(--face); box-shadow: var(--raised); display: grid; place-items: center; cursor: pointer; }
+      .w-btns .w-btn + .w-btn[data-act="close"] { margin-left: 2px; }
+      .w-btn:active { box-shadow: var(--pressed); }
+      .w-btn i { font-style: normal; color: #000; }
+      .g-min { width: 6px; height: 2px; background: #000; margin-top: 6px; }
+      .g-max { width: 9px; height: 8px; border: 1px solid #000; border-top-width: 2px; }
+      .g-close { font: bold 13px/1 Arial, sans-serif; margin-top: -1px; }
+
+      /* 凹陷的输入框、列表底 */
+      .field { background: #fff; box-shadow: var(--sunken); }
+
+      .btn { display: inline-flex; align-items: center; justify-content: center; gap: 4px; min-width: 75px; height: 23px; padding: 0 10px; border: 0; background: var(--face); box-shadow: var(--raised); font: inherit; color: #000; cursor: pointer; }
+      .btn:active, .btn.is-down { box-shadow: var(--pressed); }
+      .btn--default { outline: 1px solid #000; outline-offset: -1px; }
+      .btn--sq { min-width: 30px; padding: 0; font-size: 11px; }
+
+      .rule { height: 2px; margin: 8px 6px; border-top: 1px solid var(--shadow); border-bottom: 1px solid var(--hi); }
+
+      /* ---- 资源管理器 ---- */
+      .win--explorer { top: 20px; left: 108px; width: min(780px, calc(100vw - 470px)); height: min(560px, calc(100vh - 80px)); }
+      .menubar { display: flex; gap: 2px; padding: 2px 2px 1px; }
+      .menubar span { padding: 1px 6px; }
+      .menubar span:hover { background: var(--navy); color: #fff; }
+      .toolbar { display: flex; align-items: center; gap: 2px; padding: 3px 2px; border-top: 1px solid var(--shadow); box-shadow: 0 1px 0 var(--hi) inset; }
+      .tb { display: flex; flex-direction: column; align-items: center; min-width: 48px; padding: 2px 6px; }
+      .tb b { font-size: 16px; line-height: 18px; color: #000080; }
+      .tb:hover { box-shadow: inset -1px -1px var(--shadow), inset 1px 1px var(--hi); }
+      .tb--off { color: var(--shadow); text-shadow: 1px 1px var(--hi); }
+      .tb--off b { color: var(--shadow); }
+      .tb-sep { width: 2px; height: 34px; margin: 0 3px; border-left: 1px solid var(--shadow); border-right: 1px solid var(--hi); }
+      .addr { display: flex; align-items: center; gap: 6px; padding: 3px 4px; border-top: 1px solid var(--shadow); box-shadow: 0 1px 0 var(--hi) inset; }
+      .addr__field { flex: 1; display: flex; align-items: center; gap: 4px; height: 22px; padding: 0 2px 0 4px; }
+      .addr__drop { margin-left: auto; width: 16px; height: 18px; display: grid; place-items: center; background: var(--face); box-shadow: var(--raised); font-size: 10px; }
+
+      .explorer { flex: 1; min-height: 0; display: flex; margin-top: 2px; }
+      .webview { width: 200px; flex: none; padding: 12px 12px; background: #fff; box-shadow: var(--sunken); overflow: auto; }
+      .webview h2 { margin: 0; font: bold 22px/1.1 Tahoma, "Songti SC", sans-serif; color: #000; }
+      .webview__rule { height: 3px; margin: 6px 0 10px; background: linear-gradient(90deg, #0000c0, #00c0ff, #fff); }
+      .webview__thumb { height: 150px; padding: 3px; margin-bottom: 8px; display: grid; place-items: center; overflow: hidden; }
+      .webview__thumb img { max-width: 100%; max-height: 100%; object-fit: contain; }
+      .webview__title { font-weight: bold; margin-bottom: 6px; line-height: 1.4; }
+      .webview__meta { color: #333; line-height: 1.7; margin-bottom: 10px; }
+
+      .list { flex: 1; min-width: 0; overflow: auto; margin-left: 2px; }
+      .list table { width: 100%; border-collapse: collapse; }
+      .list th { position: sticky; top: 0; height: 18px; padding: 0 6px; text-align: left; font-weight: normal; background: var(--face); box-shadow: var(--raised); white-space: nowrap; }
+      .list td { padding: 1px 6px; white-space: nowrap; cursor: default; }
+      .list .r { text-align: right; }
+      /* 名称列限宽，给大小、分类、日期留出位置 */
+      .list .name { display: flex; align-items: center; gap: 4px; max-width: 290px; }
+      .list .name span { overflow: hidden; text-overflow: ellipsis; }
+      .list tr:focus { outline: none; }
+      .list tr.sel td { background: var(--navy); color: #fff; }
+      .list tr.sel .name span { outline: 1px dotted #ff0; }
+
+      .status { display: flex; gap: 2px; margin-top: 2px; }
+      .status .field { height: 20px; padding: 2px 6px; background: transparent; box-shadow: inset -1px -1px var(--hi), inset 1px 1px var(--shadow); white-space: nowrap; }
+      .status__grow { flex: 1; }
+
+      /* ---- 关于 ---- */
+      .win--about { top: 20px; right: 20px; width: 330px; }
+      .about { display: flex; gap: 12px; align-items: center; padding: 12px 10px 4px; }
+      .about__avatar { width: 64px; height: 64px; box-shadow: var(--sunken); padding: 2px; background: #fff; image-rendering: pixelated; }
+      .about__name { font-weight: bold; font-size: 13px; }
+      .about p { margin-bottom: 2px; }
+      .stats, .cd__info { display: grid; grid-template-columns: auto 1fr; gap: 4px 6px; align-items: center; margin: 0 10px; }
+      .stats dd, .cd__info dd { margin: 0; height: 21px; padding: 2px 5px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+      .dlg-btns { display: flex; justify-content: flex-end; gap: 6px; padding: 10px; }
+      .dlg-btns--split { justify-content: space-between; align-items: center; }
+
+      /* ---- CD 播放器 ---- */
+      .win--cd { top: 262px; right: 20px; width: 330px; }
+      .cd { display: flex; gap: 8px; align-items: center; padding: 8px 10px; }
+      .cd__lcd { flex: 1; height: 44px; display: grid; place-items: center; background: #000; box-shadow: var(--sunken); color: #00ff00; font: bold 24px/1 "Courier New", monospace; letter-spacing: 1px; text-shadow: 0 0 4px #00c000; }
+      .cd__keys { display: grid; grid-template-columns: repeat(2, 30px); gap: 3px; }
+      .cd__info { padding-bottom: 10px; }
+
+      /* ---- 提示 ---- */
+      .win--tip { top: 470px; right: 20px; width: 330px; }
+      .tip { display: flex; gap: 10px; padding: 10px 10px 0; }
+      .tip__bulb { font-size: 30px; line-height: 1; }
+      .tip__text { flex: 1; padding: 8px; line-height: 1.6; }
+      .tip__text b { display: block; margin-bottom: 4px; font-size: 13px; }
+      .dlg-btns label { display: flex; align-items: center; gap: 4px; }
+
+      /* ---- 任务栏 ---- */
+      .taskbar { position: fixed; left: 0; right: 0; bottom: 0; height: 30px; display: flex; align-items: center; gap: 4px; padding: 2px 2px; background: var(--face); box-shadow: inset 0 1px var(--light), inset 0 2px var(--hi); z-index: 1000; }
+      .start { min-width: 0; padding: 0 5px; height: 24px; gap: 3px; }
+      .start .flag { width: 16px; height: 16px; }
+      .task-sep { width: 2px; height: 22px; border-left: 1px solid var(--shadow); border-right: 1px solid var(--hi); }
+      .tasks { flex: 1; display: flex; gap: 3px; min-width: 0; }
+      .task { justify-content: flex-start; min-width: 0; width: 150px; height: 24px; padding: 0 6px; overflow: hidden; white-space: nowrap; }
+      .task.is-down { font-weight: bold; background-image: repeating-conic-gradient(#fff 0 25%, var(--face) 0 50%); background-size: 2px 2px; }
+      .tray { display: flex; align-items: center; gap: 8px; height: 24px; padding: 0 10px; background: transparent; box-shadow: inset -1px -1px var(--hi), inset 1px 1px var(--shadow); }
+      .tray__lang { padding: 0 3px; background: var(--navy); color: #fff; font-weight: bold; }
+
+      /* ---- 开始菜单 ---- */
+      .start-menu { position: fixed; left: 2px; bottom: 30px; display: flex; background: var(--face); box-shadow: var(--raised); padding: 3px; z-index: 1001; }
+      .start-menu[hidden] { display: none; }
+      .start-menu__banner { width: 24px; display: flex; flex-direction: column-reverse; align-items: center; padding: 6px 0; background: linear-gradient(0deg, var(--navy), #1084d0); color: #c0c0c0; font: 18px/1 Arial, sans-serif; writing-mode: vertical-rl; transform: rotate(180deg); }
+      .start-menu__banner b { color: #fff; }
+      .start-menu ul { list-style: none; margin: 0; padding: 0; min-width: 210px; }
+      .start-menu li a { display: flex; align-items: center; gap: 10px; height: 32px; padding: 0 20px 0 6px; }
+      .start-menu li a:hover { background: var(--navy); color: #fff; }
+      .sm-ico { width: 24px; font-size: 20px; text-align: center; }
+      .start-menu .sep { height: 2px; margin: 3px 2px; border-top: 1px solid var(--shadow); border-bottom: 1px solid var(--hi); }
+
+      /* 窄屏：窗口不再浮动，从上往下排 */
+      @media (max-width: 900px) {
+        .w98 { overflow: auto; height: auto; }
+        .desk { height: auto; padding: 8px 8px 44px; display: flex; flex-direction: column; gap: 10px; }
+        .icons { position: static; flex-direction: row; flex-wrap: wrap; width: auto; }
+        .win { position: static; width: auto !important; height: auto !important; }
+        .win--explorer .explorer { height: 60vh; }
+        .webview { display: none; }
+        .task { width: auto; }
+        .tasks .task:nth-child(n + 2) { display: none; }
+      }
+    </style>
+
+    <script>
+      const wins = [...document.querySelectorAll<HTMLElement>(".win")];
+      const tasks = [...document.querySelectorAll<HTMLElement>(".task")];
+      let z = 10;
+
+      const focusWin = (w: HTMLElement) => {
+        w.hidden = false;
+        w.style.zIndex = String(++z);
+        wins.forEach((x) => x.classList.toggle("is-active", x === w));
+        tasks.forEach((t) => t.classList.toggle("is-down", t.dataset.task === w.dataset.win));
+      };
+      const hideWin = (w: HTMLElement) => {
+        w.hidden = true;
+        w.classList.remove("is-active");
+        tasks.find((t) => t.dataset.task === w.dataset.win)?.classList.remove("is-down");
+      };
+
+      wins.forEach((w) => {
+        w.addEventListener("pointerdown", () => focusWin(w));
+        w.querySelectorAll<HTMLElement>("[data-act]").forEach((b) =>
+          b.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const act = b.dataset.act;
+            if (act === "max") w.classList.toggle("is-max");
+            else hideWin(w);
+          }),
+        );
+
+        // 拖标题栏移动窗口
+        const bar = w.querySelector<HTMLElement>(".w-title");
+        bar?.addEventListener("pointerdown", (e) => {
+          if ((e.target as HTMLElement).closest(".w-btn") || w.classList.contains("is-max")) return;
+          if (matchMedia("(max-width: 900px)").matches) return;
+          const r = w.getBoundingClientRect();
+          const dx = e.clientX - r.left, dy = e.clientY - r.top;
+          w.style.right = "auto";
+          w.style.left = r.left + "px";
+          w.style.top = r.top + "px";
+          bar.setPointerCapture(e.pointerId);
+          const move = (ev: PointerEvent) => {
+            w.style.left = Math.max(0, ev.clientX - dx) + "px";
+            w.style.top = Math.max(0, Math.min(innerHeight - 60, ev.clientY - dy)) + "px";
+          };
+          const up = () => { bar.removeEventListener("pointermove", move); bar.removeEventListener("pointerup", up); };
+          bar.addEventListener("pointermove", move);
+          bar.addEventListener("pointerup", up);
+        });
+      });
+
+      tasks.forEach((t) =>
+        t.addEventListener("click", () => {
+          const w = wins.find((x) => x.dataset.win === t.dataset.task);
+          if (!w) return;
+          if (!w.hidden && w.classList.contains("is-active")) hideWin(w);
+          else focusWin(w);
+        }),
+      );
+      focusWin(wins[0]);
+
+      // 开始菜单
+      const startBtn = document.getElementById("start-btn")!;
+      const menu = document.getElementById("start-menu")!;
+      startBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        menu.hidden = !menu.hidden;
+        startBtn.classList.toggle("is-down", !menu.hidden);
+      });
+      document.addEventListener("click", (e) => {
+        if (!menu.contains(e.target as Node)) { menu.hidden = true; startBtn.classList.remove("is-down"); }
+      });
+
+      // 资源管理器：单击选中，双击或回车打开，和 Win98 一样
+      const set = (id: string, v: string) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+      document.querySelectorAll<HTMLTableRowElement>("#rows tr").forEach((tr) => {
+        const d = tr.dataset;
+        tr.addEventListener("click", () => {
+          document.querySelectorAll("#rows tr.sel").forEach((x) => x.classList.remove("sel"));
+          tr.classList.add("sel");
+          set("wv-title", d.title!); set("wv-date", d.date!); set("wv-tags", d.tags!);
+          set("wv-size", d.size!); set("wv-mins", d.mins!);
+          const img = document.getElementById("wv-img") as HTMLImageElement | null;
+          if (img) { img.src = d.thumb || ""; img.style.visibility = d.thumb ? "visible" : "hidden"; }
+          (document.getElementById("wv-open") as HTMLAnchorElement).href = d.href!;
+        });
+        tr.addEventListener("dblclick", () => (location.href = d.href!));
+        tr.addEventListener("keydown", (e) => { if (e.key === "Enter") location.href = d.href!; });
+      });
+
+      // 任务栏时钟
+      const clock = document.getElementById("clock")!;
+      const tick = () => {
+        const n = new Date();
+        clock.textContent = `${n.getHours()}:${String(n.getMinutes()).padStart(2, "0")}`;
+      };
+      tick();
+      setInterval(tick, 10000);
+
+      // CD 播放器：能切歌、能「播放」计时，不会真的出声
+      const tracks: { a: string; b: string; t: string }[] = JSON.parse(document.getElementById("cd-data")!.textContent || "[]");
+      let cur = 0, sec = 0, timer: number | undefined;
+      const lcd = () => set("cd-lcd", `[${String(cur + 1).padStart(2, "0")}] ${String(Math.floor(sec / 60)).padStart(2, "0")}:${String(sec % 60).padStart(2, "0")}`);
+      const load = () => { const t = tracks[cur]; if (!t) return; set("cd-artist", t.a); set("cd-album", t.b); set("cd-title", t.t); sec = 0; lcd(); };
+      document.getElementById("cd-play")!.addEventListener("click", () => { if (timer) return; timer = window.setInterval(() => { sec++; lcd(); }, 1000); });
+      document.getElementById("cd-stop")!.addEventListener("click", () => { clearInterval(timer); timer = undefined; sec = 0; lcd(); });
+      document.getElementById("cd-next")!.addEventListener("click", () => { cur = (cur + 1) % tracks.length; load(); });
+      document.getElementById("cd-prev")!.addEventListener("click", () => { cur = (cur - 1 + tracks.length) % tracks.length; load(); });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,80 @@
+---
+/**
+ * 首页右下角悬浮的「我的电脑」，点进去是 /win98。
+ * 图标是照着 XP 风格自己画的矢量图，不是微软的原图，放多大都清晰。
+ */
+import T from "./T.astro";
+import { UI } from "../i18n";
+---
+
+<a class="launcher" href="/win98" aria-label={UI.win98.title.zh}>
+  <svg class="launcher__icon" viewBox="0 0 64 64" aria-hidden="true">
+    <defs>
+      <linearGradient id="lc-bezel" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fbfaf6" />
+        <stop offset="1" stop-color="#c9c4b6" />
+      </linearGradient>
+      <linearGradient id="lc-side" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#b8b2a2" />
+        <stop offset="1" stop-color="#8f897a" />
+      </linearGradient>
+      <linearGradient id="lc-screen" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#6cc4ff" />
+        <stop offset=".58" stop-color="#1f6fe0" />
+        <stop offset=".58" stop-color="#3a9b2c" />
+        <stop offset="1" stop-color="#2b7a1e" />
+      </linearGradient>
+      <linearGradient id="lc-glare" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#fff" stop-opacity=".75" />
+        <stop offset=".5" stop-color="#fff" stop-opacity="0" />
+      </linearGradient>
+      <linearGradient id="lc-case" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#f3f0e8" />
+        <stop offset="1" stop-color="#bdb7a8" />
+      </linearGradient>
+      <radialGradient id="lc-shadow" cx=".5" cy=".5" r=".5">
+        <stop offset="0" stop-color="#3a2a22" stop-opacity=".35" />
+        <stop offset="1" stop-color="#3a2a22" stop-opacity="0" />
+      </radialGradient>
+    </defs>
+
+    {/* 落在桌面上的影子 */}
+    <ellipse cx="33" cy="58" rx="27" ry="4" fill="url(#lc-shadow)" />
+
+    {/* 机箱：扁平卧式，带一点透视 */}
+    <path d="M9 45 L51 45 L57 41 L15 41 Z" fill="#e9e5da" />
+    <path d="M51 45 L57 41 L57 50 L51 55 Z" fill="url(#lc-side)" />
+    <rect x="9" y="45" width="42" height="10" rx="1.2" fill="url(#lc-case)" stroke="#8a8474" stroke-width=".6" />
+    <rect x="14" y="48.5" width="16" height="1.6" rx=".8" fill="#8a8474" />
+    <rect x="14" y="51.4" width="10" height="1.2" rx=".6" fill="#a39d8e" />
+    <circle cx="46" cy="50" r="1.3" fill="#3fd13f" />
+    <circle cx="46" cy="50" r="2.4" fill="#3fd13f" opacity=".25" />
+
+    {/* 显示器底座 */}
+    <path d="M25 41 L39 41 L37 37 L27 37 Z" fill="#b9b3a3" />
+
+    {/* 显示器机身侧面，做出 CRT 的厚度 */}
+    <path d="M50 6 L56 9 L56 35 L50 38 Z" fill="url(#lc-side)" />
+
+    {/* 显示器正面 */}
+    <rect x="11" y="5" width="40" height="33" rx="3.5" fill="url(#lc-bezel)" stroke="#8a8474" stroke-width=".7" />
+    <rect x="15" y="9" width="32" height="23" rx="1.5" fill="#2a3440" />
+    <rect x="16" y="10" width="30" height="21" rx="1" fill="url(#lc-screen)" />
+    {/* 屏幕里的云，照 XP 桌面的意思随手画的 */}
+    <ellipse cx="24" cy="15" rx="4" ry="1.4" fill="#fff" opacity=".7" />
+    <ellipse cx="36" cy="13.5" rx="3" ry="1.1" fill="#fff" opacity=".55" />
+    <path d="M16 23.6 Q27 20 46 24 L46 31 L16 31 Z" fill="#4db33a" opacity=".55" />
+    <path d="M16 10 L34 10 L16 24 Z" fill="url(#lc-glare)" />
+
+    {/* 显示器下巴上的按钮和指示灯 */}
+    <rect x="41" y="34" width="6" height="1.4" rx=".7" fill="#a39d8e" />
+    <circle cx="15" cy="34.7" r=".9" fill="#3fd13f" />
+  </svg>
+
+  <span class="launcher__label">
+    <T zh={UI.win98.label.zh} en={UI.win98.label.en} />
+  </span>
+  <span class="launcher__tip" role="tooltip">
+    <T zh={UI.win98.title.zh} en={UI.win98.title.en} />
+  </span>
+</a>

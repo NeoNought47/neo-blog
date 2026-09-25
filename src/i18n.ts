@@ -36,6 +36,12 @@ export const UI = {
     total: { zh: "共 {n} 篇", en: "{n} in total" },
   },
 
+  /** 首页右下角通往 /win98 的悬浮图标 */
+  win98: {
+    label: { zh: "我的电脑", en: "My Computer" },
+    title: { zh: "打开 Neo's Buffet 98", en: "Open Neo's Buffet 98" },
+  },
+
   music: {
     title: { zh: "在听", en: "On Rotation" },
     count: { zh: "{n} 首", en: "{n} tracks" },

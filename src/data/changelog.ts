@@ -23,6 +23,24 @@ export const KIND_LABEL: Record<LogKind, { zh: string; en: string }> = {
 export const CHANGELOG: LogEntry[] = [
   {
     date: "2026-09-25",
+    kind: "feature",
+    zh: {
+      title: "藏了一个 Windows 98 版首页",
+      items: [
+        "首页右下角多了一台「我的电脑」，点进去是 Win98 风格的桌面：资源管理器里列着全部文章，还有关于窗口、CD 播放器和开始菜单。",
+        "窗口能拖、能最小化和最大化，文章单击选中、双击打开，和当年一样。数据和正常版完全同步。",
+      ],
+    },
+    en: {
+      title: "A hidden Windows 98 homepage",
+      items: [
+        "A My Computer icon now sits in the bottom-right corner of the homepage. It opens a Win98-style desktop with every post in an Explorer window, plus an About box, a CD player and a Start menu.",
+        "Windows can be dragged, minimised and maximised, and posts are selected with a single click and opened with a double click, just like back then. The data stays in sync with the regular site.",
+      ],
+    },
+  },
+  {
+    date: "2026-09-25",
     kind: "look",
     zh: {
       title: "代码高亮换成 One 配色",
