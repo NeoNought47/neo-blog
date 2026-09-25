@@ -22,6 +22,24 @@ export const KIND_LABEL: Record<LogKind, { zh: string; en: string }> = {
 
 export const CHANGELOG: LogEntry[] = [
   {
+    date: "2026-09-25",
+    kind: "look",
+    zh: {
+      title: "代码高亮换成 One 配色",
+      items: [
+        "浅色代码块从 github-light 换成 one-light，深色换成 one-dark-pro。变量、函数、字符串、关键字各有各的颜色，比原来显眼得多。",
+        "顺带修掉一个漏洞：以前只读了配色里的颜色，没读斜体和粗体，所以注释的斜体一直没生效。",
+      ],
+    },
+    en: {
+      title: "Code highlighting switched to the One themes",
+      items: [
+        "Light code blocks moved from github-light to one-light, and dark ones to one-dark-pro. Variables, functions, strings and keywords each get a distinct colour, which reads far more clearly than before.",
+        "Also fixed a gap along the way: only colours were being read from the theme, not italics or bold, so italic comments never showed up.",
+      ],
+    },
+  },
+  {
     date: "2026-09-18",
     kind: "feature",
     zh: {
