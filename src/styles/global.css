@@ -2492,6 +2492,7 @@ a.tag:hover {
 }
 
 /* ---- 首页右下角的「我的电脑」 ---- */
+/* 照 Win98 桌面图标来：平面像素图，不加阴影，悬停也不浮起来 */
 .launcher {
   position: fixed;
   right: max(1.4rem, env(safe-area-inset-right));
@@ -2500,85 +2501,76 @@ a.tag:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.2rem;
-  padding: 0.45rem 0.5rem 0.4rem;
-  border-radius: 14px;
+  gap: 0.25rem;
+  padding: 0.3rem;
   text-decoration: none;
-  transition: transform 0.3s var(--ease), background-color 0.3s var(--ease);
 }
 
 .launcher__icon {
+  display: block;
   width: 64px;
   height: 64px;
-  filter: drop-shadow(0 4px 8px rgba(58, 42, 34, 0.18));
-  transition: transform 0.3s var(--ease);
+  image-rendering: pixelated;
 }
 
 .launcher__label {
-  padding: 0.05rem 0.4rem;
-  border-radius: 4px;
-  font-family: Tahoma, "PingFang SC", sans-serif;
-  font-size: 0.72rem;
+  padding: 0 0.25rem;
+  font-family: Tahoma, "PingFang SC", SimSun, sans-serif;
+  font-size: 0.75rem;
+  line-height: 1.4;
   color: var(--text);
-  text-shadow: 0 1px 0 color-mix(in srgb, var(--bg) 70%, transparent);
-  transition: background-color 0.25s var(--ease), color 0.25s var(--ease);
 }
 
-/* 悬浮时学 XP 桌面图标被选中的样子：文字底变蓝，图标往上抬一点 */
-.launcher:hover .launcher__icon,
-.launcher:focus-visible .launcher__icon {
-  transform: translateY(-3px);
-}
-
+/* Win98 选中图标的样子：文字变藏青底白字加虚线框，图标整体泛蓝 */
 .launcher:hover .launcher__label,
 .launcher:focus-visible .launcher__label {
-  background: #316ac5;
+  background: #000080;
   color: #fff;
-  text-shadow: none;
+  outline: 1px dotted #ffff00;
+}
+
+.launcher:hover .launcher__icon,
+.launcher:focus-visible .launcher__icon {
+  filter: sepia(1) saturate(4) hue-rotate(190deg) brightness(0.75);
 }
 
 .launcher:focus-visible {
-  outline: 1px dotted var(--text-muted);
-  outline-offset: 2px;
+  outline: none;
 }
 
-/* 仿 XP 的黄色气泡提示 */
+/* 98 的提示框是方角、细黑边、淡黄底，没有阴影 */
 .launcher__tip {
   position: absolute;
-  right: 0;
-  bottom: calc(100% + 0.35rem);
-  padding: 0.35rem 0.6rem;
+  right: 0.3rem;
+  bottom: calc(100% + 0.2rem);
+  padding: 0.15rem 0.35rem;
   border: 1px solid #000;
-  border-radius: 6px;
   background: #ffffe1;
-  font-family: Tahoma, "PingFang SC", sans-serif;
+  font-family: Tahoma, "PingFang SC", SimSun, sans-serif;
   font-size: 0.72rem;
   white-space: nowrap;
   color: #000;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  opacity: 0;
-  transform: translateY(4px);
-  pointer-events: none;
-  transition: opacity 0.2s var(--ease), transform 0.2s var(--ease);
+  visibility: hidden;
+  transition: visibility 0s 0.4s;
 }
 
+/* 和真的一样，停一会儿才出来 */
 .launcher:hover .launcher__tip,
 .launcher:focus-visible .launcher__tip {
-  opacity: 1;
-  transform: none;
+  visibility: visible;
+  transition-delay: 0.5s;
 }
 
 @media (max-width: 620px) {
   .launcher__icon {
-    width: 46px;
-    height: 46px;
+    width: 48px;
+    height: 48px;
   }
 
   .launcher__label {
-    font-size: 0.66rem;
+    font-size: 0.68rem;
   }
 
-  /* 手机上没有悬停，提示气泡只会挡字 */
   .launcher__tip {
     display: none;
   }
