@@ -167,7 +167,7 @@ cost = 10 的意思是内部循环 2¹⁰ = 1024 轮，这就是 bcrypt 故意"�
 1. **抓包定位**：登录请求 → 观察密码字段变化
 2. **查找JS引用**：搜索 `md5.js`、`aes.js` 等加密库
 3. **跟踪加密逻辑**：
-```JavaScript
+```javascript
 // 典型前端加密
 var pwd = document.getElementById('password').value;
 var encrypted = MD5(pwd);  // 调用自定义MD5函数

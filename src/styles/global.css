@@ -1821,6 +1821,20 @@ a.tag:hover {
   color: var(--shiki-light);
 }
 
+/* 双主题模式下，Shiki 把斜体、粗体也放进变量里，不读就会丢。
+   one-light / one-dark-pro 的注释是斜体，靠这里才生效 */
+.code-light .prose pre span {
+  font-style: var(--shiki-light-font-style, inherit);
+  font-weight: var(--shiki-light-font-weight, inherit);
+  text-decoration: var(--shiki-light-text-decoration, inherit);
+}
+
+.code-dark .prose pre span {
+  font-style: var(--shiki-dark-font-style, inherit);
+  font-weight: var(--shiki-dark-font-weight, inherit);
+  text-decoration: var(--shiki-dark-text-decoration, inherit);
+}
+
 .code-light .prose pre {
   background: linear-gradient(
     to bottom,

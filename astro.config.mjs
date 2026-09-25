@@ -20,7 +20,9 @@ export default defineConfig({
     shikiConfig: {
       // 双主题：Shiki 只输出 --shiki-light / --shiki-dark 两套颜色变量，
       // 由 CSS 决定用哪套，背景则完全交给我们自己的玻璃样式
-      themes: { light: "github-light", dark: "github-dark-dimmed" },
+      // one-light 每种元素都有自己的颜色，比 github-light 显眼得多；
+      // one-dark-pro 是它的深色搭档，两边风格一致
+      themes: { light: "one-light", dark: "one-dark-pro" },
       defaultColor: false,
       wrap: true,
     },
