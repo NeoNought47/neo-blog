@@ -23,6 +23,24 @@ export const KIND_LABEL: Record<LogKind, { zh: string; en: string }> = {
 export const CHANGELOG: LogEntry[] = [
   {
     date: "2026-10-24",
+    kind: "image",
+    zh: {
+      title: "列表缩略图不再被裁",
+      items: [
+        "首页横行、方格、侧栏「最近更新」和标签页里的封面，以前会被裁成固定比例，截图类封面和竖拍的照片两头都被切掉。现在整张图都显示出来。",
+        "格子里多出来的空白，用同一张图放大模糊后垫在后面补满，不是直接留白边。以后新发的文章自动按这个方式显示。",
+      ],
+    },
+    en: {
+      title: "List thumbnails are no longer cropped",
+      items: [
+        "Covers on the homepage rows and tiles, the sidebar's Recent list and tag pages used to be cropped to a fixed ratio, which cut off the edges of screenshots and portrait photos. The whole image now shows.",
+        "Leftover space in each frame is filled with a blurred, enlarged copy of the same image rather than a plain border. New posts get this automatically.",
+      ],
+    },
+  },
+  {
+    date: "2026-10-24",
     kind: "look",
     zh: {
       title: "1.0：背景换成流动的颜料漩涡",

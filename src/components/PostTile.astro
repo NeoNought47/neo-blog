@@ -1,4 +1,5 @@
 ---
+import CoverImage from "./CoverImage.astro";
 import { Image } from "astro:assets";
 import type { Post } from "../lib/posts";
 import { getCover, getFallback } from "../lib/covers";
@@ -21,7 +22,7 @@ const d = formatDateBoth(date);
   <a class="tile__media" href={`/posts/${post.id}`} tabindex="-1" aria-hidden="true">
     {
       cover ? (
-        <Image src={cover} alt="" width={560} height={560} loading="lazy" layout="none" />
+        <CoverImage src={cover} width={640} height={640} />
       ) : fallback ? (
         <span class="tile__logo">
           <Image src={fallback} alt="" width={320} loading="lazy" layout="none" />

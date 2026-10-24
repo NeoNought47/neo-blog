@@ -1144,11 +1144,7 @@ a.side__stat:hover span {
   border: 1px solid var(--border);
 }
 
-.recent__thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+
 
 .recent__ph {
   display: grid;
@@ -1302,18 +1298,12 @@ a.catbar__item:hover {
   overflow: hidden;
 }
 
-.row__cover img {
-  width: 100%;
-  height: 100%;
+.row__cover .cov {
   min-height: 200px;
-  object-fit: cover;
-  filter: saturate(0.94);
-  transition: transform 0.7s var(--ease), filter 0.5s var(--ease);
 }
 
-.row:hover .row__cover img {
-  transform: scale(1.04);
-  filter: saturate(1.05);
+.row:hover .cov__fg {
+  transform: scale(1.03);
 }
 
 .row__body {
@@ -1410,17 +1400,38 @@ a.catbar__item:hover {
   background: var(--bg-elevated);
 }
 
-.tile__media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: saturate(0.94);
-  transition: transform 0.7s var(--ease), filter 0.5s var(--ease);
+.tile:hover .cov__fg {
+  transform: scale(1.03);
 }
 
-.tile:hover .tile__media img {
-  transform: scale(1.05);
-  filter: saturate(1.05);
+/* ---- 列表封面：整张显示，不裁 ----
+   前景 contain 完整显示；后面垫同一张图放大模糊，补满留白。见 CoverImage.astro */
+.cov {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg-elevated);
+}
+
+.cov__bg {
+  position: absolute;
+  inset: -10%;
+  width: 120%;
+  height: 120%;
+  object-fit: cover;
+  filter: blur(18px) saturate(1.15);
+  opacity: 0.6;
+}
+
+.cov__fg {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.6s var(--ease);
 }
 
 /* 没有封面时按标签垫一张图。图本身是透明底，深浅主题都能直接放 */
@@ -1543,7 +1554,7 @@ a.catbar__item:hover {
     order: 0;
   }
 
-  .row__cover img {
+  .row__cover .cov {
     min-height: 0;
     aspect-ratio: 16 / 10;
   }
@@ -1635,17 +1646,8 @@ a.catbar__item:hover {
   background: var(--bg-elevated);
 }
 
-.card__media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.7s var(--ease), filter 0.5s var(--ease);
-  filter: saturate(0.92);
-}
-
-.card:hover .card__media img {
-  transform: scale(1.05);
-  filter: saturate(1.05);
+.card:hover .cov__fg {
+  transform: scale(1.03);
 }
 
 .card__body {
