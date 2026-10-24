@@ -22,6 +22,26 @@ export const KIND_LABEL: Record<LogKind, { zh: string; en: string }> = {
 
 export const CHANGELOG: LogEntry[] = [
   {
+    date: "2026-10-24",
+    kind: "look",
+    zh: {
+      title: "1.0：背景换成流动的颜料漩涡",
+      items: [
+        "这一版定为 1.0。",
+        "全站背景换成 Balatro 主菜单那种缓慢流动、旋转的颜料漩涡，配色是奶白和黄，带一点像素颗粒感。深色模式下是琥珀和深棕。",
+        "文章页的背景会安静很多，颜色往底色靠，正文读起来不受影响。系统开了「减少动态效果」时背景静止不动。",
+      ],
+    },
+    en: {
+      title: "1.0: a flowing paint-swirl background",
+      items: [
+        "This release is 1.0.",
+        "The whole site now sits on a slowly flowing, rotating paint swirl in the style of the Balatro main menu, in cream and yellow with a touch of pixel grain. Dark mode uses amber and deep brown.",
+        "Article pages get a much calmer version that leans toward the base colour, so body text stays easy to read. With reduced motion turned on, the background stays still.",
+      ],
+    },
+  },
+  {
     date: "2026-09-25",
     kind: "feature",
     zh: {
