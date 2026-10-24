@@ -219,6 +219,28 @@ a {
 }
 
 /* 细颗粒噪点，消除大面积渐变的"塑料感" */
+/* Balatro 式的流动背景。低分辨率渲染后按像素放大，所以要 pixelated */
+.swirl {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  image-rendering: pixelated;
+  opacity: 0;
+  transition: opacity 0.8s var(--ease);
+}
+
+/* 着色器跑起来之后才淡入，同时关掉原来的光晕；跑不起来就保持光晕 */
+html.swirl-on .swirl {
+  opacity: 1;
+}
+
+html.swirl-on .aurora {
+  display: none;
+}
+
 .grain {
   position: fixed;
   inset: 0;

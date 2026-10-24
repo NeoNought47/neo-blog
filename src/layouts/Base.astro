@@ -2,6 +2,7 @@
 import { SITE } from "../consts";
 import { UI } from "../i18n";
 import T from "../components/T.astro";
+import SwirlBg from "../components/SwirlBg.astro";
 import "../styles/global.css";
 
 interface Props {
@@ -59,6 +60,8 @@ const canonical = new URL(path, Astro.site);
 
   <body>
     <div class="aurora" aria-hidden="true"><span class="aurora__green"></span></div>
+    {/* 文章页（有阅读进度条的那种）背景放安静一点，文字直接压在上面 */}
+    <SwirlBg calm={progress} />
     <div class="grain" aria-hidden="true"></div>
     {progress && <div class="progress" id="progress" aria-hidden="true"></div>}
 

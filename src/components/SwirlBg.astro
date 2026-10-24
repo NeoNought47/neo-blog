@@ -1,0 +1,159 @@
+---
+/**
+ * 全站背景：Balatro 主菜单那种流动的颜料漩涡，配色换成奶白和黄。
+ *
+ * 一段 WebGL 片元着色器：先按离中心的距离扭一圈，再反复做几轮
+ * 「坐标扭曲」（domain warping），最后按扭完的距离在三种颜色之间分段上色。
+ * 画布只按屏幕的 1/PX 渲染再放大，出像素颗粒感，也把 GPU 开销压到很低。
+ *
+ * calm=true 时（文章页）颜色往底色靠，文字直接压在背景上也读得清。
+ * WebGL 不可用时什么都不做，原来的 .aurora 光晕照常显示。
+ */
+interface Props {
+  calm?: boolean;
+}
+const { calm = false } = Astro.props;
+---
+
+<canvas class="swirl" id="swirl" aria-hidden="true" data-calm={calm ? "1" : "0"}></canvas>
+
+<script>
+  const canvas = document.getElementById("swirl") as HTMLCanvasElement | null;
+  const gl = canvas?.getContext("webgl", { antialias: false, alpha: false, premultipliedAlpha: false });
+
+  if (canvas && gl) {
+    /** 一个像素块占几个 CSS 像素。越大越粗、越省 */
+    const PX = 3;
+    /** 最高帧率。背景不需要 60 帧，30 帧看着一样顺，省一半电 */
+    const FPS = 30;
+    const calm = canvas.dataset.calm === "1";
+
+    const vs = `attribute vec2 p; void main(){ gl_Position = vec4(p, 0.0, 1.0); }`;
+    const fs = `
+      precision mediump float;
+      uniform vec2 uRes;
+      uniform float uTime;
+      uniform vec3 uA, uB, uBase;
+      uniform float uStrength;
+
+      void main() {
+        vec2 uv = (gl_FragCoord.xy - 0.5 * uRes) / length(uRes);
+
+        // 绕中心扭一圈：越靠中间扭得越厉害，整体再慢慢转
+        float r = length(uv);
+        float ang = atan(uv.y, uv.x) + uTime * 0.05 - r * 5.0;
+        uv = vec2(cos(ang), sin(ang)) * r * 26.0;
+
+        // 反复扭曲坐标，颜料的「流」就是这几轮叠出来的
+        float t = uTime * 0.32;
+        vec2 w = vec2(uv.x + uv.y);
+        for (int i = 0; i < 5; i++) {
+          w += sin(max(uv.x, uv.y)) + uv;
+          uv += 0.5 * vec2(cos(4.7 + 0.35 * w.y + t * 0.13), sin(w.x - 0.11 * t));
+          uv -= cos(uv.x + uv.y) - sin(uv.x * 0.71 - uv.y);
+        }
+
+        // 按扭完之后的距离分三段上色，边界处互相渐变
+        float paint = clamp(length(uv) * 0.035, 0.0, 2.0);
+        float k = 1.5;
+        float a = max(0.0, 1.0 - k * abs(1.0 - paint));
+        float b = max(0.0, 1.0 - k * abs(paint));
+        float c = 1.0 - min(1.0, a + b);
+        vec3 col = uA * a + uB * b + uBase * c;
+
+        gl_FragColor = vec4(mix(uBase, col, uStrength), 1.0);
+      }`;
+
+    const compile = (type: number, src: string) => {
+      const s = gl.createShader(type)!;
+      gl.shaderSource(s, src);
+      gl.compileShader(s);
+      return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null;
+    };
+    const v = compile(gl.VERTEX_SHADER, vs);
+    const f = compile(gl.FRAGMENT_SHADER, fs);
+    const prog = gl.createProgram()!;
+    if (v && f) {
+      gl.attachShader(prog, v);
+      gl.attachShader(prog, f);
+      gl.linkProgram(prog);
+    }
+
+    if (v && f && gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+      gl.useProgram(prog);
+
+      // 一个盖满屏幕的三角形，比两个三角形拼矩形少一条接缝
+      const buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+      const loc = gl.getAttribLocation(prog, "p");
+      gl.enableVertexAttribArray(loc);
+      gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+      const u = (n: string) => gl.getUniformLocation(prog, n);
+      const uRes = u("uRes"), uTime = u("uTime"), uA = u("uA"), uB = u("uB"), uBase = u("uBase"), uStrength = u("uStrength");
+
+      const hex = (h: string) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255);
+
+      // 浅色：奶白、黄、淡黄打底。深色：琥珀、深棕，底色压暗
+      const PALETTE = {
+        light: { a: "#fffaf0", b: "#f2c240", base: "#f8e6b0" },
+        dark: { a: "#4a2e1c", b: "#c98a2a", base: "#1c130f" },
+      };
+      const setPalette = () => {
+        const p = document.documentElement.dataset.theme === "light" ? PALETTE.light : PALETTE.dark;
+        gl.uniform3fv(uA, hex(p.a));
+        gl.uniform3fv(uB, hex(p.b));
+        gl.uniform3fv(uBase, hex(p.base));
+        gl.uniform1f(uStrength, calm ? 0.38 : 1.0);
+      };
+      setPalette();
+
+      const resize = () => {
+        canvas.width = Math.ceil(innerWidth / PX);
+        canvas.height = Math.ceil(innerHeight / PX);
+        gl.viewport(0, 0, canvas.width, canvas.height);
+        gl.uniform2f(uRes, canvas.width, canvas.height);
+      };
+      resize();
+
+      // 起点给一个固定偏移，刷新页面时画面不是从同一帧开始
+      const t0 = performance.now() - Math.random() * 60000;
+      const draw = (now: number) => {
+        gl.uniform1f(uTime, (now - t0) / 1000);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+      };
+
+      const still = matchMedia("(prefers-reduced-motion: reduce)");
+      let raf = 0;
+      let last = 0;
+      const loop = (now: number) => {
+        raf = requestAnimationFrame(loop);
+        if (now - last < 1000 / FPS) return;
+        last = now;
+        draw(now);
+      };
+      const start = () => {
+        cancelAnimationFrame(raf);
+        if (still.matches || document.hidden) draw(performance.now());
+        else raf = requestAnimationFrame(loop);
+      };
+
+      let rt = 0;
+      addEventListener("resize", () => {
+        clearTimeout(rt);
+        rt = window.setTimeout(() => { resize(); draw(performance.now()); }, 120);
+      });
+      document.addEventListener("visibilitychange", start);
+      still.addEventListener("change", start);
+
+      // 切明暗主题时换配色，不用刷新
+      new MutationObserver(() => { setPalette(); draw(performance.now()); })
+        .observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+      draw(performance.now());
+      document.documentElement.classList.add("swirl-on");
+      start();
+    }
+  }
+</script>
