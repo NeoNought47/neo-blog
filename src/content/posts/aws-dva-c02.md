@@ -3,7 +3,7 @@ title: "AWS DVA-C02 证书"
 titleEn: "AWS Certified Developer Associate (DVA-C02)"
 date: 2026-10-19
 posted: 2026-10-19
-tags: ["AWS", "Learning Notes"]
+tags: ["AWS", "Learning Notes", "Daily Life"]
 description: "20 多天没更新，是去考 AWS Developer Associate 了，一遍过。附上备考时顺手记的笔记。"
 ---
 
