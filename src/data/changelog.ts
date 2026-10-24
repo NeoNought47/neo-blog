@@ -25,6 +25,26 @@ export const CHANGELOG: LogEntry[] = [
     date: "2026-10-24",
     kind: "look",
     zh: {
+      title: "背景改成砖红 · 芥末黄 · 奶白三拼",
+      items: [
+        "照 Balatro 的配色结构改成三色：大面积砖红、漩涡里的芥末黄，中间夹着奶白细纹。色带边界比原来清楚得多，不再糊成一片。",
+        "只有首页用满强度。归档、标签、关于这些字直接写在背景上的页面，背景都往纸色淡化，正文读起来不受影响。",
+        "首页的毛玻璃卡片垫了一层纸色，背景透上来也看得清字。",
+      ],
+    },
+    en: {
+      title: "Background is now brick red, mustard and cream",
+      items: [
+        "Following Balatro's colour structure: large fields of brick red, mustard in the swirl, and thin cream streaks between them. The bands are far crisper than before instead of blurring together.",
+        "Only the homepage runs at full strength. Pages where text sits directly on the background, such as the archive, tags and about pages, fade it toward the paper colour so reading is unaffected.",
+        "Glass cards on the homepage now have a layer of paper colour underneath so text stays legible over the swirl.",
+      ],
+    },
+  },
+  {
+    date: "2026-10-24",
+    kind: "look",
+    zh: {
       title: "首页卡片会跟着光标转",
       items: [
         "学 Balatro 里的小丑牌：鼠标停在首页的文章卡片上，卡面会转向光标，光标所在的位置还有一块跟着走的反光。移开后慢慢回正。",

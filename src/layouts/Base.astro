@@ -10,9 +10,11 @@ interface Props {
   description?: string;
   /** 文章页开启顶部阅读进度条 */
   progress?: boolean;
+  /** 背景漩涡的强度。只有首页这种全是卡片的页面用 full，字直接压在背景上的页面都用 calm */
+  swirl?: "full" | "calm";
 }
 
-const { title, description = SITE.description, progress = false } = Astro.props;
+const { title, description = SITE.description, progress = false, swirl = "calm" } = Astro.props;
 const pageTitle = title ? `${title} · ${SITE.title}` : SITE.title;
 const path = Astro.url.pathname;
 const canonical = new URL(path, Astro.site);
@@ -60,8 +62,7 @@ const canonical = new URL(path, Astro.site);
 
   <body>
     <div class="aurora" aria-hidden="true"><span class="aurora__green"></span></div>
-    {/* 文章页（有阅读进度条的那种）背景放安静一点，文字直接压在上面 */}
-    <SwirlBg calm={progress} />
+    <SwirlBg calm={swirl !== "full"} />
     <div class="grain" aria-hidden="true"></div>
     {progress && <div class="progress" id="progress" aria-hidden="true"></div>}
 

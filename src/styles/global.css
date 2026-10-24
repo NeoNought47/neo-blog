@@ -241,6 +241,17 @@ html.swirl-on .aurora {
   display: none;
 }
 
+/* 毛玻璃卡片原本只有几乎透明的一层白，背景是浅奶油色时看不出问题。
+   换成饱和的漩涡后背景整片透上来，卡片被染色，浅色字和强调色字都会看不清。
+   垫一层纸色在渐变下面：保留一点透色和模糊，但字始终压在接近纸色的底上 */
+html.swirl-on:is([data-theme="light"]) :is(.side__card, .row, .tile, .catbar, .card, .ic, .about__more) {
+  background-color: rgba(251, 247, 236, 0.78);
+}
+
+html.swirl-on:not([data-theme="light"]) :is(.side__card, .row, .tile, .catbar, .card, .ic, .about__more) {
+  background-color: rgba(28, 19, 15, 0.74);
+}
+
 .grain {
   position: fixed;
   inset: 0;
