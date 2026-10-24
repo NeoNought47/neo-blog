@@ -18,7 +18,7 @@ const d = formatDateBoth(date);
 const mins = readingTime(post.body ?? "");
 ---
 
-<article class:list={["row", "reveal", { "row--flip": flip, "row--nocover": !cover }]}>
+<article class:list={["row", "reveal", "tilt", { "row--flip": flip, "row--nocover": !cover }]}>
   {
     cover && (
       <a class="row__cover" href={`/posts/${post.id}`} tabindex="-1" aria-hidden="true">

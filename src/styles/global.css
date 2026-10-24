@@ -3252,6 +3252,57 @@ html.js .reveal.in {
   transform: none;
 }
 
+/* ---------- 17b. 卡片跟着光标倾斜，学 Balatro 的小丑牌 ----------
+   JS 只负责写 --rx / --ry（转角）和 --mx / --my（光标位置），其余都在这里。
+   选择器要压过上面 .reveal.in 的 transform: none 和 .row:hover 的上浮。 */
+.tilt {
+  --rx: 0deg;
+  --ry: 0deg;
+  --mx: 50%;
+  --my: 50%;
+  --lift: 0px;
+}
+
+html.js .tilt.in {
+  transform: perspective(1100px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(var(--lift));
+  transition: opacity 0.7s var(--ease), transform 0.55s var(--ease), border-color 0.35s var(--ease),
+    box-shadow 0.35s var(--ease);
+  will-change: transform;
+}
+
+.tilt:hover {
+  --lift: -4px;
+}
+
+/* 正在跟手时过渡要短，否则光标动了卡片半天才跟上 */
+html.js .tilt.in.is-tilting {
+  transition: opacity 0.7s var(--ease), transform 0.12s linear, border-color 0.35s var(--ease),
+    box-shadow 0.35s var(--ease);
+}
+
+/* 光标处的一块反光，像牌面上的镭射。叠在图片上面，但不挡点击 */
+.tilt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--mx) var(--my),
+    rgba(255, 255, 255, 0.42) 0%,
+    rgba(255, 255, 255, 0.12) 28%,
+    rgba(255, 255, 255, 0) 58%
+  );
+  mix-blend-mode: soft-light;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+}
+
+.tilt.is-tilting::before {
+  opacity: 1;
+}
+
 /* 尊重"减少动态效果"的系统设置 */
 @media (prefers-reduced-motion: reduce) {
   *,

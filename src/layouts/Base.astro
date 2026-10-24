@@ -459,6 +459,45 @@ const canonical = new URL(path, Astro.site);
         io.observe(el);
       });
 
+      // ---- 卡片跟着光标倾斜 ----
+      // 只在有鼠标的设备上开：触屏没有悬停，倾斜只会在点的一瞬间抽一下。
+      // 系统开了减少动态效果也不开。
+      const canTilt =
+        matchMedia("(hover: hover) and (pointer: fine)").matches &&
+        !matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (canTilt) {
+        document.querySelectorAll<HTMLElement>(".tilt").forEach((card) => {
+          // 宽的横行转小一点，方格转大一点，转角按像素算出来手感才一致
+          const maxDeg = () => Math.min(10, 2600 / card.offsetWidth);
+          let frame = 0;
+          card.addEventListener("pointerenter", () => {
+            // 入场动画给每张卡留了一个延迟，不清掉的话倾斜会慢半拍
+            card.style.transitionDelay = "0s";
+            card.classList.add("is-tilting");
+          });
+          card.addEventListener("pointermove", (e) => {
+            cancelAnimationFrame(frame);
+            frame = requestAnimationFrame(() => {
+              const r = card.getBoundingClientRect();
+              const x = (e.clientX - r.left) / r.width;
+              const y = (e.clientY - r.top) / r.height;
+              const m = maxDeg();
+              // 卡面转向光标：光标所在那一侧往里压，对面一侧翘起来
+              card.style.setProperty("--ry", `${((x - 0.5) * 2 * m).toFixed(2)}deg`);
+              card.style.setProperty("--rx", `${((0.5 - y) * 2 * m).toFixed(2)}deg`);
+              card.style.setProperty("--mx", `${(x * 100).toFixed(1)}%`);
+              card.style.setProperty("--my", `${(y * 100).toFixed(1)}%`);
+            });
+          });
+          card.addEventListener("pointerleave", () => {
+            cancelAnimationFrame(frame);
+            card.classList.remove("is-tilting");
+            card.style.setProperty("--rx", "0deg");
+            card.style.setProperty("--ry", "0deg");
+          });
+        });
+      }
+
       // ---- 代码块深浅切换 ----
       const ICON =
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +

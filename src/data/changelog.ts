@@ -23,6 +23,24 @@ export const KIND_LABEL: Record<LogKind, { zh: string; en: string }> = {
 export const CHANGELOG: LogEntry[] = [
   {
     date: "2026-10-24",
+    kind: "look",
+    zh: {
+      title: "首页卡片会跟着光标转",
+      items: [
+        "学 Balatro 里的小丑牌：鼠标停在首页的文章卡片上，卡面会转向光标，光标所在的位置还有一块跟着走的反光。移开后慢慢回正。",
+        "宽的横行转得少，方格转得多，手感一致。触屏设备和开了「减少动态效果」的不启用。",
+      ],
+    },
+    en: {
+      title: "Homepage cards tilt toward the cursor",
+      items: [
+        "Borrowed from the jokers in Balatro: hover a post card on the homepage and it turns to face the cursor, with a patch of glare that follows the pointer. It eases back when you move away.",
+        "Wide rows tilt less and square tiles more, so both feel the same. Disabled on touch devices and with reduced motion turned on.",
+      ],
+    },
+  },
+  {
+    date: "2026-10-24",
     kind: "image",
     zh: {
       title: "列表缩略图不再被裁",
