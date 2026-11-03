@@ -1,7 +1,7 @@
 ---
 title: "手动单反相机笔记"
 titleEn: "Manual DSLR Camera Notes"
-date: 2026-11-03
+date: 2026-02-01
 posted: 2026-11-03
 tags: ["Photography", "Learning Notes"]
 hasEnglish: true
