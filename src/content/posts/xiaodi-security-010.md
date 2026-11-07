@@ -1,5 +1,5 @@
 ---
-title: "小迪安全 010：基础入门 - HTTP数据包、Postman构造、请求方法、请求头修改、状态码判断"
+title: "xiaodisec 010：基础入门 - HTTP数据包、Postman构造、请求方法、请求头修改、状态码判断"
 titleEn: "XiaoDi Security 010: Getting Started with HTTP Packets, Building Requests in Postman, Request Methods, Editing Headers & Reading Status Codes"
 date: 2026-11-06
 posted: 2026-11-06

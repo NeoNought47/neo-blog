@@ -46,7 +46,7 @@ npm run import-obsidian -- "~/Documents/NeosRepo/笔记文件名.md" xiaodi-secu
 
 ```yaml
 ---
-title: "小迪安全 009：基础入门 - xxx、xxx"
+title: "xiaodisec 009：基础入门 - xxx、xxx"
 titleEn: "XiaoDi Security 009: TODO"
 date: 2026-09-21
 posted: 2026-09-23
@@ -62,9 +62,9 @@ tags: ["Cybersecurity", "Learning Notes"]
 
 - `-` 变成 ` - `
 - `&` 变成 `、`
-- 编号后面加中文冒号
+- 「小迪安全」换成 `xiaodisec`，编号后面加中文冒号
 
-结果是「小迪安全 008：基础入门 - 算法分析、传输加密」。
+结果是「xiaodisec 008：基础入门 - 算法分析、传输加密」。
 
 所以**文件名里的错字会原样进标题**。008 那篇文件名末尾是「逆向保护护」，标题里就多了一个「护」。
 

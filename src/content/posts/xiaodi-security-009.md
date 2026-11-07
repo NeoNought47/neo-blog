@@ -1,5 +1,5 @@
 ---
-title: "小迪安全 009：基础入门 - 算法逆向、散列、对称非对称、JS源码逆向、AES、DES、RSA、SHA"
+title: "xiaodisec 009：基础入门 - 算法逆向、散列、对称非对称、JS源码逆向、AES、DES、RSA、SHA"
 titleEn: "XiaoDi Security 009: Getting Started with Algorithm Reversing, Hashing, Symmetric & Asymmetric Encryption, JS Source Reversing, AES, DES, RSA & SHA"
 date: 2026-09-24
 posted: 2026-09-25

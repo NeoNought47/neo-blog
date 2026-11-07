@@ -1,5 +1,5 @@
 ---
-title: "小迪安全 004：APP、小程序、模拟器、开发工具与源码案例"
+title: "xiaodisec 004：APP、小程序、模拟器、开发工具与源码案例"
 titleEn: "XiaoDi Security 004: Apps, Mini Programs, Emulators, Dev Tools & Source Code Cases"
 date: 2026-07-24T12:00:00
 tags: ["Cybersecurity", "Learning Notes"]

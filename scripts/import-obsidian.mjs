@@ -131,14 +131,14 @@ body = body.replace(/!\[\[([^\]|#]+)(?:#[^\]|]*)?(?:\|([^\]]*))?\]\]/g, (m, ref,
 
 // ---------- 标题 ----------
 
-// 「小迪安全 008-基础入门-算法分析&传输加密」→「小迪安全 008：基础入门 - 算法分析、传输加密」
+// 「小迪安全 008-基础入门-算法分析&传输加密」→「xiaodisec 008：基础入门 - 算法分析、传输加密」
 const rawTitle = path.basename(notePath, ".md");
 let title = rawTitle;
 let num = null;
 const m = rawTitle.match(/^小迪安全\s*(\d+)\s*[-：:]\s*(.+)$/);
 if (m) {
   num = m[1];
-  title = `小迪安全 ${num}：${m[2]
+  title = `xiaodisec ${num}：${m[2]
     .split(/\s*-\s*/)
     .map((s) => s.split(/\s*&\s*/).join("、"))
     .join(" - ")}`;
