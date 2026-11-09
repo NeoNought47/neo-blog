@@ -135,7 +135,7 @@ body = body.replace(/!\[\[([^\]|#]+)(?:#[^\]|]*)?(?:\|([^\]]*))?\]\]/g, (m, ref,
 const rawTitle = path.basename(notePath, ".md");
 let title = rawTitle;
 let num = null;
-const m = rawTitle.match(/^小迪安全\s*(\d+)\s*[-：:]\s*(.+)$/);
+const m = rawTitle.match(/^(?:小迪安全\s*)?(\d{3})\s*[-：:]\s*(.+)$/);
 if (m) {
   num = m[1];
   title = `xiaodisec ${num}：${m[2]
