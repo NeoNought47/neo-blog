@@ -1,7 +1,7 @@
 ---
 title: "xiaodisec 012：信息打点 - Web应用、企业产权、指纹识别、域名资产、网络空间、威胁情报"
 titleEn: "XiaoDi Security 012: Recon - Web Apps, Company Assets, Fingerprinting, Domain Assets, Cyberspace Search & Threat Intelligence"
-date: 2026-11-09
+date: 2026-11-08
 posted: 2026-11-09
 tags: ["Cybersecurity", "Learning Notes"]
 ---

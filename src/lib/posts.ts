@@ -7,7 +7,15 @@ export async function getPosts(): Promise<Post[]> {
   const all = await getCollection("posts");
   return all
     .filter((p) => import.meta.env.DEV || !p.data.draft)
-    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime() || newerFirst(a, b));
+}
+
+/** 同一天的文章：先比写作日期，再按文件名倒序（xiaodi-security-013 排在 012 前面） */
+function newerFirst(a: Post, b: Post): number {
+  return (
+    postedAt(b).getTime() - postedAt(a).getTime() ||
+    b.id.localeCompare(a.id, undefined, { numeric: true })
+  );
 }
 
 /** 写作日期。没标 posted 的老文章就按显示日期算 */
@@ -19,7 +27,7 @@ export function postedAt(p: Post): Date {
 export async function getRecent(n: number): Promise<Post[]> {
   const all = await getPosts();
   return [...all]
-    .sort((a, b) => postedAt(b).getTime() - postedAt(a).getTime())
+    .sort((a, b) => postedAt(b).getTime() - postedAt(a).getTime() || b.id.localeCompare(a.id, undefined, { numeric: true }))
     .slice(0, n);
 }
 
