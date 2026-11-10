@@ -22,6 +22,22 @@ export const KIND_LABEL: Record<LogKind, { zh: string; en: string }> = {
 
 export const CHANGELOG: LogEntry[] = [
   {
+    date: "2026-11-09",
+    kind: "feature",
+    zh: {
+      title: "同一天的文章排序修正",
+      items: [
+        "以前两篇文章日期相同时，先后顺序是随机的，新写的可能排在旧的下面。现在先比写作日期，再按编号，新的总在上面。",
+      ],
+    },
+    en: {
+      title: "Fixed ordering of posts from the same day",
+      items: [
+        "Posts sharing the same date used to appear in arbitrary order, so a newer one could end up below an older one. They are now ordered by writing date and then by number, newest first.",
+      ],
+    },
+  },
+  {
     date: "2026-10-24",
     kind: "look",
     zh: {
