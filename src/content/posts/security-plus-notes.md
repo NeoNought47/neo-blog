@@ -249,9 +249,3 @@ tags: ["Cybersecurity", "Learning Notes"]
 还没写解释的词：
 
 Bluejacking、Bluesnarfing、Broadcast、CAT、Cloud、Cloud-based service、Deauthentication、Degausser、DoD、DSS、ESI、Geotagging、HDE、Incremental、IPsec、IPv4、IPv6、MFA、Monolithic、MTD、Packet sniffing、PCI、PKI、SAST、SMTP、TCP/22、UDP/53、WEP、WPS
-
-## 答题记录
-
-```text
-6A 11A 17? 24AB 31D 35? 63C 78b 80a 82a 100ad
-```
