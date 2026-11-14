@@ -22,6 +22,26 @@ export const KIND_LABEL: Record<LogKind, { zh: string; en: string }> = {
 
 export const CHANGELOG: LogEntry[] = [
   {
+    date: "2026-11-14",
+    kind: "feature",
+    zh: {
+      title: "文章目录",
+      items: [
+        "所有文章右侧多了一列短横线，每条代表一个标题，当前读到的那条会变成砖红色。",
+        "鼠标移上去展开成标题列表，点哪个就跳到哪。手机上点横线展开。",
+        "双语文章只列出当前语言的标题，切换语言时目录跟着换。",
+      ],
+    },
+    en: {
+      title: "Table of contents for posts",
+      items: [
+        "Every post now has a column of short lines on the right, one per heading. The section you are reading turns brick red.",
+        "Hover to expand it into a list of headings and click one to jump there. On phones, tap the lines to open it.",
+        "Bilingual posts only list headings in the current language, and the list switches when you change language.",
+      ],
+    },
+  },
+  {
     date: "2026-11-09",
     kind: "feature",
     zh: {

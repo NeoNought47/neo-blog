@@ -5,6 +5,7 @@ import Base from "../../layouts/Base.astro";
 import { getPosts, readingTime } from "../../lib/posts";
 import { UI, fill, formatDateBoth } from "../../i18n";
 import T from "../../components/T.astro";
+import Toc from "../../components/Toc.astro";
 
 export async function getStaticPaths() {
   const posts = await getPosts();
@@ -60,6 +61,8 @@ const mins = readingTime(post.body ?? "");
       }
       <Content />
     </div>
+
+    <Toc />
 
     <nav class="pager page" aria-label="文章导航">
       {
