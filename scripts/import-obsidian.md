@@ -15,7 +15,7 @@ cd /Users/neyonought/dev/neo-blog
 再跑：
 
 ```bash
-npm run import-obsidian -- "~/Documents/NeosRepo/笔记文件名.md" xiaodi-security-009 --date 2026-09-21 --posted 2026-09-23
+npm run import-obsidian -- "~/Documents/NeosObsiRepo/笔记文件名.md" xiaodi-security-009 --date 2026-09-21 --posted 2026-09-23
 ```
 
 中间那个 `--` 不能省，它告诉 npm 后面的东西是给脚本的参数。
