@@ -117,6 +117,49 @@ tags: ["Cybersecurity", "Learning Notes"]
 
 第 9 种的思路是反过来：从目标转到寻找它卖的源码系统，再从源码系统找到使用它的其他目标。
 
+### 4.1 本地复现：Git 泄漏
+
+> **为什么要学**：自己搭个环境跑一遍，能直观看到一个暴露出来的 `.git` 目录到底能还原出多少东西，比只看工具介绍印象深得多。
+
+开本地服务器，在原来的 blog 文件夹下，找到 `.git`：
+
+```bash
+cd ~/Documents/blog-repo
+python3 -m http.server 8000 --bind 127.0.0.1
+```
+
+```text
+Serving HTTP on 127.0.0.1 port 8000 (http://127.0.0.1:8000/) ...
+```
+
+运行 GitHack 脚本：
+
+```bash
+cd ~/Documents/Security/GitHack
+python3 GitHack.py http://127.0.0.1:8000/.git/
+```
+
+结果：
+
+```text
+[+] Download and parse index file ...
+[+] .DS_Store
+[+] .app.py.swp
+[+] .gitignore
+[+] .idea/blog-repo.iml
+[+] .idea/inspectionProfiles/profiles_settings.xml
+[+] .idea/misc.xml
+[+] .idea/vcs.xml
+[+] .idea/workspace.xml
+[+] Icon
+[+] README.md
+[+] UPGRADE_PLAN.md
+[+] __pycache__/app.cpython-312.pyc
+[+] app.py
+[+] articles.json
+（后面省略）
+```
+
 ## 5. 拓展
 
 ### GitHub 搜索语法
