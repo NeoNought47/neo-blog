@@ -1,6 +1,6 @@
 ---
-title: "写了个脚本：查万智牌的外语版和签名卡"
-titleEn: "A Script to Find Foreign-Language and Signed MTG Cards"
+title: "万智牌的外语版和签名卡查询脚本"
+titleEn: "A Lookup Script for Foreign-Language and Signed MTG Cards"
 date: 2026-11-18
 posted: 2026-11-18
 tags: ["Magic the Gathering", "Trading Card Games"]
