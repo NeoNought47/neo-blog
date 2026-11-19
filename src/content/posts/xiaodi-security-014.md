@@ -66,6 +66,8 @@ https://example.com/api/login
 
 Vue、Node.js、jQuery、Angular 等。
 
+FOFA 语法，找使用 Vue.js 实现的网站，学习用：`app="Vue.js"`
+
 ### 0.6 如何判定是 JS 开发的应用
 
 > 先判断目标是不是以 JS 为主的应用，再决定要不要把精力放在 JS 分析上，避免方向选错白费功夫。
@@ -229,6 +231,10 @@ HaE 是一个**流量高亮和信息提取框架**，利用正则规则检查 Bu
 - 把匹配结果集中显示在数据面板
 
 它的优势是规则可以自定义，适合持续查看大量 HTTP 流量。
+
+HaE 是 Burp Suite Community 能用的 extension。安装之后在 Proxy → HTTP History 里能看到包内容：
+
+![](../../assets/posts/xiaodi-security-014/hae-http-history.png)
 
 ### 2.6 Unexpected_information
 
