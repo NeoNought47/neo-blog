@@ -306,6 +306,19 @@ URLFinder 能做到：
 - 显示状态码及响应大小
 - 整理结果并生成报告
 
+大概的演示语法：
+
+```bash
+# 只导出HTML
+./URLFinder -u http://127.0.0.1:8000 -m 1 -s all -o ./output/result.html
+
+# 只导出JSON
+./URLFinder -u http://127.0.0.1:8000 -m 1 -s all -o ./output/result.json
+
+# 只导出CSV
+./URLFinder -u http://127.0.0.1:8000 -m 1 -s all -o ./output/result.csv
+```
+
 ![](../../assets/posts/xiaodi-security-014/Screenshot-2026-11-14-at-8.16.01-pm.png)
 
 工具也帮着自动访问了，能看到状态码：
