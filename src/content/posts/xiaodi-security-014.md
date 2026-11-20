@@ -319,6 +319,17 @@ URLFinder 能做到：
 ./URLFinder -u http://127.0.0.1:8000 -m 1 -s all -o ./output/result.csv
 ```
 
+参数说明：
+
+- `./URLFinder`：运行程序。
+- `-u`：指定目标网址。
+- `-m 1`：普通抓取模式。
+- `-s all`：显示所有HTTP状态码。
+- `-t 5`：使用5个并发线程。
+- `-o ./output/result2.html`：把结果保存为指定的HTML文件。
+- `\`：命令换行符，表示下一行仍属于同一条命令。
+
+
 ![](../../assets/posts/xiaodi-security-014/Screenshot-2026-11-14-at-8.16.01-pm.png)
 
 工具也帮着自动访问了，能看到状态码：
