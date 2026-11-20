@@ -173,6 +173,11 @@ url: "/api/user/login"
 
 它比较专一，重点就是「从 JS 找链接和接口」。
 
+BurpJSLinkFinder 会对 Burp 捕获到的每个 JavaScript 响应进行分析，从代码中提取看起来像链接或路径的字符串。
+
+![](../../assets/posts/xiaodi-security-014/js-link-finder-log.png)
+⬆️ 图片列举了每一个 JS 里面的 link 有哪些
+
 ### 2.4 JS Miner
 
 > 它除了接口还能找密钥、云地址、子域名等，覆盖面更广。了解它会主动发请求这一点，才能在授权范围内合理使用。
